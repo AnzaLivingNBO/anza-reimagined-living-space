@@ -32,21 +32,13 @@ export const Hero = () => {
             everything you need—comfort, convenience, and a co-living community you'll love.
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-8">
+          <div className="flex justify-center items-center pt-8">
             <Button 
               size="lg" 
               className="btn-primary text-lg px-10 py-4 hover:scale-105 transition-bounce"
               onClick={() => document.getElementById('rooms')?.scrollIntoView({ behavior: 'smooth' })}
             >
               Start Exploring
-            </Button>
-            <Button 
-              variant="outline" 
-              size="lg" 
-              className="text-white border-white hover:bg-white hover:text-primary text-lg px-10 py-4 transition-smooth"
-              onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
-            >
-              Learn More
             </Button>
           </div>
         </div>
