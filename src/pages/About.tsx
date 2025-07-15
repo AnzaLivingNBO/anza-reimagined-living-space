@@ -113,10 +113,10 @@ const About = () => {
               return (
                 <div 
                   key={index}
-                  className={`${bgColors[index]} rounded-2xl p-8 shadow-soft hover-lift border animate-fade-up`}
+                  className={`${bgColors[index]} rounded-2xl p-8 shadow-soft hover-lift border animate-fade-up text-center`}
                   style={{animationDelay: `${index * 0.1}s`}}
                 >
-                  <div className={`w-16 h-16 bg-gradient-to-br ${gradients[index]} rounded-xl flex items-center justify-center mb-6`}>
+                  <div className={`w-16 h-16 bg-gradient-to-br ${gradients[index]} rounded-xl flex items-center justify-center mb-6 mx-auto`}>
                     <Icon className="w-8 h-8 text-white" />
                   </div>
                   <h3 className="text-xl font-bold mb-4">{value.title}</h3>
