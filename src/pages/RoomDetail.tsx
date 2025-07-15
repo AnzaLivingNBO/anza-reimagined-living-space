@@ -38,9 +38,12 @@ const allRooms = [
     images: [room1, room2, room3],
     features: ['WiFi', 'Parking', 'Kitchen Access', 'Laundry', 'Air Conditioning', 'Balcony'],
     amenities: [
-      { icon: Wifi, label: 'High-Speed WiFi' },
-      { icon: Car, label: 'Parking Space' },
-      { icon: Coffee, label: 'Kitchen Access' }
+      { icon: Wifi, label: 'Compound Pool' },
+      { icon: Car, label: 'Compound Gym' },
+      { icon: Coffee, label: 'Parking' },
+      { icon: Home, label: 'UN Approved' },
+      { icon: MapPin, label: 'Balcony' },
+      { icon: Users, label: 'Compound Roof Terrace' }
     ],
     description: 'A beautiful private room in a modern shared apartment with all amenities included. This spacious room features large windows with natural light, premium furnishing, and access to all common areas.',
     longDescription: 'Experience comfortable living in this thoughtfully designed private room located in the heart of downtown. The space features modern furnishing, ample storage, and large windows that flood the room with natural light. You\'ll have access to a fully equipped kitchen, comfortable living areas, and all essential amenities. The location offers easy access to public transportation, shopping centers, restaurants, and entertainment venues.',
@@ -70,8 +73,12 @@ const allRooms = [
     images: [room2, room3, room1],
     features: ['WiFi', 'Shared Kitchen', 'Lounge Area', 'Study Room', 'Gym Access'],
     amenities: [
-      { icon: Wifi, label: 'High-Speed WiFi' },
-      { icon: Coffee, label: 'Shared Kitchen' }
+      { icon: Wifi, label: 'Compound Pool' },
+      { icon: Car, label: 'Compound Gym' },
+      { icon: Coffee, label: 'Parking' },
+      { icon: Home, label: 'UN Approved' },
+      { icon: MapPin, label: 'Balcony' },
+      { icon: Users, label: 'Compound Roof Terrace' }
     ],
     description: 'Perfect for young professionals looking for a vibrant community atmosphere in a tech-focused environment.',
     longDescription: 'Join our vibrant community of young professionals and creatives in this modern shared living space. Located in the bustling tech district, this space offers everything you need for productive living and networking. The shared areas are designed for collaboration and socializing, while your private space provides comfort and privacy.',
@@ -262,6 +269,29 @@ const RoomDetail = () => {
                     {room.longDescription}
                   </p>
 
+                  {/* Amenities */}
+                  <div>
+                    <h3 className="text-xl font-bold mb-4">Amenities</h3>
+                    <div className="flex flex-wrap gap-4">
+                      {room.amenities.map((amenity, i) => {
+                        const Icon = amenity.icon;
+                        return (
+                          <Tooltip key={i}>
+                            <TooltipTrigger asChild>
+                              <div className="flex items-center gap-3 bg-muted rounded-lg p-3 hover:bg-primary/10 transition-smooth cursor-help">
+                                <Icon className="w-5 h-5 text-primary" />
+                                <span className="text-sm font-medium">{amenity.label}</span>
+                              </div>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <p>Available in this room</p>
+                            </TooltipContent>
+                          </Tooltip>
+                        );
+                      })}
+                    </div>
+                  </div>
+
                   {/* Location & What's Included Section */}
                   <div className="grid md:grid-cols-2 gap-8">
                     {/* What's Included */}
@@ -297,29 +327,6 @@ const RoomDetail = () => {
                           </div>
                         )}
                       </div>
-                    </div>
-                  </div>
-
-                  {/* Amenities */}
-                  <div>
-                    <h3 className="text-xl font-bold mb-4">Amenities</h3>
-                    <div className="flex flex-wrap gap-4">
-                      {room.amenities.map((amenity, i) => {
-                        const Icon = amenity.icon;
-                        return (
-                          <Tooltip key={i}>
-                            <TooltipTrigger asChild>
-                              <div className="flex items-center gap-3 bg-muted rounded-lg p-3 hover:bg-primary/10 transition-smooth cursor-help">
-                                <Icon className="w-5 h-5 text-primary" />
-                                <span className="text-sm font-medium">{amenity.label}</span>
-                              </div>
-                            </TooltipTrigger>
-                            <TooltipContent>
-                              <p>Available in this room</p>
-                            </TooltipContent>
-                          </Tooltip>
-                        );
-                      })}
                     </div>
                   </div>
 
