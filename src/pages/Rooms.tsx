@@ -203,7 +203,7 @@ const Rooms = () => {
                         </div>
                         
                         <p className="text-muted-foreground mb-4 lg:mb-6 leading-relaxed text-sm lg:text-base">
-                          {room.description}
+                          {room.description.length > 140 ? `${room.description.substring(0, 140)}...` : room.description}
                         </p>
                         
                          {/* Characteristics */}

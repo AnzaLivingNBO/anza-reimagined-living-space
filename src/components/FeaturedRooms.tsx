@@ -120,7 +120,7 @@ export const FeaturedRooms = () => {
                   </div>
                   
                   <p className="text-muted-foreground text-sm mb-4 leading-relaxed">
-                    {room.description}
+                    {room.description.length > 140 ? `${room.description.substring(0, 140)}...` : room.description}
                   </p>
                   
                    {/* Characteristics - Show first 6 characteristics */}
