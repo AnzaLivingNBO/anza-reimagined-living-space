@@ -6,7 +6,8 @@ import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
-import { MapPin, Wifi, Car, Coffee, Search, Filter } from 'lucide-react';
+import { RoomMap } from '@/components/RoomMap';
+import { MapPin, Wifi, Car, Coffee, Search, Filter, AlertCircle } from 'lucide-react';
 import room1 from '@/assets/room-1.jpg';
 import room2 from '@/assets/room-2.jpg';
 import room3 from '@/assets/room-3.jpg';
@@ -116,6 +117,7 @@ const Rooms = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedNeighbourhood, setSelectedNeighbourhood] = useState('all');
   const [priceRange, setPriceRange] = useState('all');
+  const [mapboxToken, setMapboxToken] = useState('');
 
   const filteredRooms = allRooms.filter(room => {
     const matchesSearch = room.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -199,7 +201,32 @@ const Rooms = () => {
         </div>
       </section>
 
-      {/* Rooms Grid */}
+      {/* Mapbox Token Input */}
+      {!mapboxToken && (
+        <section className="py-4 bg-yellow-50 border-b border-yellow-200">
+          <div className="container mx-auto px-4">
+            <div className="flex items-center gap-4 max-w-2xl mx-auto">
+              <AlertCircle className="w-5 h-5 text-yellow-600 flex-shrink-0" />
+              <div className="flex-1">
+                <p className="text-sm text-yellow-700 mb-2">
+                  To enable maps, please enter your Mapbox public token. Get it from{' '}
+                  <a href="https://mapbox.com/" target="_blank" rel="noopener noreferrer" className="underline">
+                    mapbox.com
+                  </a>
+                </p>
+                <Input
+                  placeholder="Enter your Mapbox public token (pk.xxx...)"
+                  value={mapboxToken}
+                  onChange={(e) => setMapboxToken(e.target.value)}
+                  className="text-sm"
+                />
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Rooms List */}
       <TooltipProvider>
         <section className="py-20 bg-background">
           <div className="container mx-auto px-4">
@@ -209,7 +236,7 @@ const Rooms = () => {
               </p>
             </div>
             
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="space-y-8">
               {filteredRooms.map((room, index) => (
                 <div 
                   key={room.id}
@@ -218,74 +245,89 @@ const Rooms = () => {
                     animationDelay: `${index * 0.1}s`
                   }}
                 >
-                  {/* Image */}
-                  <div className="relative overflow-hidden">
-                    <img 
-                      src={room.image} 
-                      alt={room.title}
-                      className="w-full h-64 object-cover group-hover:scale-110 transition-smooth"
-                    />
-                    <div className="absolute top-4 left-4">
-                      <Badge 
-                        variant={room.available ? "default" : "secondary"}
-                        className={room.available ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"}
-                      >
-                        {room.available ? 'Available' : 'Coming Soon'}
-                      </Badge>
+                  <div className="flex flex-col lg:flex-row h-auto lg:h-80">
+                    {/* Image Section */}
+                    <div className="relative lg:w-80 h-64 lg:h-full overflow-hidden">
+                      <img 
+                        src={room.image} 
+                        alt={room.title}
+                        className="w-full h-full object-cover group-hover:scale-110 transition-smooth"
+                      />
+                      <div className="absolute top-4 left-4">
+                        <Badge 
+                          variant={room.available ? "default" : "secondary"}
+                          className={room.available ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"}
+                        >
+                          {room.available ? 'Available' : 'Coming Soon'}
+                        </Badge>
+                      </div>
                     </div>
-                  </div>
-                  
-                  {/* Content */}
-                  <div className="p-6">
-                    <div className="flex items-start justify-between mb-4">
+                    
+                    {/* Content Section */}
+                    <div className="flex-1 p-6 flex flex-col justify-between">
                       <div>
-                        <h3 className="text-xl font-bold mb-2 text-card-foreground">
-                          {room.title}
-                        </h3>
-                        <div className="flex items-center text-muted-foreground mb-2">
-                          <MapPin className="w-4 h-4 mr-1" />
-                          <span className="text-sm">{room.location}</span>
+                        <div className="flex items-start justify-between mb-4">
+                          <div className="flex-1">
+                            <h3 className="text-2xl font-bold mb-2 text-card-foreground">
+                              {room.title}
+                            </h3>
+                            <div className="flex items-center text-muted-foreground mb-3">
+                              <MapPin className="w-4 h-4 mr-2" />
+                              <span className="text-sm">{room.location} • {room.neighbourhood}</span>
+                            </div>
+                          </div>
+                          <div className="text-right ml-4">
+                            <div className="text-3xl font-bold text-primary">
+                              ${room.price}
+                            </div>
+                            <div className="text-sm text-muted-foreground">
+                              {room.period}
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <p className="text-muted-foreground mb-6 leading-relaxed">
+                          {room.description}
+                        </p>
+                        
+                        {/* Amenities */}
+                        <div className="flex items-center space-x-4 mb-6">
+                          {room.amenities.map((amenity, i) => {
+                            const Icon = amenity.icon;
+                            return (
+                              <Tooltip key={i}>
+                                <TooltipTrigger asChild>
+                                  <div className="flex items-center justify-center w-10 h-10 bg-muted rounded-lg hover:bg-primary/20 transition-smooth cursor-help">
+                                    <Icon className="w-5 h-5 text-muted-foreground hover:text-primary transition-smooth" />
+                                  </div>
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                  <p>{amenity.label}</p>
+                                </TooltipContent>
+                              </Tooltip>
+                            );
+                          })}
                         </div>
                       </div>
-                      <div className="text-right">
-                        <div className="text-2xl font-bold text-primary">
-                          ${room.price}
-                        </div>
-                        <div className="text-sm text-muted-foreground">
-                          {room.period}
-                        </div>
+                      
+                      <div className="flex items-end justify-between">
+                        <Button 
+                          className={`${room.available ? 'btn-primary' : 'btn-secondary opacity-50 cursor-not-allowed'}`}
+                          disabled={!room.available}
+                        >
+                          {room.available ? 'View Details' : 'Notify When Available'}
+                        </Button>
                       </div>
                     </div>
                     
-                    <p className="text-muted-foreground text-sm mb-4 leading-relaxed">
-                      {room.description}
-                    </p>
-                    
-                    {/* Amenities */}
-                    <div className="flex items-center space-x-4 mb-6">
-                      {room.amenities.map((amenity, i) => {
-                        const Icon = amenity.icon;
-                        return (
-                          <Tooltip key={i}>
-                            <TooltipTrigger asChild>
-                              <div className="flex items-center justify-center w-8 h-8 bg-muted rounded-lg hover:bg-primary/20 transition-smooth cursor-help">
-                                <Icon className="w-4 h-4 text-muted-foreground hover:text-primary transition-smooth" />
-                              </div>
-                            </TooltipTrigger>
-                            <TooltipContent>
-                              <p>{amenity.label}</p>
-                            </TooltipContent>
-                          </Tooltip>
-                        );
-                      })}
+                    {/* Map Section */}
+                    <div className="lg:w-80 h-64 lg:h-full">
+                      <RoomMap 
+                        location={room.location}
+                        neighbourhood={room.neighbourhood}
+                        mapboxToken={mapboxToken}
+                      />
                     </div>
-                    
-                    <Button 
-                      className={`w-full ${room.available ? 'btn-primary' : 'btn-secondary opacity-50 cursor-not-allowed'}`}
-                      disabled={!room.available}
-                    >
-                      {room.available ? 'View Details' : 'Notify When Available'}
-                    </Button>
                   </div>
                 </div>
               ))}
