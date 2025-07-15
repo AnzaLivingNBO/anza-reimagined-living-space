@@ -66,23 +66,23 @@ const About = () => {
               </div>
               <div className="animate-fade-in" style={{animationDelay: '0.2s'}}>
                 <div className="bg-gradient-to-br from-primary to-secondary rounded-2xl p-8 text-white">
-                  <h3 className="text-2xl font-bold mb-4">By the Numbers</h3>
+                  <h3 className="text-2xl font-bold mb-4">Key Facts</h3>
                   <div className="grid grid-cols-2 gap-6">
                     <div className="text-center">
-                      <div className="text-3xl font-bold">500+</div>
-                      <div className="text-white/80">Happy Residents</div>
+                      <div className="text-3xl font-bold">1</div>
+                      <div className="text-white/80">Vibrant City - Nairobi</div>
                     </div>
                     <div className="text-center">
-                      <div className="text-3xl font-bold">50+</div>
-                      <div className="text-white/80">Properties</div>
+                      <div className="text-3xl font-bold">20+</div>
+                      <div className="text-white/80">Residents – young professionals, founders, and creatives</div>
                     </div>
                     <div className="text-center">
-                      <div className="text-3xl font-bold">15</div>
-                      <div className="text-white/80">Cities</div>
+                      <div className="text-3xl font-bold">1000+</div>
+                      <div className="text-white/80">Nights Hosted</div>
                     </div>
                     <div className="text-center">
                       <div className="text-3xl font-bold">98%</div>
-                      <div className="text-white/80">Satisfaction Rate</div>
+                      <div className="text-white/80">Satisfaction Score</div>
                     </div>
                   </div>
                 </div>
