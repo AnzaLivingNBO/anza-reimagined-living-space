@@ -14,6 +14,27 @@ export type Database = {
   }
   public: {
     Tables: {
+      characteristics: {
+        Row: {
+          created_at: string
+          id: string
+          importance_order: number
+          name: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          importance_order: number
+          name: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          importance_order?: number
+          name?: string
+        }
+        Relationships: []
+      }
       flat_gallery_images: {
         Row: {
           alt_text: string | null
@@ -79,6 +100,42 @@ export type Database = {
         }
         Relationships: []
       }
+      room_characteristics: {
+        Row: {
+          characteristic_id: string
+          created_at: string
+          id: string
+          room_id: string
+        }
+        Insert: {
+          characteristic_id: string
+          created_at?: string
+          id?: string
+          room_id: string
+        }
+        Update: {
+          characteristic_id?: string
+          created_at?: string
+          id?: string
+          room_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "room_characteristics_characteristic_id_fkey"
+            columns: ["characteristic_id"]
+            isOneToOne: false
+            referencedRelation: "characteristics"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "room_characteristics_room_id_fkey"
+            columns: ["room_id"]
+            isOneToOne: false
+            referencedRelation: "rooms"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       room_images: {
         Row: {
           alt_text: string | null
@@ -116,7 +173,6 @@ export type Database = {
       }
       rooms: {
         Row: {
-          amenities: string[] | null
           availability_status: string
           created_at: string
           description: string | null
@@ -127,7 +183,6 @@ export type Database = {
           updated_at: string
         }
         Insert: {
-          amenities?: string[] | null
           availability_status?: string
           created_at?: string
           description?: string | null
@@ -138,7 +193,6 @@ export type Database = {
           updated_at?: string
         }
         Update: {
-          amenities?: string[] | null
           availability_status?: string
           created_at?: string
           description?: string | null

@@ -11,7 +11,7 @@ export interface Room {
   period: string;
   image: string;
   features: string[];
-  amenities: Array<{ icon: any; label: string }>;
+  characteristics: Array<{ icon: any; label: string }>;
   description: string;
   available: boolean;
   neighbourhood: string;
@@ -26,20 +26,17 @@ export const allRooms: Room[] = [
     period: '/month',
     image: room1,
     features: ['WiFi', 'Parking', 'Kitchen Access', 'Laundry'],
-    amenities: [
-      { icon: Waves, label: 'Compound Pool' },
-      { icon: Dumbbell, label: 'Compound Gym' },
-      { icon: Shield, label: 'UN Approved' },
-      { icon: Building, label: 'Balcony' },
-      { icon: Sunrise, label: 'Compound Roof Terrace' },
-      { icon: Zap, label: 'Electricity' },
-      { icon: Droplets, label: 'Water' },
+    characteristics: [
+      { icon: Wifi, label: 'Wifi' },
       { icon: Shield, label: '24/7 Security' },
-      { icon: Receipt, label: 'Service Charge' },
-      { icon: Sparkles, label: 'Cleaning and Housekeeping' },
-      { icon: Wifi, label: 'WiFi' }
+      { icon: Sparkles, label: 'Cleaning' },
+      { icon: Shield, label: 'UN Approved' },
+      { icon: Waves, label: 'Pool' },
+      { icon: Dumbbell, label: 'Gym' },
+      { icon: Building, label: 'Balcony' },
+      { icon: Sunrise, label: 'Roof Terrace' }
     ],
-    description: 'A beautiful private room in a modern shared apartment with all amenities included.',
+    description: 'A beautiful private room in a modern shared apartment with all characteristics included.',
     available: true,
     neighbourhood: 'Kileleshwa'
   },
@@ -51,18 +48,15 @@ export const allRooms: Room[] = [
     period: '/month',
     image: room2,
     features: ['WiFi', 'Shared Kitchen', 'Lounge Area', 'Study Room'],
-    amenities: [
-      { icon: Waves, label: 'Compound Pool' },
-      { icon: Dumbbell, label: 'Compound Gym' },
-      { icon: Shield, label: 'UN Approved' },
-      { icon: Building, label: 'Balcony' },
-      { icon: Sunrise, label: 'Compound Roof Terrace' },
-      { icon: Zap, label: 'Electricity' },
-      { icon: Droplets, label: 'Water' },
+    characteristics: [
+      { icon: Wifi, label: 'Wifi' },
       { icon: Shield, label: '24/7 Security' },
-      { icon: Receipt, label: 'Service Charge' },
-      { icon: Sparkles, label: 'Cleaning and Housekeeping' },
-      { icon: Wifi, label: 'WiFi' }
+      { icon: Sparkles, label: 'Cleaning' },
+      { icon: Shield, label: 'UN Approved' },
+      { icon: Waves, label: 'Pool' },
+      { icon: Dumbbell, label: 'Gym' },
+      { icon: Building, label: 'Balcony' },
+      { icon: Sunrise, label: 'Roof Terrace' }
     ],
     description: 'Perfect for young professionals looking for a vibrant community atmosphere.',
     available: true,
@@ -76,20 +70,17 @@ export const allRooms: Room[] = [
     period: '/month',
     image: room3,
     features: ['WiFi', 'Parking', 'Gym Access', 'Rooftop', 'Concierge'],
-    amenities: [
-      { icon: Waves, label: 'Compound Pool' },
-      { icon: Dumbbell, label: 'Compound Gym' },
-      { icon: Shield, label: 'UN Approved' },
-      { icon: Building, label: 'Balcony' },
-      { icon: Sunrise, label: 'Compound Roof Terrace' },
-      { icon: Zap, label: 'Electricity' },
-      { icon: Droplets, label: 'Water' },
+    characteristics: [
+      { icon: Wifi, label: 'Wifi' },
       { icon: Shield, label: '24/7 Security' },
-      { icon: Receipt, label: 'Service Charge' },
-      { icon: Sparkles, label: 'Cleaning and Housekeeping' },
-      { icon: Wifi, label: 'WiFi' }
+      { icon: Sparkles, label: 'Cleaning' },
+      { icon: Shield, label: 'UN Approved' },
+      { icon: Waves, label: 'Pool' },
+      { icon: Dumbbell, label: 'Gym' },
+      { icon: Building, label: 'Balcony' },
+      { icon: Sunrise, label: 'Roof Terrace' }
     ],
-    description: 'Premium co-living experience with stunning views and top-tier amenities.',
+    description: 'Premium co-living experience with stunning views and top-tier characteristics.',
     available: false,
     neighbourhood: 'Kileleshwa'
   },
@@ -101,18 +92,15 @@ export const allRooms: Room[] = [
     period: '/month',
     image: room1,
     features: ['WiFi', 'Study Area', 'Shared Kitchen', 'Social Lounge'],
-    amenities: [
-      { icon: Waves, label: 'Compound Pool' },
-      { icon: Dumbbell, label: 'Compound Gym' },
-      { icon: Shield, label: 'UN Approved' },
-      { icon: Building, label: 'Balcony' },
-      { icon: Sunrise, label: 'Compound Roof Terrace' },
-      { icon: Zap, label: 'Electricity' },
-      { icon: Droplets, label: 'Water' },
+    characteristics: [
+      { icon: Wifi, label: 'Wifi' },
       { icon: Shield, label: '24/7 Security' },
-      { icon: Receipt, label: 'Service Charge' },
-      { icon: Sparkles, label: 'Cleaning and Housekeeping' },
-      { icon: Wifi, label: 'WiFi' }
+      { icon: Sparkles, label: 'Cleaning' },
+      { icon: Shield, label: 'UN Approved' },
+      { icon: Waves, label: 'Pool' },
+      { icon: Dumbbell, label: 'Gym' },
+      { icon: Building, label: 'Balcony' },
+      { icon: Sunrise, label: 'Roof Terrace' }
     ],
     description: 'Perfect for students with dedicated study spaces and social areas.',
     available: true,
@@ -125,21 +113,18 @@ export const allRooms: Room[] = [
     price: 750,
     period: '/month',
     image: room2,
-    features: ['WiFi', 'Private Bathroom', 'Work Desk', 'Premium Amenities'],
-    amenities: [
-      { icon: Waves, label: 'Compound Pool' },
-      { icon: Dumbbell, label: 'Compound Gym' },
-      { icon: Shield, label: 'UN Approved' },
-      { icon: Building, label: 'Balcony' },
-      { icon: Sunrise, label: 'Compound Roof Terrace' },
-      { icon: Zap, label: 'Electricity' },
-      { icon: Droplets, label: 'Water' },
+    features: ['WiFi', 'Private Bathroom', 'Work Desk', 'Premium Characteristics'],
+    characteristics: [
+      { icon: Wifi, label: 'Wifi' },
       { icon: Shield, label: '24/7 Security' },
-      { icon: Receipt, label: 'Service Charge' },
-      { icon: Sparkles, label: 'Cleaning and Housekeeping' },
-      { icon: Wifi, label: 'WiFi' }
+      { icon: Sparkles, label: 'Cleaning' },
+      { icon: Shield, label: 'UN Approved' },
+      { icon: Waves, label: 'Pool' },
+      { icon: Dumbbell, label: 'Gym' },
+      { icon: Building, label: 'Balcony' },
+      { icon: Sunrise, label: 'Roof Terrace' }
     ],
-    description: 'Premium accommodation for business professionals with executive amenities.',
+    description: 'Premium accommodation for business professionals with executive characteristics.',
     available: true,
     neighbourhood: 'Kileleshwa'
   },
@@ -151,18 +136,15 @@ export const allRooms: Room[] = [
     period: '/month',
     image: room3,
     features: ['WiFi', 'Art Studio', 'Creative Workspace', 'Collaboration Areas'],
-    amenities: [
-      { icon: Waves, label: 'Compound Pool' },
-      { icon: Dumbbell, label: 'Compound Gym' },
-      { icon: Shield, label: 'UN Approved' },
-      { icon: Building, label: 'Balcony' },
-      { icon: Sunrise, label: 'Compound Roof Terrace' },
-      { icon: Zap, label: 'Electricity' },
-      { icon: Droplets, label: 'Water' },
+    characteristics: [
+      { icon: Wifi, label: 'Wifi' },
       { icon: Shield, label: '24/7 Security' },
-      { icon: Receipt, label: 'Service Charge' },
-      { icon: Sparkles, label: 'Cleaning and Housekeeping' },
-      { icon: Wifi, label: 'WiFi' }
+      { icon: Sparkles, label: 'Cleaning' },
+      { icon: Shield, label: 'UN Approved' },
+      { icon: Waves, label: 'Pool' },
+      { icon: Dumbbell, label: 'Gym' },
+      { icon: Building, label: 'Balcony' },
+      { icon: Sunrise, label: 'Roof Terrace' }
     ],
     description: 'Inspiring space for creative professionals with dedicated studio areas.',
     available: true,

@@ -74,20 +74,20 @@ export const FeaturedRooms = () => {
                     {room.description}
                   </p>
                   
-                  {/* Amenities - Show first 6 amenities */}
-                  <div className="flex items-center gap-2 mb-6 overflow-x-auto">
-                    {room.amenities.slice(0, 6).map((amenity, i) => {
-                      const Icon = amenity.icon;
+                   {/* Characteristics - Show first 6 characteristics */}
+                   <div className="flex items-center gap-2 mb-6 overflow-x-auto">
+                     {room.characteristics.slice(0, 6).map((characteristic, i) => {
+                       const Icon = characteristic.icon;
                       return (
                         <Tooltip key={i}>
                           <TooltipTrigger asChild>
                             <div className="flex items-center justify-center w-8 h-8 bg-muted rounded-lg hover:bg-primary/20 transition-smooth cursor-help shrink-0">
                               <Icon className="w-4 h-4 text-muted-foreground hover:text-primary transition-smooth" />
                             </div>
-                          </TooltipTrigger>
-                          <TooltipContent>
-                            <p>{amenity.label}</p>
-                          </TooltipContent>
+                           </TooltipTrigger>
+                           <TooltipContent>
+                             <p>{characteristic.label}</p>
+                           </TooltipContent>
                         </Tooltip>
                       );
                     })}

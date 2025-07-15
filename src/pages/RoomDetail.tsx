@@ -242,19 +242,19 @@ const RoomDetail = () => {
                     {room.description}
                   </p>
 
-                  {/* Amenities & What's Included */}
-                  <div>
-                    <h3 className="text-xl font-bold mb-4">Amenities & What's Included</h3>
-                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                      {room.amenities.map((amenity, i) => {
-                        const Icon = amenity.icon;
+                   {/* Characteristics & What's Included */}
+                   <div>
+                     <h3 className="text-xl font-bold mb-4">Characteristics & What's Included</h3>
+                     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                       {room.characteristics.map((characteristic, i) => {
+                         const Icon = characteristic.icon;
                         return (
                           <Tooltip key={i}>
                             <TooltipTrigger asChild>
-                              <div className="flex items-center gap-3 bg-muted rounded-lg p-3 hover:bg-primary/10 transition-smooth cursor-help">
-                                <Icon className="w-5 h-5 text-primary flex-shrink-0" />
-                                <span className="text-sm font-medium">{amenity.label}</span>
-                              </div>
+                               <div className="flex items-center gap-3 bg-muted rounded-lg p-3 hover:bg-primary/10 transition-smooth cursor-help">
+                                 <Icon className="w-5 h-5 text-primary flex-shrink-0" />
+                                 <span className="text-sm font-medium">{characteristic.label}</span>
+                               </div>
                             </TooltipTrigger>
                             <TooltipContent>
                               <p>Included with this room</p>
@@ -359,10 +359,10 @@ const RoomDetail = () => {
                 <div>
                   <h2 className="text-3xl font-bold mb-6">About the Flat</h2>
                   <div className="space-y-4 text-muted-foreground leading-relaxed">
-                    <p>
-                      This beautiful apartment complex offers modern living with premium amenities in one of Nairobi's most desirable neighborhoods. 
-                      The building features contemporary architecture with thoughtfully designed spaces that promote both comfort and community.
-                    </p>
+                     <p>
+                       This beautiful apartment complex offers modern living with premium characteristics in one of Nairobi's most desirable neighborhoods. 
+                       The building features contemporary architecture with thoughtfully designed spaces that promote both comfort and community.
+                     </p>
                     <p>
                       Located in a secure compound with 24/7 security, residents enjoy peace of mind along with access to exceptional facilities 
                       including a swimming pool, fully equipped gym, and a stunning rooftop terrace with panoramic city views.

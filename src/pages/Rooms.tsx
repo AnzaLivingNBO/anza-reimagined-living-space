@@ -190,21 +190,21 @@ const Rooms = () => {
                           {room.description}
                         </p>
                         
-                        {/* Amenities */}
-                        <div className="overflow-x-auto scrollbar-hide mb-4 lg:mb-6">
-                          <div className="flex items-center gap-2 lg:gap-3 pb-2 min-w-max">
-                            {room.amenities.map((amenity, i) => {
-                              const Icon = amenity.icon;
+                         {/* Characteristics */}
+                         <div className="overflow-x-auto scrollbar-hide mb-4 lg:mb-6">
+                           <div className="flex items-center gap-2 lg:gap-3 pb-2 min-w-max">
+                             {room.characteristics.map((characteristic, i) => {
+                               const Icon = characteristic.icon;
                               return (
                                 <Tooltip key={i}>
                                   <TooltipTrigger asChild>
                                     <div className="flex items-center justify-center w-8 h-8 lg:w-10 lg:h-10 bg-muted rounded-lg hover:bg-primary/20 transition-smooth cursor-help flex-shrink-0">
                                       <Icon className="w-4 h-4 lg:w-5 lg:h-5 text-muted-foreground hover:text-primary transition-smooth" />
                                     </div>
-                                  </TooltipTrigger>
-                                  <TooltipContent>
-                                    <p>{amenity.label}</p>
-                                  </TooltipContent>
+                                   </TooltipTrigger>
+                                   <TooltipContent>
+                                     <p>{characteristic.label}</p>
+                                   </TooltipContent>
                                 </Tooltip>
                               );
                             })}

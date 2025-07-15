@@ -27,7 +27,7 @@ const faqCategories = [
     faqs: [
       {
         question: 'What is included in the rent?',
-        answer: 'All our rooms come fully furnished with bed, desk, wardrobe, and all essential furniture. Rent includes utilities (electricity, water, gas), high-speed WiFi, cleaning of common areas, and access to all amenities.'
+        answer: 'All our rooms come fully furnished with bed, desk, wardrobe, and all essential furniture. Rent includes utilities (electricity, water, gas), high-speed WiFi, cleaning of common areas, and access to all characteristics.'
       },
       {
         question: 'Can I choose my flatmates?',
@@ -48,7 +48,7 @@ const faqCategories = [
     faqs: [
       {
         question: 'Are there any hidden fees?',
-        answer: 'No hidden fees! Our pricing is transparent. You pay monthly rent plus a refundable security deposit. Some properties may have optional services like parking or premium amenities with additional charges.'
+        answer: 'No hidden fees! Our pricing is transparent. You pay monthly rent plus a refundable security deposit. Some properties may have optional services like parking or premium characteristics with additional charges.'
       },
       {
         question: 'How do I pay rent?',
