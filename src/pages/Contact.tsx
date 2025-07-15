@@ -22,18 +22,6 @@ const contactInfo = [
     title: 'Email',
     details: ['hello@anzaliving.com', 'support@anzaliving.com'],
     description: 'We respond within 24 hours'
-  },
-  {
-    icon: MapPin,
-    title: 'Office',
-    details: ['123 Co-living Street', 'Downtown, City 12345'],
-    description: 'Visit us for a personal consultation'
-  },
-  {
-    icon: Clock,
-    title: 'Hours',
-    details: ['Mon-Fri: 9AM-6PM', 'Sat: 10AM-4PM', 'Sun: Closed'],
-    description: '24/7 emergency support available'
   }
 ];
 
@@ -114,7 +102,7 @@ const Contact = () => {
       {/* Contact Information */}
       <section className="py-20 bg-background">
         <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+          <div className="grid md:grid-cols-2 gap-6 mb-16">
             {contactInfo.map((info, index) => {
               const Icon = info.icon;
               return (
@@ -253,22 +241,6 @@ const Contact = () => {
                   </Button>
                 </div>
 
-                <div className="bg-muted/50 rounded-2xl p-6">
-                  <h4 className="text-lg font-semibold mb-3">Emergency Contact</h4>
-                  <p className="text-sm text-muted-foreground mb-3">
-                    For urgent matters outside business hours:
-                  </p>
-                  <div className="space-y-2">
-                    <div className="flex items-center space-x-2">
-                      <Phone className="w-4 h-4 text-primary" />
-                      <span className="font-medium">+1 (555) 911-HELP</span>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <Mail className="w-4 h-4 text-primary" />
-                      <span className="font-medium">emergency@anzaliving.com</span>
-                    </div>
-                  </div>
-                </div>
 
                 <div className="bg-gradient-to-br from-primary/5 to-secondary/5 rounded-2xl p-6">
                   <h4 className="text-lg font-semibold mb-3">Follow Us</h4>
