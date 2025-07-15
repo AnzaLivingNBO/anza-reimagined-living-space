@@ -410,7 +410,7 @@ const RoomDetail = () => {
                       <div className="flex gap-3">
                         <Button variant="outline" className="flex-1" size="lg">
                           <MessageSquare className="w-4 h-4 mr-2" />
-                          Ask Questions About Room
+                          Ask Question
                         </Button>
                         <Button 
                           variant="outline" 
