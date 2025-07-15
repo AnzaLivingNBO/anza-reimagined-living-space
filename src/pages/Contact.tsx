@@ -7,8 +7,9 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { MapPin, Phone, Mail, Clock, Send, MessageSquare } from 'lucide-react';
+import { MapPin, Phone, Mail, Send, MessageSquare } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { RoomApplicationForm } from '@/components/RoomApplicationForm';
 
 const contactInfo = [
   {
@@ -27,6 +28,7 @@ const contactInfo = [
 
 const Contact = () => {
   const { toast } = useToast();
+  const [showApplicationForm, setShowApplicationForm] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -236,7 +238,10 @@ const Contact = () => {
                     If you're ready to apply for a room, you can start the application process 
                     right away. Our team will guide you through each step.
                   </p>
-                  <Button className="btn-secondary w-full mb-4">
+                  <Button 
+                    className="btn-secondary w-full mb-4"
+                    onClick={() => setShowApplicationForm(true)}
+                  >
                     Start Application
                   </Button>
                 </div>
@@ -261,6 +266,10 @@ const Contact = () => {
           </div>
         </div>
       </section>
+
+      {showApplicationForm && (
+        <RoomApplicationForm onClose={() => setShowApplicationForm(false)} />
+      )}
 
       <Footer />
     </div>
