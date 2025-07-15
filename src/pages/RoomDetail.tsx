@@ -19,6 +19,7 @@ import {
   Clock,
   Phone,
   MessageSquare,
+  Share2,
   ChevronRight,
   ChevronLeft as PrevIcon,
   AlertCircle
@@ -141,6 +142,22 @@ const RoomDetail = () => {
 
   const nextGalleryImage = () => {
     setCurrentGalleryIndex((prev) => (prev + 1) % galleryImages.length);
+  };
+
+  const handleShare = () => {
+    if (navigator.share) {
+      navigator.share({
+        title: room.title,
+        text: room.description,
+        url: window.location.href,
+      });
+    } else {
+      navigator.clipboard.writeText(window.location.href);
+      toast({
+        title: "Link copied!",
+        description: "Room link has been copied to your clipboard.",
+      });
+    }
   };
 
   const prevGalleryImage = () => {
@@ -387,10 +404,21 @@ const RoomDetail = () => {
                         <Home className="w-4 h-4 mr-2" />
                         Start Room Application
                       </Button>
-                      <Button variant="outline" className="w-full" size="lg">
-                        <MessageSquare className="w-4 h-4 mr-2" />
-                        Ask Questions About Room
-                      </Button>
+                      <div className="flex gap-3">
+                        <Button variant="outline" className="flex-1" size="lg">
+                          <MessageSquare className="w-4 h-4 mr-2" />
+                          Ask Questions About Room
+                        </Button>
+                        <Button 
+                          variant="outline" 
+                          className="flex-1" 
+                          size="lg"
+                          onClick={handleShare}
+                        >
+                          <Share2 className="w-4 h-4 mr-2" />
+                          Share
+                        </Button>
+                      </div>
                     </div>
                   </CardContent>
                 </Card>
