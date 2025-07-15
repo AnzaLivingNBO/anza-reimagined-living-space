@@ -64,12 +64,6 @@ export const Community = () => {
             })}
           </div>
           
-          <div className="text-center mt-12">
-            <div className="inline-flex items-center space-x-2 bg-background/80 backdrop-blur-sm rounded-full px-6 py-3 border border-border">
-              <Users className="w-5 h-5 text-primary" />
-              <span className="text-sm font-medium">Join 500+ happy residents</span>
-            </div>
-          </div>
         </div>
       </div>
     </section>
