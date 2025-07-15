@@ -33,94 +33,13 @@ import {
   Sparkles
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { allRooms } from '@/data/rooms';
 import room1 from '@/assets/room-1.jpg';
 import room2 from '@/assets/room-2.jpg';
 import room3 from '@/assets/room-3.jpg';
 
-const allRooms = [
-  {
-    id: 1,
-    title: 'Cozy Private Room',
-    location: 'Central Downtown',
-    price: 850,
-    period: '/month',
-    images: [room1, room2, room3],
-    features: ['WiFi', 'Parking', 'Kitchen Access', 'Laundry', 'Air Conditioning', 'Balcony'],
-    amenities: [
-      { icon: Waves, label: 'Compound Pool' },
-      { icon: Dumbbell, label: 'Compound Gym' },
-      { icon: Car, label: 'Parking' },
-      { icon: Shield, label: 'UN Approved' },
-      { icon: Building, label: 'Balcony' },
-      { icon: Sunrise, label: 'Compound Roof Terrace' },
-      { icon: Zap, label: 'Electricity' },
-      { icon: Droplets, label: 'Water' },
-      { icon: Shield, label: '24/7 Security' },
-      { icon: Receipt, label: 'Service Charge' },
-      { icon: Sparkles, label: 'Cleaning and Housekeeping' },
-      { icon: Wifi, label: 'WiFi' }
-    ],
-    description: 'A beautiful private room in a modern shared apartment with all amenities included. This spacious room features large windows with natural light, premium furnishing, and access to all common areas.',
-    longDescription: 'Experience comfortable living in this thoughtfully designed private room located in the heart of downtown. The space features modern furnishing, ample storage, and large windows that flood the room with natural light. You\'ll have access to a fully equipped kitchen, comfortable living areas, and all essential amenities. The location offers easy access to public transportation, shopping centers, restaurants, and entertainment venues.',
-    available: true,
-    neighbourhood: 'Kileleshwa',
-    roomSize: '15 sqm',
-    maxOccupancy: 1,
-    moveInDate: '2024-01-15',
-    leaseTerm: 'Flexible (3-12 months)',
-    deposit: 1700,
-    included: ['Electricity', 'Water', '24/7 Security', 'Service Charge', 'Cleaning and Housekeeping', 'WiFi'],
-    houseRules: ['No smoking', 'No pets', 'Quiet hours 10PM-8AM', 'Keep common areas clean'],
-    highlights: [
-      'Prime downtown location',
-      'Fully furnished room',
-      '24/7 building security',
-      'Weekly cleaning service',
-      'Professional community'
-    ]
-  },
-  {
-    id: 2,
-    title: 'Modern Shared Space',
-    location: 'Tech District',
-    price: 720,
-    period: '/month',
-    images: [room2, room3, room1],
-    features: ['WiFi', 'Shared Kitchen', 'Lounge Area', 'Study Room', 'Gym Access'],
-    amenities: [
-      { icon: Waves, label: 'Compound Pool' },
-      { icon: Dumbbell, label: 'Compound Gym' },
-      { icon: Car, label: 'Parking' },
-      { icon: Shield, label: 'UN Approved' },
-      { icon: Building, label: 'Balcony' },
-      { icon: Sunrise, label: 'Compound Roof Terrace' },
-      { icon: Zap, label: 'Electricity' },
-      { icon: Droplets, label: 'Water' },
-      { icon: Shield, label: '24/7 Security' },
-      { icon: Receipt, label: 'Service Charge' },
-      { icon: Sparkles, label: 'Cleaning and Housekeeping' },
-      { icon: Wifi, label: 'WiFi' }
-    ],
-    description: 'Perfect for young professionals looking for a vibrant community atmosphere in a tech-focused environment.',
-    longDescription: 'Join our vibrant community of young professionals and creatives in this modern shared living space. Located in the bustling tech district, this space offers everything you need for productive living and networking. The shared areas are designed for collaboration and socializing, while your private space provides comfort and privacy.',
-    available: true,
-    neighbourhood: 'Westlands',
-    roomSize: '12 sqm',
-    maxOccupancy: 1,
-    moveInDate: '2024-02-01',
-    leaseTerm: 'Flexible (1-12 months)',
-    deposit: 1440,
-    included: ['Electricity', 'Water', '24/7 Security', 'Service Charge', 'Cleaning and Housekeeping', 'WiFi'],
-    houseRules: ['No smoking', 'Guests until 11PM', 'Clean after use', 'Respect community guidelines'],
-    highlights: [
-      'Tech district location',
-      'Networking opportunities',
-      'On-site gym',
-      'Coworking spaces',
-      'Regular community events'
-    ]
-  }
-];
+// Property gallery images
+const propertyGalleryImages = [room1, room2, room3];
 
 const RoomDetail = () => {
   const { id } = useParams();
@@ -130,6 +49,7 @@ const RoomDetail = () => {
   const [mapboxToken, setMapboxToken] = useState('');
   
   const room = allRooms.find(r => r.id === parseInt(id || ''));
+  const roomImages = room ? [room.image, ...propertyGalleryImages] : [];
 
   if (!room) {
     return (
@@ -146,11 +66,11 @@ const RoomDetail = () => {
 
 
   const nextImage = () => {
-    setCurrentImageIndex((prev) => (prev + 1) % room.images.length);
+    setCurrentImageIndex((prev) => (prev + 1) % roomImages.length);
   };
 
   const prevImage = () => {
-    setCurrentImageIndex((prev) => (prev - 1 + room.images.length) % room.images.length);
+    setCurrentImageIndex((prev) => (prev - 1 + roomImages.length) % roomImages.length);
   };
 
   const galleryImages = [
@@ -251,13 +171,13 @@ const RoomDetail = () => {
                 <div className="relative">
                   <div className="relative h-96 md:h-[500px] rounded-2xl overflow-hidden">
                     <img 
-                      src={room.images[currentImageIndex]} 
+                      src={roomImages[currentImageIndex]} 
                       alt={`${room.title} - Image ${currentImageIndex + 1}`}
                       className="w-full h-full object-cover"
                     />
                     
                     {/* Navigation Arrows */}
-                    {room.images.length > 1 && (
+                    {roomImages.length > 1 && (
                       <>
                         <button
                           onClick={prevImage}
@@ -276,13 +196,13 @@ const RoomDetail = () => {
                     
                     {/* Image Counter */}
                     <div className="absolute bottom-4 right-4 bg-black/60 text-white px-3 py-1 rounded-full text-sm">
-                      {currentImageIndex + 1} / {room.images.length}
+                      {currentImageIndex + 1} / {roomImages.length}
                     </div>
                   </div>
                   
                   {/* Thumbnail Navigation */}
                   <div className="flex gap-2 mt-4 overflow-x-auto pb-2">
-                    {room.images.map((image, index) => (
+                    {roomImages.map((image, index) => (
                       <button
                         key={index}
                         onClick={() => setCurrentImageIndex(index)}
@@ -319,7 +239,7 @@ const RoomDetail = () => {
                   </div>
 
                   <p className="text-lg text-muted-foreground leading-relaxed">
-                    {room.longDescription}
+                    {room.description}
                   </p>
 
                   {/* Amenities & What's Included */}
@@ -381,27 +301,27 @@ const RoomDetail = () => {
                         ${room.price}
                         <span className="text-lg text-muted-foreground">{room.period}</span>
                       </div>
-                      <p className="text-sm text-muted-foreground">Security deposit: ${room.deposit}</p>
+                      <p className="text-sm text-muted-foreground">Security deposit: ${room.price * 2}</p>
                     </div>
 
-                    <div className="space-y-4 mb-6">
-                      <div className="flex justify-between text-sm">
-                        <span className="text-muted-foreground">Room Size:</span>
-                        <span className="font-medium">{room.roomSize}</span>
-                      </div>
-                      <div className="flex justify-between text-sm">
-                        <span className="text-muted-foreground">Max Occupancy:</span>
-                        <span className="font-medium">{room.maxOccupancy} person</span>
-                      </div>
-                      <div className="flex justify-between text-sm">
-                        <span className="text-muted-foreground">Move-in Date:</span>
-                        <span className="font-medium">{room.moveInDate}</span>
-                      </div>
-                      <div className="flex justify-between text-sm">
-                        <span className="text-muted-foreground">Lease Term:</span>
-                        <span className="font-medium">{room.leaseTerm}</span>
-                      </div>
-                    </div>
+                     <div className="space-y-4 mb-6">
+                       <div className="flex justify-between text-sm">
+                         <span className="text-muted-foreground">Room Size:</span>
+                         <span className="font-medium">12-15 sqm</span>
+                       </div>
+                       <div className="flex justify-between text-sm">
+                         <span className="text-muted-foreground">Max Occupancy:</span>
+                         <span className="font-medium">1 person</span>
+                       </div>
+                       <div className="flex justify-between text-sm">
+                         <span className="text-muted-foreground">Move-in Date:</span>
+                         <span className="font-medium">Available now</span>
+                       </div>
+                       <div className="flex justify-between text-sm">
+                         <span className="text-muted-foreground">Lease Term:</span>
+                         <span className="font-medium">Flexible (3-12 months)</span>
+                       </div>
+                     </div>
 
                     <div className="space-y-3">
                       <Button className="w-full btn-primary" size="lg">

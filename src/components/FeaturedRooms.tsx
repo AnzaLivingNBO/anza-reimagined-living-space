@@ -1,57 +1,12 @@
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
-import { MapPin, Wifi, Car, Coffee } from 'lucide-react';
-import room1 from '@/assets/room-1.jpg';
-import room2 from '@/assets/room-2.jpg';
-import room3 from '@/assets/room-3.jpg';
+import { MapPin } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { allRooms } from '@/data/rooms';
 
-const rooms = [
-  {
-    id: 1,
-    title: 'Cozy Private Room',
-    location: 'Central Downtown',
-    price: '$850',
-    period: '/month',
-    image: room1,
-    amenities: [
-      { icon: Wifi, label: 'WiFi' },
-      { icon: Car, label: 'Parking' },
-      { icon: Coffee, label: 'Kitchen Access' }
-    ],
-    description: 'A beautiful private room in a modern shared apartment with all amenities included.',
-    available: true
-  },
-  {
-    id: 2,
-    title: 'Modern Shared Space',
-    location: 'Tech District',
-    price: '$720',
-    period: '/month',
-    image: room2,
-    amenities: [
-      { icon: Wifi, label: 'WiFi' },
-      { icon: Coffee, label: 'Shared Kitchen' }
-    ],
-    description: 'Perfect for young professionals looking for a vibrant community atmosphere.',
-    available: true
-  },
-  {
-    id: 3,
-    title: 'Luxury Co-Living',
-    location: 'Riverside',
-    price: '$950',
-    period: '/month',
-    image: room3,
-    amenities: [
-      { icon: Wifi, label: 'WiFi' },
-      { icon: Car, label: 'Parking' },
-      { icon: Coffee, label: 'Gym Access' }
-    ],
-    description: 'Premium co-living experience with stunning views and top-tier amenities.',
-    available: false
-  }
-];
+// Get the first 3 rooms for featured display
+const featuredRooms = allRooms.slice(0, 3);
 
 export const FeaturedRooms = () => {
   return (
@@ -68,7 +23,7 @@ export const FeaturedRooms = () => {
           </div>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {rooms.map((room, index) => (
+            {featuredRooms.map((room, index) => (
               <div 
                 key={room.id}
                 className="group bg-card rounded-2xl overflow-hidden shadow-soft hover-lift border border-border/50 animate-fade-up"
@@ -107,7 +62,7 @@ export const FeaturedRooms = () => {
                     </div>
                     <div className="text-right">
                       <div className="text-2xl font-bold text-primary">
-                        {room.price}
+                        ${room.price}
                       </div>
                       <div className="text-sm text-muted-foreground">
                         {room.period}
@@ -119,14 +74,14 @@ export const FeaturedRooms = () => {
                     {room.description}
                   </p>
                   
-                  {/* Amenities */}
-                  <div className="flex items-center space-x-4 mb-6">
-                    {room.amenities.map((amenity, i) => {
+                  {/* Amenities - Show first 6 amenities */}
+                  <div className="flex items-center gap-2 mb-6 overflow-x-auto">
+                    {room.amenities.slice(0, 6).map((amenity, i) => {
                       const Icon = amenity.icon;
                       return (
                         <Tooltip key={i}>
                           <TooltipTrigger asChild>
-                            <div className="flex items-center justify-center w-8 h-8 bg-muted rounded-lg hover:bg-primary/20 transition-smooth cursor-help">
+                            <div className="flex items-center justify-center w-8 h-8 bg-muted rounded-lg hover:bg-primary/20 transition-smooth cursor-help shrink-0">
                               <Icon className="w-4 h-4 text-muted-foreground hover:text-primary transition-smooth" />
                             </div>
                           </TooltipTrigger>
@@ -138,21 +93,25 @@ export const FeaturedRooms = () => {
                     })}
                   </div>
                   
-                  <Button 
-                    className={`w-full ${room.available ? 'btn-primary' : 'btn-secondary opacity-50 cursor-not-allowed'}`}
-                    disabled={!room.available}
-                  >
-                    {room.available ? 'View Details' : 'Notify When Available'}
-                  </Button>
+                  <Link to={`/room/${room.id}`}>
+                    <Button 
+                      className={`w-full ${room.available ? 'btn-primary' : 'btn-secondary opacity-50 cursor-not-allowed'}`}
+                      disabled={!room.available}
+                    >
+                      {room.available ? 'View Details' : 'Notify When Available'}
+                    </Button>
+                  </Link>
                 </div>
               </div>
             ))}
           </div>
           
           <div className="text-center mt-12">
-            <Button variant="outline" size="lg" className="px-8 py-3">
-              View All Rooms
-            </Button>
+            <Link to="/rooms">
+              <Button variant="outline" size="lg" className="px-8 py-3">
+                View All Rooms
+              </Button>
+            </Link>
           </div>
         </div>
       </section>

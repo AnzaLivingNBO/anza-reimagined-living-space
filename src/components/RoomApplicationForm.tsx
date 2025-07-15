@@ -13,15 +13,14 @@ import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
 
-// Room options for the dropdown
-const roomOptions = [
-  { id: '1', name: 'Sunrise Heights, Kileleshwa - Room 1', price: '$450/month' },
-  { id: '2', name: 'Urban Residences, Kileleshwa - Room 2', price: '$525/month' },
-  { id: '3', name: 'Metro Apartments, Kileleshwa - Room 3', price: '$600/month' },
-  { id: '4', name: 'Student Haven, Kileleshwa - Room 4', price: '$400/month' },
-  { id: '5', name: 'Executive Suites, Kileleshwa - Room 5', price: '$750/month' },
-  { id: '6', name: 'Creative Spaces, Kileleshwa - Room 6', price: '$500/month' }
-];
+import { allRooms } from '@/data/rooms';
+
+// Room options for the dropdown - using the actual room data
+const roomOptions = allRooms.map(room => ({
+  id: room.id.toString(),
+  name: room.location,
+  price: `$${room.price}/month`
+}));
 
 // Characteristics options
 const characteristicsOptions = [
