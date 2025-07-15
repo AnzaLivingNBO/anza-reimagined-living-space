@@ -67,7 +67,7 @@ export const useRooms = () => {
           price: Number(room.price),
           period: '/month',
           location: room.flats?.location || '',
-          neighbourhood: room.flats?.neighborhood || '',
+          neighbourhood: room.flats?.location || '',
           image: room.room_images[0]?.image_url || '/placeholder.svg',
           available: room.availability_status === 'available',
           characteristics: room.room_characteristics

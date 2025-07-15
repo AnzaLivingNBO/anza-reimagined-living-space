@@ -15,20 +15,20 @@ import { useRooms } from '@/hooks/useRooms';
 const Rooms = () => {
   const { rooms, loading, error } = useRooms();
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedNeighbourhood, setSelectedNeighbourhood] = useState('all');
+  const [selectedLocation, setSelectedLocation] = useState('all');
   const [priceRange, setPriceRange] = useState('all');
   const [mapboxToken, setMapboxToken] = useState('');
 
   const filteredRooms = rooms.filter(room => {
     const matchesSearch = room.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          room.location.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesNeighbourhood = selectedNeighbourhood === 'all' || room.neighbourhood.toLowerCase().includes(selectedNeighbourhood);
+    const matchesLocation = selectedLocation === 'all' || room.location.toLowerCase().includes(selectedLocation.toLowerCase());
     const matchesPrice = priceRange === 'all' || 
                         (priceRange === 'low' && room.price < 750) ||
                         (priceRange === 'medium' && room.price >= 750 && room.price < 1000) ||
                         (priceRange === 'high' && room.price >= 1000);
     
-    return matchesSearch && matchesNeighbourhood && matchesPrice;
+    return matchesSearch && matchesLocation && matchesPrice;
   });
 
   return (
@@ -72,16 +72,17 @@ const Rooms = () => {
                 <span className="text-sm font-medium">Filters:</span>
               </div>
               
-              <Select value={selectedNeighbourhood} onValueChange={setSelectedNeighbourhood}>
+              <Select value={selectedLocation} onValueChange={setSelectedLocation}>
                 <SelectTrigger className="w-[140px]">
-                  <SelectValue placeholder="Neighbourhood" />
+                  <SelectValue placeholder="Location" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">All Neighbourhoods</SelectItem>
-                  <SelectItem value="kileleshwa">Kileleshwa</SelectItem>
-                  <SelectItem value="lavington">Lavington</SelectItem>
-                  <SelectItem value="parklands">Parklands</SelectItem>
-                  <SelectItem value="westlands">Westlands</SelectItem>
+                  <SelectItem value="all">All Locations</SelectItem>
+                  {[...new Set(rooms.map(room => room.location).filter(Boolean))].map(location => (
+                    <SelectItem key={location} value={location.toLowerCase()}>
+                      {location}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
 
@@ -245,11 +246,11 @@ const Rooms = () => {
                     
                     {/* Map Section */}
                     <div className="w-full lg:w-1/3 h-48 lg:h-full">
-                      <RoomMap 
-                        location={room.location}
-                        neighbourhood={room.neighbourhood}
-                        mapboxToken={mapboxToken}
-                      />
+                          <RoomMap 
+                            location={room.location} 
+                            neighbourhood={room.location}
+                            mapboxToken={mapboxToken}
+                          />
                     </div>
                   </div>
                 </Link>
@@ -271,7 +272,7 @@ const Rooms = () => {
                   variant="outline" 
                   onClick={() => {
                     setSearchTerm('');
-                    setSelectedNeighbourhood('all');
+                    setSelectedLocation('all');
                     setPriceRange('all');
                   }}
                 >
