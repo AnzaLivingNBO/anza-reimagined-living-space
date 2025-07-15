@@ -23,8 +23,7 @@ const allRooms = [
     amenities: [Wifi, Car, Coffee],
     description: 'A beautiful private room in a modern shared apartment with all amenities included.',
     available: true,
-    type: 'Private Room',
-    city: 'Downtown'
+    neighbourhood: 'Kileleshwa'
   },
   {
     id: 2,
@@ -38,8 +37,7 @@ const allRooms = [
     amenities: [Wifi, Coffee],
     description: 'Perfect for young professionals looking for a vibrant community atmosphere.',
     available: true,
-    type: 'Shared Room',
-    city: 'Tech District'
+    neighbourhood: 'Westlands'
   },
   {
     id: 3,
@@ -53,8 +51,7 @@ const allRooms = [
     amenities: [Wifi, Car, Coffee],
     description: 'Premium co-living experience with stunning views and top-tier amenities.',
     available: false,
-    type: 'Studio',
-    city: 'Riverside'
+    neighbourhood: 'Lavington'
   },
   {
     id: 4,
@@ -68,8 +65,7 @@ const allRooms = [
     amenities: [Wifi, Coffee],
     description: 'Perfect for students with dedicated study spaces and social areas.',
     available: true,
-    type: 'Shared Room',
-    city: 'University'
+    neighbourhood: 'Parklands'
   },
   {
     id: 5,
@@ -83,8 +79,7 @@ const allRooms = [
     amenities: [Wifi, Car, Coffee],
     description: 'Premium accommodation for business professionals with executive amenities.',
     available: true,
-    type: 'Private Room',
-    city: 'Business'
+    neighbourhood: 'Westlands'
   },
   {
     id: 6,
@@ -98,28 +93,25 @@ const allRooms = [
     amenities: [Wifi],
     description: 'Inspiring space for creative professionals with dedicated studio areas.',
     available: true,
-    type: 'Studio',
-    city: 'Creative'
+    neighbourhood: 'Kileleshwa'
   }
 ];
 
 const Rooms = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedCity, setSelectedCity] = useState('all');
-  const [selectedType, setSelectedType] = useState('all');
+  const [selectedNeighbourhood, setSelectedNeighbourhood] = useState('all');
   const [priceRange, setPriceRange] = useState('all');
 
   const filteredRooms = allRooms.filter(room => {
     const matchesSearch = room.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          room.location.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCity = selectedCity === 'all' || room.city.toLowerCase().includes(selectedCity);
-    const matchesType = selectedType === 'all' || room.type === selectedType;
+    const matchesNeighbourhood = selectedNeighbourhood === 'all' || room.neighbourhood.toLowerCase().includes(selectedNeighbourhood);
     const matchesPrice = priceRange === 'all' || 
                         (priceRange === 'low' && room.price < 750) ||
                         (priceRange === 'medium' && room.price >= 750 && room.price < 1000) ||
                         (priceRange === 'high' && room.price >= 1000);
     
-    return matchesSearch && matchesCity && matchesType && matchesPrice;
+    return matchesSearch && matchesNeighbourhood && matchesPrice;
   });
 
   return (
@@ -163,30 +155,16 @@ const Rooms = () => {
                 <span className="text-sm font-medium">Filters:</span>
               </div>
               
-              <Select value={selectedCity} onValueChange={setSelectedCity}>
+              <Select value={selectedNeighbourhood} onValueChange={setSelectedNeighbourhood}>
                 <SelectTrigger className="w-[140px]">
-                  <SelectValue placeholder="City" />
+                  <SelectValue placeholder="Neighbourhood" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">All Cities</SelectItem>
-                  <SelectItem value="downtown">Downtown</SelectItem>
-                  <SelectItem value="tech">Tech District</SelectItem>
-                  <SelectItem value="riverside">Riverside</SelectItem>
-                  <SelectItem value="university">University</SelectItem>
-                  <SelectItem value="business">Business</SelectItem>
-                  <SelectItem value="creative">Creative</SelectItem>
-                </SelectContent>
-              </Select>
-
-              <Select value={selectedType} onValueChange={setSelectedType}>
-                <SelectTrigger className="w-[140px]">
-                  <SelectValue placeholder="Room Type" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All Types</SelectItem>
-                  <SelectItem value="Private Room">Private Room</SelectItem>
-                  <SelectItem value="Shared Room">Shared Room</SelectItem>
-                  <SelectItem value="Studio">Studio</SelectItem>
+                  <SelectItem value="all">All Neighbourhoods</SelectItem>
+                  <SelectItem value="kileleshwa">Kileleshwa</SelectItem>
+                  <SelectItem value="lavington">Lavington</SelectItem>
+                  <SelectItem value="parklands">Parklands</SelectItem>
+                  <SelectItem value="westlands">Westlands</SelectItem>
                 </SelectContent>
               </Select>
 
@@ -239,7 +217,7 @@ const Rooms = () => {
                       {room.available ? 'Available' : 'Coming Soon'}
                     </Badge>
                     <Badge variant="outline">
-                      {room.type}
+                      {room.neighbourhood}
                     </Badge>
                   </div>
                   <div className="absolute top-4 right-4 bg-background/90 backdrop-blur-sm rounded-lg px-2 py-1 flex items-center space-x-1">
@@ -321,8 +299,7 @@ const Rooms = () => {
                 variant="outline" 
                 onClick={() => {
                   setSearchTerm('');
-                  setSelectedCity('all');
-                  setSelectedType('all');
+                  setSelectedNeighbourhood('all');
                   setPriceRange('all');
                 }}
               >
