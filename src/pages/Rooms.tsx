@@ -147,7 +147,7 @@ const Rooms = () => {
                 >
                   <div className="flex flex-col lg:flex-row h-auto lg:h-80">
                     {/* Image Section */}
-                    <div className="relative w-full lg:w-1/3 h-64 lg:h-full overflow-hidden">
+                    <div className="relative w-full lg:w-1/2 h-64 lg:h-full overflow-hidden">
                       <img 
                         src={room.image} 
                         alt={room.title}
