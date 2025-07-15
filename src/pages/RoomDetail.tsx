@@ -20,8 +20,6 @@ import {
   Clock,
   Phone,
   MessageSquare,
-  Heart,
-  Share2,
   ChevronRight,
   ChevronLeft as PrevIcon
 } from 'lucide-react';
@@ -100,7 +98,6 @@ const RoomDetail = () => {
   const { id } = useParams();
   const { toast } = useToast();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [isLiked, setIsLiked] = useState(false);
   
   const room = allRooms.find(r => r.id === parseInt(id || ''));
 
@@ -117,29 +114,6 @@ const RoomDetail = () => {
     );
   }
 
-  const handleShare = () => {
-    if (navigator.share) {
-      navigator.share({
-        title: room.title,
-        text: room.description,
-        url: window.location.href,
-      });
-    } else {
-      navigator.clipboard.writeText(window.location.href);
-      toast({
-        title: "Link copied!",
-        description: "Room link has been copied to your clipboard.",
-      });
-    }
-  };
-
-  const handleLike = () => {
-    setIsLiked(!isLiked);
-    toast({
-      title: isLiked ? "Removed from favorites" : "Added to favorites",
-      description: isLiked ? "Room removed from your favorites." : "Room added to your favorites.",
-    });
-  };
 
   const nextImage = () => {
     setCurrentImageIndex((prev) => (prev + 1) % room.images.length);
@@ -348,33 +322,13 @@ const RoomDetail = () => {
 
                     <div className="space-y-3">
                       <Button className="w-full btn-primary" size="lg">
-                        <Calendar className="w-4 h-4 mr-2" />
-                        Book Viewing
+                        <Home className="w-4 h-4 mr-2" />
+                        Start Room Application
                       </Button>
                       <Button variant="outline" className="w-full" size="lg">
                         <MessageSquare className="w-4 h-4 mr-2" />
-                        Ask Questions
+                        Ask Questions About Room
                       </Button>
-                      <div className="flex gap-2">
-                        <Button 
-                          variant="outline" 
-                          size="sm" 
-                          className="flex-1"
-                          onClick={handleLike}
-                        >
-                          <Heart className={`w-4 h-4 mr-2 ${isLiked ? 'fill-red-500 text-red-500' : ''}`} />
-                          {isLiked ? 'Liked' : 'Like'}
-                        </Button>
-                        <Button 
-                          variant="outline" 
-                          size="sm" 
-                          className="flex-1"
-                          onClick={handleShare}
-                        >
-                          <Share2 className="w-4 h-4 mr-2" />
-                          Share
-                        </Button>
-                      </div>
                     </div>
                   </CardContent>
                 </Card>

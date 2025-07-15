@@ -239,9 +239,10 @@ const Rooms = () => {
             
             <div className="space-y-8">
               {filteredRooms.map((room, index) => (
-                <div 
-                  key={room.id}
-                  className="group bg-card rounded-2xl overflow-hidden shadow-soft hover-lift border border-border/50 animate-fade-up"
+                <Link 
+                  key={room.id} 
+                  to={`/rooms/${room.id}`}
+                  className="block group bg-card rounded-2xl overflow-hidden shadow-soft hover-lift border border-border/50 animate-fade-up transition-smooth"
                   style={{
                     animationDelay: `${index * 0.1}s`
                   }}
@@ -335,7 +336,7 @@ const Rooms = () => {
                       />
                     </div>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
             
