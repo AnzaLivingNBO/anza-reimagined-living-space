@@ -17,7 +17,7 @@ const allRooms = [
   {
     id: 1,
     title: 'Cozy Private Room',
-    location: 'Kileleshwa Central',
+    location: 'Sunrise Heights',
     price: 850,
     period: '/month',
     image: room1,
@@ -37,7 +37,7 @@ const allRooms = [
   {
     id: 2,
     title: 'Modern Shared Space',
-    location: 'Kileleshwa North',
+    location: 'Urban Residences',
     price: 720,
     period: '/month',
     image: room2,
@@ -57,7 +57,7 @@ const allRooms = [
   {
     id: 3,
     title: 'Luxury Co-Living',
-    location: 'Kileleshwa Heights',
+    location: 'Luxury Gardens',
     price: 950,
     period: '/month',
     image: room3,
@@ -77,7 +77,7 @@ const allRooms = [
   {
     id: 4,
     title: 'Student Haven',
-    location: 'Kileleshwa South',
+    location: 'Scholar Suites',
     price: 650,
     period: '/month',
     image: room1,
@@ -97,7 +97,7 @@ const allRooms = [
   {
     id: 5,
     title: 'Executive Suite',
-    location: 'Kileleshwa Commercial',
+    location: 'Executive Plaza',
     price: 1200,
     period: '/month',
     image: room2,
@@ -117,7 +117,7 @@ const allRooms = [
   {
     id: 6,
     title: 'Artist Loft',
-    location: 'Kileleshwa Creative',
+    location: 'Creative Studios',
     price: 800,
     period: '/month',
     image: room3,
