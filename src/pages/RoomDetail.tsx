@@ -382,6 +382,75 @@ const RoomDetail = () => {
 
               </div>
             </div>
+
+            {/* About the Flat & Images Section */}
+            <div className="grid lg:grid-cols-2 gap-8 mt-16 pt-16 border-t border-border">
+              
+              {/* Left Column - About the Flat */}
+              <div className="space-y-6">
+                <div>
+                  <h2 className="text-3xl font-bold mb-6">About the Flat</h2>
+                  <div className="space-y-4 text-muted-foreground leading-relaxed">
+                    <p>
+                      This beautiful apartment complex offers modern living with premium amenities in one of Nairobi's most desirable neighborhoods. 
+                      The building features contemporary architecture with thoughtfully designed spaces that promote both comfort and community.
+                    </p>
+                    <p>
+                      Located in a secure compound with 24/7 security, residents enjoy peace of mind along with access to exceptional facilities 
+                      including a swimming pool, fully equipped gym, and a stunning rooftop terrace with panoramic city views.
+                    </p>
+                    <p>
+                      The strategic location provides easy access to major business districts, shopping centers, restaurants, and public transportation. 
+                      UN approved status ensures international standards of safety and quality throughout the property.
+                    </p>
+                    <p>
+                      Each unit comes fully furnished with modern appliances and fixtures, offering a hassle-free move-in experience. 
+                      Professional cleaning and housekeeping services maintain the highest standards of cleanliness and comfort.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Right Column - Images */}
+              <div className="space-y-4">
+                <h3 className="text-xl font-bold mb-4">Property Gallery</h3>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-4">
+                    <div className="aspect-square rounded-lg overflow-hidden">
+                      <img 
+                        src="https://images.unsplash.com/photo-1721322800607-8c38375eef04" 
+                        alt="Living area"
+                        className="w-full h-full object-cover hover:scale-110 transition-smooth"
+                      />
+                    </div>
+                    <div className="aspect-square rounded-lg overflow-hidden">
+                      <img 
+                        src={room2} 
+                        alt="Modern bedroom"
+                        className="w-full h-full object-cover hover:scale-110 transition-smooth"
+                      />
+                    </div>
+                  </div>
+                  <div className="space-y-4">
+                    <div className="aspect-square rounded-lg overflow-hidden">
+                      <img 
+                        src={room3} 
+                        alt="Luxury amenities"
+                        className="w-full h-full object-cover hover:scale-110 transition-smooth"
+                      />
+                    </div>
+                    <div className="aspect-square rounded-lg overflow-hidden">
+                      <img 
+                        src="https://images.unsplash.com/photo-1649972904349-6e44c42644a7" 
+                        alt="Comfortable workspace"
+                        className="w-full h-full object-cover hover:scale-110 transition-smooth"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+            </div>
           </div>
         </section>
 
