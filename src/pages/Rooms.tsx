@@ -17,7 +17,7 @@ const allRooms = [
   {
     id: 1,
     title: 'Cozy Private Room',
-    location: 'Central Downtown',
+    location: 'Kileleshwa Central',
     price: 850,
     period: '/month',
     image: room1,
@@ -34,7 +34,7 @@ const allRooms = [
   {
     id: 2,
     title: 'Modern Shared Space',
-    location: 'Tech District',
+    location: 'Kileleshwa North',
     price: 720,
     period: '/month',
     image: room2,
@@ -45,12 +45,12 @@ const allRooms = [
     ],
     description: 'Perfect for young professionals looking for a vibrant community atmosphere.',
     available: true,
-    neighbourhood: 'Westlands'
+    neighbourhood: 'Kileleshwa'
   },
   {
     id: 3,
     title: 'Luxury Co-Living',
-    location: 'Riverside',
+    location: 'Kileleshwa Heights',
     price: 950,
     period: '/month',
     image: room3,
@@ -62,12 +62,12 @@ const allRooms = [
     ],
     description: 'Premium co-living experience with stunning views and top-tier amenities.',
     available: false,
-    neighbourhood: 'Lavington'
+    neighbourhood: 'Kileleshwa'
   },
   {
     id: 4,
     title: 'Student Haven',
-    location: 'University District',
+    location: 'Kileleshwa South',
     price: 650,
     period: '/month',
     image: room1,
@@ -78,12 +78,12 @@ const allRooms = [
     ],
     description: 'Perfect for students with dedicated study spaces and social areas.',
     available: true,
-    neighbourhood: 'Parklands'
+    neighbourhood: 'Kileleshwa'
   },
   {
     id: 5,
     title: 'Executive Suite',
-    location: 'Business District',
+    location: 'Kileleshwa Commercial',
     price: 1200,
     period: '/month',
     image: room2,
@@ -95,12 +95,12 @@ const allRooms = [
     ],
     description: 'Premium accommodation for business professionals with executive amenities.',
     available: true,
-    neighbourhood: 'Westlands'
+    neighbourhood: 'Kileleshwa'
   },
   {
     id: 6,
     title: 'Artist Loft',
-    location: 'Creative Quarter',
+    location: 'Kileleshwa Creative',
     price: 800,
     period: '/month',
     image: room3,
@@ -247,9 +247,9 @@ const Rooms = () => {
                     animationDelay: `${index * 0.1}s`
                   }}
                 >
-                  <div className="flex h-80">
+                  <div className="flex flex-col lg:flex-row h-auto lg:h-80">
                     {/* Image Section */}
-                    <div className="relative w-1/3 h-full overflow-hidden">
+                    <div className="relative w-full lg:w-1/3 h-64 lg:h-full overflow-hidden">
                       <img 
                         src={room.image} 
                         alt={room.title}
@@ -266,20 +266,20 @@ const Rooms = () => {
                     </div>
                     
                     {/* Content Section */}
-                    <div className="flex-1 p-6 flex flex-col justify-between">
+                    <div className="flex-1 p-4 lg:p-6 flex flex-col justify-between">
                       <div>
-                        <div className="flex items-start justify-between mb-4">
-                          <div className="flex-1">
-                            <h3 className="text-2xl font-bold mb-2 text-card-foreground">
+                        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-4">
+                          <div className="flex-1 mb-3 sm:mb-0">
+                            <h3 className="text-xl lg:text-2xl font-bold mb-2 text-card-foreground">
                               {room.title}
                             </h3>
                             <div className="flex items-center text-muted-foreground mb-3">
-                              <MapPin className="w-4 h-4 mr-2" />
+                              <MapPin className="w-4 h-4 mr-2 flex-shrink-0" />
                               <span className="text-sm">{room.location} • {room.neighbourhood}</span>
                             </div>
                           </div>
-                          <div className="text-right ml-4">
-                            <div className="text-3xl font-bold text-primary">
+                          <div className="text-left sm:text-right sm:ml-4">
+                            <div className="text-2xl lg:text-3xl font-bold text-primary">
                               ${room.price}
                             </div>
                             <div className="text-sm text-muted-foreground">
@@ -288,19 +288,19 @@ const Rooms = () => {
                           </div>
                         </div>
                         
-                        <p className="text-muted-foreground mb-6 leading-relaxed">
+                        <p className="text-muted-foreground mb-4 lg:mb-6 leading-relaxed text-sm lg:text-base">
                           {room.description}
                         </p>
                         
                         {/* Amenities */}
-                        <div className="flex items-center space-x-4 mb-6">
+                        <div className="flex items-center flex-wrap gap-2 lg:gap-4 mb-4 lg:mb-6">
                           {room.amenities.map((amenity, i) => {
                             const Icon = amenity.icon;
                             return (
                               <Tooltip key={i}>
                                 <TooltipTrigger asChild>
-                                  <div className="flex items-center justify-center w-10 h-10 bg-muted rounded-lg hover:bg-primary/20 transition-smooth cursor-help">
-                                    <Icon className="w-5 h-5 text-muted-foreground hover:text-primary transition-smooth" />
+                                  <div className="flex items-center justify-center w-8 h-8 lg:w-10 lg:h-10 bg-muted rounded-lg hover:bg-primary/20 transition-smooth cursor-help">
+                                    <Icon className="w-4 h-4 lg:w-5 lg:h-5 text-muted-foreground hover:text-primary transition-smooth" />
                                   </div>
                                 </TooltipTrigger>
                                 <TooltipContent>
@@ -315,12 +315,12 @@ const Rooms = () => {
                       <div className="flex items-end justify-between">
                         {room.available ? (
                           <Link to={`/rooms/${room.id}`}>
-                            <Button className="btn-primary">
+                            <Button className="btn-primary" size="sm">
                               View Details
                             </Button>
                           </Link>
                         ) : (
-                          <Button className="btn-secondary opacity-50 cursor-not-allowed" disabled>
+                          <Button className="btn-secondary opacity-50 cursor-not-allowed" disabled size="sm">
                             Notify When Available
                           </Button>
                         )}
@@ -328,7 +328,7 @@ const Rooms = () => {
                     </div>
                     
                     {/* Map Section */}
-                    <div className="w-1/3 h-full">
+                    <div className="w-full lg:w-1/3 h-48 lg:h-full">
                       <RoomMap 
                         location={room.location}
                         neighbourhood={room.neighbourhood}
