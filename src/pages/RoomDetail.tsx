@@ -5,23 +5,23 @@ import { Footer } from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { RoomMap } from '@/components/RoomMap';
+import { Input } from '@/components/ui/input';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { 
   MapPin, 
   Wifi, 
   Car, 
   Coffee, 
   ChevronLeft, 
-  Calendar,
   Users,
   Home,
-  Shield,
   Clock,
   Phone,
   MessageSquare,
   ChevronRight,
-  ChevronLeft as PrevIcon
+  ChevronLeft as PrevIcon,
+  AlertCircle
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import room1 from '@/assets/room-1.jpg';
@@ -98,6 +98,7 @@ const RoomDetail = () => {
   const { id } = useParams();
   const { toast } = useToast();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [mapboxToken, setMapboxToken] = useState('');
   
   const room = allRooms.find(r => r.id === parseInt(id || ''));
 
@@ -128,8 +129,33 @@ const RoomDetail = () => {
       <div className="min-h-screen">
         <Header />
         
+        {/* Mapbox Token Input */}
+        {!mapboxToken && (
+          <section className="py-4 bg-yellow-50 border-b border-yellow-200">
+            <div className="container mx-auto px-4">
+              <div className="flex items-center gap-4 max-w-2xl mx-auto">
+                <AlertCircle className="w-5 h-5 text-yellow-600 flex-shrink-0" />
+                <div className="flex-1">
+                  <p className="text-sm text-yellow-700 mb-2">
+                    To enable interactive maps, please enter your Mapbox public token. Get it from{' '}
+                    <a href="https://mapbox.com/" target="_blank" rel="noopener noreferrer" className="underline">
+                      mapbox.com
+                    </a>
+                  </p>
+                  <Input
+                    placeholder="Enter your Mapbox public token (pk.xxx...)"
+                    value={mapboxToken}
+                    onChange={(e) => setMapboxToken(e.target.value)}
+                    className="text-sm"
+                  />
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
+
         {/* Breadcrumb */}
-        <section className="pt-24 pb-4 bg-muted/30">
+        <section className="pt-6 pb-4 bg-muted/30">
           <div className="container mx-auto px-4">
             <div className="flex items-center space-x-2 text-sm text-muted-foreground">
               <Link to="/" className="hover:text-primary transition-smooth">Home</Link>
@@ -236,16 +262,41 @@ const RoomDetail = () => {
                     {room.longDescription}
                   </p>
 
-                  {/* Key Features */}
-                  <div>
-                    <h3 className="text-xl font-bold mb-4">What's Included</h3>
-                    <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                      {room.included.map((item, index) => (
-                        <div key={index} className="flex items-center gap-2 text-sm">
-                          <div className="w-2 h-2 bg-primary rounded-full"></div>
-                          <span>{item}</span>
+                  {/* Location & What's Included Section */}
+                  <div className="grid md:grid-cols-2 gap-8">
+                    {/* What's Included */}
+                    <div>
+                      <h3 className="text-xl font-bold mb-4">What's Included</h3>
+                      <div className="grid grid-cols-1 gap-3">
+                        {room.included.map((item, index) => (
+                          <div key={index} className="flex items-center gap-2 text-sm">
+                            <div className="w-2 h-2 bg-primary rounded-full"></div>
+                            <span>{item}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Location Map */}
+                    <div>
+                      <h3 className="text-xl font-bold mb-4">Location</h3>
+                      <div className="space-y-4">
+                        <div className="h-48 rounded-lg overflow-hidden border border-border">
+                          <RoomMap 
+                            location={room.location}
+                            neighbourhood={room.neighbourhood}
+                            mapboxToken={mapboxToken}
+                          />
                         </div>
-                      ))}
+                        <p className="text-sm text-muted-foreground">
+                          📍 {room.location}, {room.neighbourhood}
+                        </p>
+                        {!mapboxToken && (
+                          <div className="text-xs text-muted-foreground bg-muted p-2 rounded">
+                            Add Mapbox token to enable interactive map
+                          </div>
+                        )}
+                      </div>
                     </div>
                   </div>
 
@@ -333,23 +384,6 @@ const RoomDetail = () => {
                   </CardContent>
                 </Card>
 
-                {/* Location Map */}
-                <Card>
-                  <CardContent className="p-0">
-                    <div className="h-64">
-                      <RoomMap 
-                        location={room.location}
-                        neighbourhood={room.neighbourhood}
-                      />
-                    </div>
-                    <div className="p-4">
-                      <h3 className="font-bold mb-2">Location</h3>
-                      <p className="text-sm text-muted-foreground">
-                        {room.location}, {room.neighbourhood}
-                      </p>
-                    </div>
-                  </CardContent>
-                </Card>
 
                 {/* Contact Card */}
                 <Card>
