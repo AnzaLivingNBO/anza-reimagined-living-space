@@ -8,7 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { RoomMap } from '@/components/RoomMap';
-import { MapPin, Car, Coffee, Search, Filter, AlertCircle, Waves, Dumbbell, Shield, Building, Sunrise, Users } from 'lucide-react';
+import { MapPin, Car, Coffee, Search, Filter, AlertCircle, Waves, Dumbbell, Shield, Building, Sunrise, Users, Zap, Droplets, Wifi, Receipt, Sparkles } from 'lucide-react';
 import room1 from '@/assets/room-1.jpg';
 import room2 from '@/assets/room-2.jpg';
 import room3 from '@/assets/room-3.jpg';
@@ -28,7 +28,13 @@ const allRooms = [
       { icon: Car, label: 'Parking' },
       { icon: Shield, label: 'UN Approved' },
       { icon: Building, label: 'Balcony' },
-      { icon: Sunrise, label: 'Compound Roof Terrace' }
+      { icon: Sunrise, label: 'Compound Roof Terrace' },
+      { icon: Zap, label: 'Electricity' },
+      { icon: Droplets, label: 'Water' },
+      { icon: Shield, label: '24/7 Security' },
+      { icon: Receipt, label: 'Service Charge' },
+      { icon: Sparkles, label: 'Cleaning and Housekeeping' },
+      { icon: Wifi, label: 'WiFi' }
     ],
     description: 'A beautiful private room in a modern shared apartment with all amenities included.',
     available: true,
@@ -48,7 +54,13 @@ const allRooms = [
       { icon: Car, label: 'Parking' },
       { icon: Shield, label: 'UN Approved' },
       { icon: Building, label: 'Balcony' },
-      { icon: Sunrise, label: 'Compound Roof Terrace' }
+      { icon: Sunrise, label: 'Compound Roof Terrace' },
+      { icon: Zap, label: 'Electricity' },
+      { icon: Droplets, label: 'Water' },
+      { icon: Shield, label: '24/7 Security' },
+      { icon: Receipt, label: 'Service Charge' },
+      { icon: Sparkles, label: 'Cleaning and Housekeeping' },
+      { icon: Wifi, label: 'WiFi' }
     ],
     description: 'Perfect for young professionals looking for a vibrant community atmosphere.',
     available: true,
@@ -68,7 +80,13 @@ const allRooms = [
       { icon: Car, label: 'Parking' },
       { icon: Shield, label: 'UN Approved' },
       { icon: Building, label: 'Balcony' },
-      { icon: Sunrise, label: 'Compound Roof Terrace' }
+      { icon: Sunrise, label: 'Compound Roof Terrace' },
+      { icon: Zap, label: 'Electricity' },
+      { icon: Droplets, label: 'Water' },
+      { icon: Shield, label: '24/7 Security' },
+      { icon: Receipt, label: 'Service Charge' },
+      { icon: Sparkles, label: 'Cleaning and Housekeeping' },
+      { icon: Wifi, label: 'WiFi' }
     ],
     description: 'Premium co-living experience with stunning views and top-tier amenities.',
     available: false,
@@ -88,7 +106,13 @@ const allRooms = [
       { icon: Car, label: 'Parking' },
       { icon: Shield, label: 'UN Approved' },
       { icon: Building, label: 'Balcony' },
-      { icon: Sunrise, label: 'Compound Roof Terrace' }
+      { icon: Sunrise, label: 'Compound Roof Terrace' },
+      { icon: Zap, label: 'Electricity' },
+      { icon: Droplets, label: 'Water' },
+      { icon: Shield, label: '24/7 Security' },
+      { icon: Receipt, label: 'Service Charge' },
+      { icon: Sparkles, label: 'Cleaning and Housekeeping' },
+      { icon: Wifi, label: 'WiFi' }
     ],
     description: 'Perfect for students with dedicated study spaces and social areas.',
     available: true,
@@ -108,7 +132,13 @@ const allRooms = [
       { icon: Car, label: 'Parking' },
       { icon: Shield, label: 'UN Approved' },
       { icon: Building, label: 'Balcony' },
-      { icon: Sunrise, label: 'Compound Roof Terrace' }
+      { icon: Sunrise, label: 'Compound Roof Terrace' },
+      { icon: Zap, label: 'Electricity' },
+      { icon: Droplets, label: 'Water' },
+      { icon: Shield, label: '24/7 Security' },
+      { icon: Receipt, label: 'Service Charge' },
+      { icon: Sparkles, label: 'Cleaning and Housekeeping' },
+      { icon: Wifi, label: 'WiFi' }
     ],
     description: 'Premium accommodation for business professionals with executive amenities.',
     available: true,
@@ -128,7 +158,13 @@ const allRooms = [
       { icon: Car, label: 'Parking' },
       { icon: Shield, label: 'UN Approved' },
       { icon: Building, label: 'Balcony' },
-      { icon: Sunrise, label: 'Compound Roof Terrace' }
+      { icon: Sunrise, label: 'Compound Roof Terrace' },
+      { icon: Zap, label: 'Electricity' },
+      { icon: Droplets, label: 'Water' },
+      { icon: Shield, label: '24/7 Security' },
+      { icon: Receipt, label: 'Service Charge' },
+      { icon: Sparkles, label: 'Cleaning and Housekeeping' },
+      { icon: Wifi, label: 'WiFi' }
     ],
     description: 'Inspiring space for creative professionals with dedicated studio areas.',
     available: true,
