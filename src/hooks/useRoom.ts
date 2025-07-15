@@ -62,7 +62,7 @@ export const useRoom = (id: string) => {
         const roomData = data as RoomWithFullDetails;
         
         const transformedRoom: RoomDetail = {
-          id: parseInt(roomData.id),
+          id: roomData.id,
           title: roomData.title,
           description: roomData.description || '',
           price: Number(roomData.price),

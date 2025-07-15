@@ -12,7 +12,7 @@ type RoomWithDetails = Tables<'rooms'> & {
 };
 
 export type Room = {
-  id: number;
+  id: string;
   title: string;
   description: string;
   price: number;
@@ -61,7 +61,7 @@ export const useRooms = () => {
         }
 
         const transformedRooms: Room[] = (data as RoomWithDetails[]).map((room) => ({
-          id: parseInt(room.id),
+          id: room.id,
           title: room.title,
           description: room.description || '',
           price: Number(room.price),
