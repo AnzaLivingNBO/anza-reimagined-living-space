@@ -245,9 +245,9 @@ const Rooms = () => {
                     animationDelay: `${index * 0.1}s`
                   }}
                 >
-                  <div className="flex flex-col lg:flex-row h-auto lg:h-80">
+                  <div className="flex h-80">
                     {/* Image Section */}
-                    <div className="relative lg:w-80 h-64 lg:h-full overflow-hidden">
+                    <div className="relative w-1/3 h-full overflow-hidden">
                       <img 
                         src={room.image} 
                         alt={room.title}
@@ -321,7 +321,7 @@ const Rooms = () => {
                     </div>
                     
                     {/* Map Section */}
-                    <div className="lg:w-80 h-64 lg:h-full">
+                    <div className="w-1/3 h-full">
                       <RoomMap 
                         location={room.location}
                         neighbourhood={room.neighbourhood}
