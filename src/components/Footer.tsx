@@ -10,9 +10,11 @@ export const Footer = () => {
           {/* Brand */}
           <div className="lg:col-span-2">
             <Link to="/" className="flex items-center space-x-2 mb-4">
-              <div className="w-12 h-12 bg-gradient-to-br from-primary to-primary-glow rounded-xl flex items-center justify-center">
-                <span className="text-primary-foreground font-bold text-xl">A</span>
-              </div>
+              <img 
+                src="/lovable-uploads/ca558e70-1c78-43e1-901c-87c0aa75d21f.png" 
+                alt="Anza Living Logo" 
+                className="w-12 h-12 object-contain"
+              />
             </Link>
             <p className="text-background/80 max-w-md mb-6 leading-relaxed">
               Creating vibrant co-living communities where comfort meets convenience. 
