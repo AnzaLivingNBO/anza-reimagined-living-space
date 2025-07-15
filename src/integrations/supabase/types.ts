@@ -14,7 +14,150 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      flat_gallery_images: {
+        Row: {
+          alt_text: string | null
+          created_at: string
+          display_order: number | null
+          flat_id: string
+          id: string
+          image_url: string
+        }
+        Insert: {
+          alt_text?: string | null
+          created_at?: string
+          display_order?: number | null
+          flat_id: string
+          id?: string
+          image_url: string
+        }
+        Update: {
+          alt_text?: string | null
+          created_at?: string
+          display_order?: number | null
+          flat_id?: string
+          id?: string
+          image_url?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "flat_gallery_images_flat_id_fkey"
+            columns: ["flat_id"]
+            isOneToOne: false
+            referencedRelation: "flats"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      flats: {
+        Row: {
+          about_description: string
+          created_at: string
+          id: string
+          location: string
+          name: string
+          neighborhood: string | null
+          updated_at: string
+        }
+        Insert: {
+          about_description: string
+          created_at?: string
+          id?: string
+          location: string
+          name: string
+          neighborhood?: string | null
+          updated_at?: string
+        }
+        Update: {
+          about_description?: string
+          created_at?: string
+          id?: string
+          location?: string
+          name?: string
+          neighborhood?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      room_images: {
+        Row: {
+          alt_text: string | null
+          created_at: string
+          display_order: number | null
+          id: string
+          image_url: string
+          room_id: string
+        }
+        Insert: {
+          alt_text?: string | null
+          created_at?: string
+          display_order?: number | null
+          id?: string
+          image_url: string
+          room_id: string
+        }
+        Update: {
+          alt_text?: string | null
+          created_at?: string
+          display_order?: number | null
+          id?: string
+          image_url?: string
+          room_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "room_images_room_id_fkey"
+            columns: ["room_id"]
+            isOneToOne: false
+            referencedRelation: "rooms"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      rooms: {
+        Row: {
+          amenities: string[] | null
+          availability_status: string
+          created_at: string
+          description: string | null
+          flat_id: string
+          id: string
+          price: number
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          amenities?: string[] | null
+          availability_status?: string
+          created_at?: string
+          description?: string | null
+          flat_id: string
+          id?: string
+          price: number
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          amenities?: string[] | null
+          availability_status?: string
+          created_at?: string
+          description?: string | null
+          flat_id?: string
+          id?: string
+          price?: number
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "rooms_flat_id_fkey"
+            columns: ["flat_id"]
+            isOneToOne: false
+            referencedRelation: "flats"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
