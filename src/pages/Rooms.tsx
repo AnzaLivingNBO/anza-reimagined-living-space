@@ -8,7 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { RoomMap } from '@/components/RoomMap';
-import { MapPin, Wifi, Car, Coffee, Search, Filter, AlertCircle } from 'lucide-react';
+import { MapPin, Car, Coffee, Search, Filter, AlertCircle, Waves, Dumbbell, Shield, Building, Sunrise, Users } from 'lucide-react';
 import room1 from '@/assets/room-1.jpg';
 import room2 from '@/assets/room-2.jpg';
 import room3 from '@/assets/room-3.jpg';
@@ -23,9 +23,12 @@ const allRooms = [
     image: room1,
     features: ['WiFi', 'Parking', 'Kitchen Access', 'Laundry'],
     amenities: [
-      { icon: Wifi, label: 'WiFi' },
+      { icon: Waves, label: 'Compound Pool' },
+      { icon: Dumbbell, label: 'Compound Gym' },
       { icon: Car, label: 'Parking' },
-      { icon: Coffee, label: 'Kitchen Access' }
+      { icon: Shield, label: 'UN Approved' },
+      { icon: Building, label: 'Balcony' },
+      { icon: Sunrise, label: 'Compound Roof Terrace' }
     ],
     description: 'A beautiful private room in a modern shared apartment with all amenities included.',
     available: true,
@@ -40,8 +43,12 @@ const allRooms = [
     image: room2,
     features: ['WiFi', 'Shared Kitchen', 'Lounge Area', 'Study Room'],
     amenities: [
-      { icon: Wifi, label: 'WiFi' },
-      { icon: Coffee, label: 'Shared Kitchen' }
+      { icon: Waves, label: 'Compound Pool' },
+      { icon: Dumbbell, label: 'Compound Gym' },
+      { icon: Car, label: 'Parking' },
+      { icon: Shield, label: 'UN Approved' },
+      { icon: Building, label: 'Balcony' },
+      { icon: Sunrise, label: 'Compound Roof Terrace' }
     ],
     description: 'Perfect for young professionals looking for a vibrant community atmosphere.',
     available: true,
@@ -56,9 +63,12 @@ const allRooms = [
     image: room3,
     features: ['WiFi', 'Parking', 'Gym Access', 'Rooftop', 'Concierge'],
     amenities: [
-      { icon: Wifi, label: 'WiFi' },
+      { icon: Waves, label: 'Compound Pool' },
+      { icon: Dumbbell, label: 'Compound Gym' },
       { icon: Car, label: 'Parking' },
-      { icon: Coffee, label: 'Gym Access' }
+      { icon: Shield, label: 'UN Approved' },
+      { icon: Building, label: 'Balcony' },
+      { icon: Sunrise, label: 'Compound Roof Terrace' }
     ],
     description: 'Premium co-living experience with stunning views and top-tier amenities.',
     available: false,
@@ -73,8 +83,12 @@ const allRooms = [
     image: room1,
     features: ['WiFi', 'Study Areas', 'Library Access', 'Events'],
     amenities: [
-      { icon: Wifi, label: 'WiFi' },
-      { icon: Coffee, label: 'Study Areas' }
+      { icon: Waves, label: 'Compound Pool' },
+      { icon: Dumbbell, label: 'Compound Gym' },
+      { icon: Car, label: 'Parking' },
+      { icon: Shield, label: 'UN Approved' },
+      { icon: Building, label: 'Balcony' },
+      { icon: Sunrise, label: 'Compound Roof Terrace' }
     ],
     description: 'Perfect for students with dedicated study spaces and social areas.',
     available: true,
@@ -89,9 +103,12 @@ const allRooms = [
     image: room2,
     features: ['WiFi', 'Parking', 'Office Space', 'Cleaning Service'],
     amenities: [
-      { icon: Wifi, label: 'WiFi' },
+      { icon: Waves, label: 'Compound Pool' },
+      { icon: Dumbbell, label: 'Compound Gym' },
       { icon: Car, label: 'Parking' },
-      { icon: Coffee, label: 'Office Space' }
+      { icon: Shield, label: 'UN Approved' },
+      { icon: Building, label: 'Balcony' },
+      { icon: Sunrise, label: 'Compound Roof Terrace' }
     ],
     description: 'Premium accommodation for business professionals with executive amenities.',
     available: true,
@@ -106,7 +123,12 @@ const allRooms = [
     image: room3,
     features: ['WiFi', 'Art Studio', 'Workshop Access', 'Gallery Space'],
     amenities: [
-      { icon: Wifi, label: 'WiFi' }
+      { icon: Waves, label: 'Compound Pool' },
+      { icon: Dumbbell, label: 'Compound Gym' },
+      { icon: Car, label: 'Parking' },
+      { icon: Shield, label: 'UN Approved' },
+      { icon: Building, label: 'Balcony' },
+      { icon: Sunrise, label: 'Compound Roof Terrace' }
     ],
     description: 'Inspiring space for creative professionals with dedicated studio areas.',
     available: true,
@@ -293,22 +315,24 @@ const Rooms = () => {
                         </p>
                         
                         {/* Amenities */}
-                        <div className="flex items-center flex-wrap gap-2 lg:gap-4 mb-4 lg:mb-6">
-                          {room.amenities.map((amenity, i) => {
-                            const Icon = amenity.icon;
-                            return (
-                              <Tooltip key={i}>
-                                <TooltipTrigger asChild>
-                                  <div className="flex items-center justify-center w-8 h-8 lg:w-10 lg:h-10 bg-muted rounded-lg hover:bg-primary/20 transition-smooth cursor-help">
-                                    <Icon className="w-4 h-4 lg:w-5 lg:h-5 text-muted-foreground hover:text-primary transition-smooth" />
-                                  </div>
-                                </TooltipTrigger>
-                                <TooltipContent>
-                                  <p>{amenity.label}</p>
-                                </TooltipContent>
-                              </Tooltip>
-                            );
-                          })}
+                        <div className="overflow-x-auto scrollbar-hide mb-4 lg:mb-6">
+                          <div className="flex items-center gap-2 lg:gap-3 pb-2 min-w-max">
+                            {room.amenities.map((amenity, i) => {
+                              const Icon = amenity.icon;
+                              return (
+                                <Tooltip key={i}>
+                                  <TooltipTrigger asChild>
+                                    <div className="flex items-center justify-center w-8 h-8 lg:w-10 lg:h-10 bg-muted rounded-lg hover:bg-primary/20 transition-smooth cursor-help flex-shrink-0">
+                                      <Icon className="w-4 h-4 lg:w-5 lg:h-5 text-muted-foreground hover:text-primary transition-smooth" />
+                                    </div>
+                                  </TooltipTrigger>
+                                  <TooltipContent>
+                                    <p>{amenity.label}</p>
+                                  </TooltipContent>
+                                </Tooltip>
+                              );
+                            })}
+                          </div>
                         </div>
                       </div>
                       
