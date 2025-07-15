@@ -97,16 +97,26 @@ const About = () => {
             </p>
           </div>
           
-          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {values.map((value, index) => {
               const Icon = value.icon;
+              const gradients = [
+                'from-blue-500 to-purple-600',
+                'from-green-500 to-teal-600', 
+                'from-pink-500 to-red-600'
+              ];
+              const bgColors = [
+                'bg-blue-50 border-blue-200',
+                'bg-green-50 border-green-200',
+                'bg-pink-50 border-pink-200'
+              ];
               return (
                 <div 
                   key={index}
-                  className="bg-card rounded-2xl p-8 shadow-soft hover-lift border border-border/50 animate-fade-up"
+                  className={`${bgColors[index]} rounded-2xl p-8 shadow-soft hover-lift border animate-fade-up`}
                   style={{animationDelay: `${index * 0.1}s`}}
                 >
-                  <div className="w-16 h-16 bg-gradient-to-br from-primary to-secondary rounded-xl flex items-center justify-center mb-6">
+                  <div className={`w-16 h-16 bg-gradient-to-br ${gradients[index]} rounded-xl flex items-center justify-center mb-6`}>
                     <Icon className="w-8 h-8 text-white" />
                   </div>
                   <h3 className="text-xl font-bold mb-4">{value.title}</h3>
