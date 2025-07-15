@@ -25,7 +25,12 @@ import {
   Dumbbell,
   Shield,
   Building,
-  Sunrise
+  Sunrise,
+  Zap,
+  Droplets,
+  Wifi,
+  Receipt,
+  Sparkles
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import room1 from '@/assets/room-1.jpg';
@@ -47,7 +52,13 @@ const allRooms = [
       { icon: Car, label: 'Parking' },
       { icon: Shield, label: 'UN Approved' },
       { icon: Building, label: 'Balcony' },
-      { icon: Sunrise, label: 'Compound Roof Terrace' }
+      { icon: Sunrise, label: 'Compound Roof Terrace' },
+      { icon: Zap, label: 'Electricity' },
+      { icon: Droplets, label: 'Water' },
+      { icon: Shield, label: '24/7 Security' },
+      { icon: Receipt, label: 'Service Charge' },
+      { icon: Sparkles, label: 'Cleaning and Housekeeping' },
+      { icon: Wifi, label: 'WiFi' }
     ],
     description: 'A beautiful private room in a modern shared apartment with all amenities included. This spacious room features large windows with natural light, premium furnishing, and access to all common areas.',
     longDescription: 'Experience comfortable living in this thoughtfully designed private room located in the heart of downtown. The space features modern furnishing, ample storage, and large windows that flood the room with natural light. You\'ll have access to a fully equipped kitchen, comfortable living areas, and all essential amenities. The location offers easy access to public transportation, shopping centers, restaurants, and entertainment venues.',
@@ -82,7 +93,13 @@ const allRooms = [
       { icon: Car, label: 'Parking' },
       { icon: Shield, label: 'UN Approved' },
       { icon: Building, label: 'Balcony' },
-      { icon: Sunrise, label: 'Compound Roof Terrace' }
+      { icon: Sunrise, label: 'Compound Roof Terrace' },
+      { icon: Zap, label: 'Electricity' },
+      { icon: Droplets, label: 'Water' },
+      { icon: Shield, label: '24/7 Security' },
+      { icon: Receipt, label: 'Service Charge' },
+      { icon: Sparkles, label: 'Cleaning and Housekeeping' },
+      { icon: Wifi, label: 'WiFi' }
     ],
     description: 'Perfect for young professionals looking for a vibrant community atmosphere in a tech-focused environment.',
     longDescription: 'Join our vibrant community of young professionals and creatives in this modern shared living space. Located in the bustling tech district, this space offers everything you need for productive living and networking. The shared areas are designed for collaboration and socializing, while your private space provides comfort and privacy.',
@@ -305,22 +322,22 @@ const RoomDetail = () => {
                     {room.longDescription}
                   </p>
 
-                  {/* Amenities */}
+                  {/* Amenities & What's Included */}
                   <div>
-                    <h3 className="text-xl font-bold mb-4">Amenities</h3>
-                    <div className="flex flex-wrap gap-4">
+                    <h3 className="text-xl font-bold mb-4">Amenities & What's Included</h3>
+                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                       {room.amenities.map((amenity, i) => {
                         const Icon = amenity.icon;
                         return (
                           <Tooltip key={i}>
                             <TooltipTrigger asChild>
                               <div className="flex items-center gap-3 bg-muted rounded-lg p-3 hover:bg-primary/10 transition-smooth cursor-help">
-                                <Icon className="w-5 h-5 text-primary" />
+                                <Icon className="w-5 h-5 text-primary flex-shrink-0" />
                                 <span className="text-sm font-medium">{amenity.label}</span>
                               </div>
                             </TooltipTrigger>
                             <TooltipContent>
-                              <p>Available in this room</p>
+                              <p>Included with this room</p>
                             </TooltipContent>
                           </Tooltip>
                         );
@@ -328,41 +345,25 @@ const RoomDetail = () => {
                     </div>
                   </div>
 
-                  {/* Location & What's Included Section */}
-                  <div className="grid md:grid-cols-2 gap-8">
-                    {/* What's Included */}
-                    <div>
-                      <h3 className="text-xl font-bold mb-4">What's Included</h3>
-                      <div className="grid grid-cols-1 gap-3">
-                        {room.included.map((item, index) => (
-                          <div key={index} className="flex items-center gap-2 text-sm">
-                            <div className="w-2 h-2 bg-primary rounded-full"></div>
-                            <span>{item}</span>
-                          </div>
-                        ))}
+                  {/* Location Map */}
+                  <div>
+                    <h3 className="text-xl font-bold mb-4">Location</h3>
+                    <div className="space-y-4">
+                      <div className="h-48 rounded-lg overflow-hidden border border-border">
+                        <RoomMap 
+                          location={room.location}
+                          neighbourhood={room.neighbourhood}
+                          mapboxToken={mapboxToken}
+                        />
                       </div>
-                    </div>
-
-                    {/* Location Map */}
-                    <div>
-                      <h3 className="text-xl font-bold mb-4">Location</h3>
-                      <div className="space-y-4">
-                        <div className="h-48 rounded-lg overflow-hidden border border-border">
-                          <RoomMap 
-                            location={room.location}
-                            neighbourhood={room.neighbourhood}
-                            mapboxToken={mapboxToken}
-                          />
+                      <p className="text-sm text-muted-foreground">
+                        📍 {room.location}, {room.neighbourhood}
+                      </p>
+                      {!mapboxToken && (
+                        <div className="text-xs text-muted-foreground bg-muted p-2 rounded">
+                          Add Mapbox token to enable interactive map
                         </div>
-                        <p className="text-sm text-muted-foreground">
-                          📍 {room.location}, {room.neighbourhood}
-                        </p>
-                        {!mapboxToken && (
-                          <div className="text-xs text-muted-foreground bg-muted p-2 rounded">
-                            Add Mapbox token to enable interactive map
-                          </div>
-                        )}
-                      </div>
+                      )}
                     </div>
                   </div>
 
