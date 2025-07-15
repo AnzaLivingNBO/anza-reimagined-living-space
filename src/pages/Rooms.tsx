@@ -8,17 +8,18 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { RoomMap } from '@/components/RoomMap';
-import { MapPin, Search, Filter, AlertCircle, ChevronLeft, ChevronRight } from 'lucide-react';
-import { allRooms } from '@/data/rooms';
+import { MapPin, Search, Filter, AlertCircle, Loader2 } from 'lucide-react';
+import { useRooms } from '@/hooks/useRooms';
 
 
 const Rooms = () => {
+  const { rooms, loading, error } = useRooms();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedNeighbourhood, setSelectedNeighbourhood] = useState('all');
   const [priceRange, setPriceRange] = useState('all');
   const [mapboxToken, setMapboxToken] = useState('');
 
-  const filteredRooms = allRooms.filter(room => {
+  const filteredRooms = rooms.filter(room => {
     const matchesSearch = room.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          room.location.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesNeighbourhood = selectedNeighbourhood === 'all' || room.neighbourhood.toLowerCase().includes(selectedNeighbourhood);
@@ -131,9 +132,24 @@ const Rooms = () => {
           <div className="container mx-auto px-4">
             <div className="mb-8">
               <p className="text-muted-foreground">
-                Showing {filteredRooms.length} of {allRooms.length} rooms
+                Showing {filteredRooms.length} of {rooms.length} rooms
               </p>
             </div>
+            
+            {loading && (
+              <div className="flex items-center justify-center py-12">
+                <Loader2 className="w-8 h-8 animate-spin text-primary" />
+                <span className="ml-2 text-muted-foreground">Loading rooms...</span>
+              </div>
+            )}
+            
+            {error && (
+              <div className="text-center py-12">
+                <p className="text-muted-foreground">Unable to load rooms. Please try again later.</p>
+              </div>
+            )}
+            
+            {!loading && !error && (
             
             <div className="space-y-8">
               {filteredRooms.map((room, index) => (
@@ -240,7 +256,9 @@ const Rooms = () => {
               ))}
             </div>
             
-            {filteredRooms.length === 0 && (
+            )}
+            
+            {!loading && !error && filteredRooms.length === 0 && (
               <div className="text-center py-12">
                 <div className="w-16 h-16 bg-muted rounded-full flex items-center justify-center mx-auto mb-4">
                   <Search className="w-8 h-8 text-muted-foreground" />

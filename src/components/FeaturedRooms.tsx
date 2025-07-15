@@ -1,14 +1,63 @@
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
-import { MapPin } from 'lucide-react';
+import { MapPin, Loader2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { allRooms } from '@/data/rooms';
-
-// Get the first 3 rooms for featured display
-const featuredRooms = allRooms.slice(0, 3);
+import { useRooms } from '@/hooks/useRooms';
 
 export const FeaturedRooms = () => {
+  const { rooms, loading, error } = useRooms();
+  
+  // Get the first 3 rooms for featured display
+  const featuredRooms = rooms.slice(0, 3);
+
+  if (loading) {
+    return (
+      <TooltipProvider>
+        <section id="rooms" className="py-20 bg-background">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-16 animate-fade-up">
+              <h2 className="text-4xl md:text-5xl font-bold mb-6">
+                Featured Furnished Rooms
+              </h2>
+              <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+                Browse our carefully curated selection of fully furnished rooms in prime locations
+              </p>
+            </div>
+            
+            <div className="flex items-center justify-center py-12">
+              <Loader2 className="w-8 h-8 animate-spin text-primary" />
+              <span className="ml-2 text-muted-foreground">Loading rooms...</span>
+            </div>
+          </div>
+        </section>
+      </TooltipProvider>
+    );
+  }
+
+  if (error) {
+    return (
+      <TooltipProvider>
+        <section id="rooms" className="py-20 bg-background">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-16 animate-fade-up">
+              <h2 className="text-4xl md:text-5xl font-bold mb-6">
+                Featured Furnished Rooms
+              </h2>
+              <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+                Browse our carefully curated selection of fully furnished rooms in prime locations
+              </p>
+            </div>
+            
+            <div className="text-center py-12">
+              <p className="text-muted-foreground">Unable to load rooms. Please try again later.</p>
+            </div>
+          </div>
+        </section>
+      </TooltipProvider>
+    );
+  }
+
   return (
     <TooltipProvider>
       <section id="rooms" className="py-20 bg-background">
@@ -93,7 +142,7 @@ export const FeaturedRooms = () => {
                     })}
                   </div>
                   
-                  <Link to={`/room/${room.id}`}>
+                  <Link to={`/rooms/${room.id}`}>
                     <Button 
                       className={`w-full ${room.available ? 'btn-primary' : 'btn-secondary opacity-50 cursor-not-allowed'}`}
                       disabled={!room.available}
