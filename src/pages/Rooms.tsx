@@ -8,7 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { RoomMap } from '@/components/RoomMap';
-import { MapPin, Search, Filter, AlertCircle } from 'lucide-react';
+import { MapPin, Search, Filter, AlertCircle, ChevronLeft, ChevronRight } from 'lucide-react';
 import { allRooms } from '@/data/rooms';
 
 
