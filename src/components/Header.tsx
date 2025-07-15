@@ -1,41 +1,54 @@
 import { useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Menu, X, Home, Users, MapPin, HelpCircle, Phone, Facebook, Instagram } from 'lucide-react';
 
 export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const location = useLocation();
 
   const navItems = [
-    { name: 'Home', href: '#home', icon: Home },
-    { name: 'About', href: '#about', icon: Users },
-    { name: 'Rooms', href: '#rooms', icon: MapPin },
-    { name: 'FAQs', href: '#faqs', icon: HelpCircle },
-    { name: 'Contact', href: '#contact', icon: Phone },
+    { name: 'Home', href: '/', icon: Home },
+    { name: 'About', href: '/about', icon: Users },
+    { name: 'Rooms', href: '/rooms', icon: MapPin },
+    { name: 'FAQs', href: '/faqs', icon: HelpCircle },
+    { name: 'Contact', href: '/contact', icon: Phone },
   ];
+
+  const isActiveRoute = (href: string) => {
+    if (href === '/') {
+      return location.pathname === '/';
+    }
+    return location.pathname.startsWith(href);
+  };
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
       <nav className="container mx-auto px-4 py-4 flex items-center justify-between">
         {/* Logo */}
-        <div className="flex items-center space-x-2">
+        <Link to="/" className="flex items-center space-x-2">
           <div className="w-10 h-10 bg-gradient-to-br from-primary to-primary-glow rounded-xl flex items-center justify-center">
             <span className="text-primary-foreground font-bold text-lg">A</span>
           </div>
           <span className="text-xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
             Anza Living
           </span>
-        </div>
+        </Link>
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center space-x-8">
           {navItems.map((item) => (
-            <a
+            <Link
               key={item.name}
-              href={item.href}
-              className="text-foreground hover:text-primary transition-smooth font-medium"
+              to={item.href}
+              className={`font-medium transition-smooth ${
+                isActiveRoute(item.href) 
+                  ? 'text-primary' 
+                  : 'text-foreground hover:text-primary'
+              }`}
             >
               {item.name}
-            </a>
+            </Link>
           ))}
         </div>
 
@@ -55,9 +68,11 @@ export const Header = () => {
           >
             <Instagram className="w-5 h-5" />
           </a>
-          <Button className="btn-primary">
-            Apply For Room
-          </Button>
+          <Link to="/contact">
+            <Button className="btn-primary">
+              Apply For Room
+            </Button>
+          </Link>
         </div>
 
         {/* Mobile Menu Button */}
@@ -78,15 +93,19 @@ export const Header = () => {
             {navItems.map((item) => {
               const Icon = item.icon;
               return (
-                <a
+                <Link
                   key={item.name}
-                  href={item.href}
-                  className="flex items-center space-x-3 text-foreground hover:text-primary transition-smooth py-2"
+                  to={item.href}
+                  className={`flex items-center space-x-3 transition-smooth py-2 ${
+                    isActiveRoute(item.href) 
+                      ? 'text-primary font-medium' 
+                      : 'text-foreground hover:text-primary'
+                  }`}
                   onClick={() => setIsMenuOpen(false)}
                 >
                   <Icon className="w-5 h-5" />
                   <span>{item.name}</span>
-                </a>
+                </Link>
               );
             })}
             <div className="flex items-center space-x-4 pt-4">
@@ -102,9 +121,11 @@ export const Header = () => {
               >
                 <Instagram className="w-5 h-5" />
               </a>
-              <Button className="btn-primary flex-1">
-                Apply For Room
-              </Button>
+              <Link to="/contact" onClick={() => setIsMenuOpen(false)}>
+                <Button className="btn-primary flex-1">
+                  Apply For Room
+                </Button>
+              </Link>
             </div>
           </div>
         </div>
