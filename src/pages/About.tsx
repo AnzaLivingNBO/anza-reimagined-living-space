@@ -19,11 +19,6 @@ const values = [
     icon: Heart,
     title: 'Genuine Care',
     description: 'Our dedicated team is committed to supporting residents throughout their journey, creating a true sense of belonging.'
-  },
-  {
-    icon: Award,
-    title: 'Innovation',
-    description: 'We continuously evolve our offerings based on resident feedback and emerging trends in modern living.'
   }
 ];
 
