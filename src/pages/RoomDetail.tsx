@@ -105,6 +105,7 @@ const RoomDetail = () => {
   const { id } = useParams();
   const { toast } = useToast();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [currentGalleryIndex, setCurrentGalleryIndex] = useState(0);
   const [mapboxToken, setMapboxToken] = useState('');
   
   const room = allRooms.find(r => r.id === parseInt(id || ''));
@@ -129,6 +130,21 @@ const RoomDetail = () => {
 
   const prevImage = () => {
     setCurrentImageIndex((prev) => (prev - 1 + room.images.length) % room.images.length);
+  };
+
+  const galleryImages = [
+    "https://images.unsplash.com/photo-1721322800607-8c38375eef04",
+    room2,
+    room3,
+    "https://images.unsplash.com/photo-1649972904349-6e44c42644a7"
+  ];
+
+  const nextGalleryImage = () => {
+    setCurrentGalleryIndex((prev) => (prev + 1) % galleryImages.length);
+  };
+
+  const prevGalleryImage = () => {
+    setCurrentGalleryIndex((prev) => (prev - 1 + galleryImages.length) % galleryImages.length);
   };
 
   return (
@@ -414,37 +430,35 @@ const RoomDetail = () => {
               {/* Right Column - Images */}
               <div className="space-y-4">
                 <h3 className="text-xl font-bold mb-4">Property Gallery</h3>
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="space-y-4">
-                    <div className="aspect-square rounded-lg overflow-hidden">
-                      <img 
-                        src="https://images.unsplash.com/photo-1721322800607-8c38375eef04" 
-                        alt="Living area"
-                        className="w-full h-full object-cover hover:scale-110 transition-smooth"
-                      />
-                    </div>
-                    <div className="aspect-square rounded-lg overflow-hidden">
-                      <img 
-                        src={room2} 
-                        alt="Modern bedroom"
-                        className="w-full h-full object-cover hover:scale-110 transition-smooth"
-                      />
-                    </div>
-                  </div>
-                  <div className="space-y-4">
-                    <div className="aspect-square rounded-lg overflow-hidden">
-                      <img 
-                        src={room3} 
-                        alt="Luxury amenities"
-                        className="w-full h-full object-cover hover:scale-110 transition-smooth"
-                      />
-                    </div>
-                    <div className="aspect-square rounded-lg overflow-hidden">
-                      <img 
-                        src="https://images.unsplash.com/photo-1649972904349-6e44c42644a7" 
-                        alt="Comfortable workspace"
-                        className="w-full h-full object-cover hover:scale-110 transition-smooth"
-                      />
+                <div className="relative">
+                  <div className="relative h-80 rounded-lg overflow-hidden">
+                    <img 
+                      src={galleryImages[currentGalleryIndex]} 
+                      alt={`Property gallery image ${currentGalleryIndex + 1}`}
+                      className="w-full h-full object-cover"
+                    />
+                    
+                    {/* Navigation Arrows */}
+                    {galleryImages.length > 1 && (
+                      <>
+                        <button
+                          onClick={prevGalleryImage}
+                          className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white rounded-full p-2 transition-smooth"
+                        >
+                          <PrevIcon className="w-5 h-5" />
+                        </button>
+                        <button
+                          onClick={nextGalleryImage}
+                          className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white rounded-full p-2 transition-smooth"
+                        >
+                          <ChevronRight className="w-5 h-5" />
+                        </button>
+                      </>
+                    )}
+                    
+                    {/* Image Counter */}
+                    <div className="absolute bottom-4 right-4 bg-black/60 text-white px-3 py-1 rounded-full text-sm">
+                      {currentGalleryIndex + 1} / {galleryImages.length}
                     </div>
                   </div>
                 </div>
