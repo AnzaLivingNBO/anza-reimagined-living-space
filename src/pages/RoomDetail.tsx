@@ -330,18 +330,6 @@ const RoomDetail = () => {
                     </div>
                   </div>
 
-                  {/* House Rules */}
-                  <div>
-                    <h3 className="text-xl font-bold mb-4">House Rules</h3>
-                    <ul className="space-y-2">
-                      {room.houseRules.map((rule, index) => (
-                        <li key={index} className="flex items-center gap-2 text-muted-foreground">
-                          <div className="w-1.5 h-1.5 bg-muted-foreground rounded-full"></div>
-                          <span>{rule}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
                 </div>
               </div>
 
