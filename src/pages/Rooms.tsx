@@ -190,7 +190,7 @@ const Rooms = () => {
                             </h3>
                             <div className="flex items-center text-muted-foreground mb-3">
                               <MapPin className="w-4 h-4 mr-2 flex-shrink-0" />
-                              <span className="text-sm">{room.location} • {room.neighbourhood}</span>
+                              <span className="text-sm">{room.location}</span>
                             </div>
                           </div>
                           <div className="text-left sm:text-right sm:ml-4">
