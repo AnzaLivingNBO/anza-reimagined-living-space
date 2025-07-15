@@ -380,22 +380,6 @@ const RoomDetail = () => {
                 </Card>
 
 
-                {/* Contact Card */}
-                <Card>
-                  <CardContent className="p-6">
-                    <h3 className="font-bold mb-4">Need Help?</h3>
-                    <div className="space-y-3">
-                      <Button variant="outline" className="w-full justify-start" size="sm">
-                        <Phone className="w-4 h-4 mr-2" />
-                        Call us: +1 (555) 123-4567
-                      </Button>
-                      <Button variant="outline" className="w-full justify-start" size="sm">
-                        <MessageSquare className="w-4 h-4 mr-2" />
-                        Live Chat Support
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
               </div>
             </div>
           </div>
