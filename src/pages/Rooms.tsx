@@ -5,7 +5,8 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { MapPin, Wifi, Car, Coffee, Star, Search, Filter } from 'lucide-react';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { MapPin, Wifi, Car, Coffee, Search, Filter } from 'lucide-react';
 import room1 from '@/assets/room-1.jpg';
 import room2 from '@/assets/room-2.jpg';
 import room3 from '@/assets/room-3.jpg';
@@ -18,9 +19,12 @@ const allRooms = [
     price: 850,
     period: '/month',
     image: room1,
-    rating: 4.9,
     features: ['WiFi', 'Parking', 'Kitchen Access', 'Laundry'],
-    amenities: [Wifi, Car, Coffee],
+    amenities: [
+      { icon: Wifi, label: 'WiFi' },
+      { icon: Car, label: 'Parking' },
+      { icon: Coffee, label: 'Kitchen Access' }
+    ],
     description: 'A beautiful private room in a modern shared apartment with all amenities included.',
     available: true,
     neighbourhood: 'Kileleshwa'
@@ -32,9 +36,11 @@ const allRooms = [
     price: 720,
     period: '/month',
     image: room2,
-    rating: 4.8,
     features: ['WiFi', 'Shared Kitchen', 'Lounge Area', 'Study Room'],
-    amenities: [Wifi, Coffee],
+    amenities: [
+      { icon: Wifi, label: 'WiFi' },
+      { icon: Coffee, label: 'Shared Kitchen' }
+    ],
     description: 'Perfect for young professionals looking for a vibrant community atmosphere.',
     available: true,
     neighbourhood: 'Westlands'
@@ -46,9 +52,12 @@ const allRooms = [
     price: 950,
     period: '/month',
     image: room3,
-    rating: 5.0,
     features: ['WiFi', 'Parking', 'Gym Access', 'Rooftop', 'Concierge'],
-    amenities: [Wifi, Car, Coffee],
+    amenities: [
+      { icon: Wifi, label: 'WiFi' },
+      { icon: Car, label: 'Parking' },
+      { icon: Coffee, label: 'Gym Access' }
+    ],
     description: 'Premium co-living experience with stunning views and top-tier amenities.',
     available: false,
     neighbourhood: 'Lavington'
@@ -60,9 +69,11 @@ const allRooms = [
     price: 650,
     period: '/month',
     image: room1,
-    rating: 4.7,
     features: ['WiFi', 'Study Areas', 'Library Access', 'Events'],
-    amenities: [Wifi, Coffee],
+    amenities: [
+      { icon: Wifi, label: 'WiFi' },
+      { icon: Coffee, label: 'Study Areas' }
+    ],
     description: 'Perfect for students with dedicated study spaces and social areas.',
     available: true,
     neighbourhood: 'Parklands'
@@ -74,9 +85,12 @@ const allRooms = [
     price: 1200,
     period: '/month',
     image: room2,
-    rating: 4.9,
     features: ['WiFi', 'Parking', 'Office Space', 'Cleaning Service'],
-    amenities: [Wifi, Car, Coffee],
+    amenities: [
+      { icon: Wifi, label: 'WiFi' },
+      { icon: Car, label: 'Parking' },
+      { icon: Coffee, label: 'Office Space' }
+    ],
     description: 'Premium accommodation for business professionals with executive amenities.',
     available: true,
     neighbourhood: 'Westlands'
@@ -88,9 +102,10 @@ const allRooms = [
     price: 800,
     period: '/month',
     image: room3,
-    rating: 4.6,
     features: ['WiFi', 'Art Studio', 'Workshop Access', 'Gallery Space'],
-    amenities: [Wifi],
+    amenities: [
+      { icon: Wifi, label: 'WiFi' }
+    ],
     description: 'Inspiring space for creative professionals with dedicated studio areas.',
     available: true,
     neighbourhood: 'Kileleshwa'
@@ -185,130 +200,121 @@ const Rooms = () => {
       </section>
 
       {/* Rooms Grid */}
-      <section className="py-20 bg-background">
-        <div className="container mx-auto px-4">
-          <div className="mb-8">
-            <p className="text-muted-foreground">
-              Showing {filteredRooms.length} of {allRooms.length} rooms
-            </p>
-          </div>
-          
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredRooms.map((room, index) => (
-              <div 
-                key={room.id}
-                className="group bg-card rounded-2xl overflow-hidden shadow-soft hover-lift border border-border/50 animate-fade-up"
-                style={{
-                  animationDelay: `${index * 0.1}s`
-                }}
-              >
-                {/* Image */}
-                <div className="relative overflow-hidden">
-                  <img 
-                    src={room.image} 
-                    alt={room.title}
-                    className="w-full h-64 object-cover group-hover:scale-110 transition-smooth"
-                  />
-                  <div className="absolute top-4 left-4 flex gap-2">
-                    <Badge 
-                      variant={room.available ? "default" : "secondary"}
-                      className={room.available ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"}
-                    >
-                      {room.available ? 'Available' : 'Coming Soon'}
-                    </Badge>
-                    <Badge variant="outline">
-                      {room.neighbourhood}
-                    </Badge>
-                  </div>
-                  <div className="absolute top-4 right-4 bg-background/90 backdrop-blur-sm rounded-lg px-2 py-1 flex items-center space-x-1">
-                    <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                    <span className="text-sm font-medium">{room.rating}</span>
-                  </div>
-                </div>
-                
-                {/* Content */}
-                <div className="p-6">
-                  <div className="flex items-start justify-between mb-4">
-                    <div>
-                      <h3 className="text-xl font-bold mb-2 text-card-foreground">
-                        {room.title}
-                      </h3>
-                      <div className="flex items-center text-muted-foreground mb-2">
-                        <MapPin className="w-4 h-4 mr-1" />
-                        <span className="text-sm">{room.location}</span>
-                      </div>
-                    </div>
-                    <div className="text-right">
-                      <div className="text-2xl font-bold text-primary">
-                        ${room.price}
-                      </div>
-                      <div className="text-sm text-muted-foreground">
-                        {room.period}
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <p className="text-muted-foreground text-sm mb-4 leading-relaxed">
-                    {room.description}
-                  </p>
-                  
-                  {/* Amenities */}
-                  <div className="flex items-center space-x-4 mb-6">
-                    {room.amenities.map((Amenity, i) => (
-                      <div key={i} className="flex items-center justify-center w-8 h-8 bg-muted rounded-lg">
-                        <Amenity className="w-4 h-4 text-muted-foreground" />
-                      </div>
-                    ))}
-                  </div>
-                  
-                  {/* Features Tags */}
-                  <div className="flex flex-wrap gap-2 mb-6">
-                    {room.features.slice(0, 3).map((feature, i) => (
-                      <Badge key={i} variant="outline" className="text-xs">
-                        {feature}
-                      </Badge>
-                    ))}
-                    {room.features.length > 3 && (
-                      <Badge variant="outline" className="text-xs">
-                        +{room.features.length - 3} more
-                      </Badge>
-                    )}
-                  </div>
-                  
-                  <Button 
-                    className={`w-full ${room.available ? 'btn-primary' : 'btn-secondary opacity-50 cursor-not-allowed'}`}
-                    disabled={!room.available}
-                  >
-                    {room.available ? 'View Details' : 'Notify When Available'}
-                  </Button>
-                </div>
-              </div>
-            ))}
-          </div>
-          
-          {filteredRooms.length === 0 && (
-            <div className="text-center py-12">
-              <div className="w-16 h-16 bg-muted rounded-full flex items-center justify-center mx-auto mb-4">
-                <Search className="w-8 h-8 text-muted-foreground" />
-              </div>
-              <h3 className="text-xl font-semibold mb-2">No rooms found</h3>
-              <p className="text-muted-foreground mb-4">
-                Try adjusting your search criteria or filters
+      <TooltipProvider>
+        <section className="py-20 bg-background">
+          <div className="container mx-auto px-4">
+            <div className="mb-8">
+              <p className="text-muted-foreground">
+                Showing {filteredRooms.length} of {allRooms.length} rooms
               </p>
-              <Button 
-                variant="outline" 
-                onClick={() => {
-                  setSearchTerm('');
-                  setSelectedNeighbourhood('all');
-                  setPriceRange('all');
-                }}
-              >
-                Clear All Filters
-              </Button>
             </div>
-          )}
-        </div>
-      </section>
+            
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {filteredRooms.map((room, index) => (
+                <div 
+                  key={room.id}
+                  className="group bg-card rounded-2xl overflow-hidden shadow-soft hover-lift border border-border/50 animate-fade-up"
+                  style={{
+                    animationDelay: `${index * 0.1}s`
+                  }}
+                >
+                  {/* Image */}
+                  <div className="relative overflow-hidden">
+                    <img 
+                      src={room.image} 
+                      alt={room.title}
+                      className="w-full h-64 object-cover group-hover:scale-110 transition-smooth"
+                    />
+                    <div className="absolute top-4 left-4">
+                      <Badge 
+                        variant={room.available ? "default" : "secondary"}
+                        className={room.available ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"}
+                      >
+                        {room.available ? 'Available' : 'Coming Soon'}
+                      </Badge>
+                    </div>
+                  </div>
+                  
+                  {/* Content */}
+                  <div className="p-6">
+                    <div className="flex items-start justify-between mb-4">
+                      <div>
+                        <h3 className="text-xl font-bold mb-2 text-card-foreground">
+                          {room.title}
+                        </h3>
+                        <div className="flex items-center text-muted-foreground mb-2">
+                          <MapPin className="w-4 h-4 mr-1" />
+                          <span className="text-sm">{room.location}</span>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <div className="text-2xl font-bold text-primary">
+                          ${room.price}
+                        </div>
+                        <div className="text-sm text-muted-foreground">
+                          {room.period}
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <p className="text-muted-foreground text-sm mb-4 leading-relaxed">
+                      {room.description}
+                    </p>
+                    
+                    {/* Amenities */}
+                    <div className="flex items-center space-x-4 mb-6">
+                      {room.amenities.map((amenity, i) => {
+                        const Icon = amenity.icon;
+                        return (
+                          <Tooltip key={i}>
+                            <TooltipTrigger asChild>
+                              <div className="flex items-center justify-center w-8 h-8 bg-muted rounded-lg hover:bg-primary/20 transition-smooth cursor-help">
+                                <Icon className="w-4 h-4 text-muted-foreground hover:text-primary transition-smooth" />
+                              </div>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <p>{amenity.label}</p>
+                            </TooltipContent>
+                          </Tooltip>
+                        );
+                      })}
+                    </div>
+                    
+                    <Button 
+                      className={`w-full ${room.available ? 'btn-primary' : 'btn-secondary opacity-50 cursor-not-allowed'}`}
+                      disabled={!room.available}
+                    >
+                      {room.available ? 'View Details' : 'Notify When Available'}
+                    </Button>
+                  </div>
+                </div>
+              ))}
+            </div>
+            
+            {filteredRooms.length === 0 && (
+              <div className="text-center py-12">
+                <div className="w-16 h-16 bg-muted rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Search className="w-8 h-8 text-muted-foreground" />
+                </div>
+                <h3 className="text-xl font-semibold mb-2">No rooms found</h3>
+                <p className="text-muted-foreground mb-4">
+                  Try adjusting your search criteria or filters
+                </p>
+                <Button 
+                  variant="outline" 
+                  onClick={() => {
+                    setSearchTerm('');
+                    setSelectedNeighbourhood('all');
+                    setPriceRange('all');
+                  }}
+                >
+                  Clear All Filters
+                </Button>
+              </div>
+            )}
+          </div>
+        </section>
+      </TooltipProvider>
 
       <Footer />
     </div>
