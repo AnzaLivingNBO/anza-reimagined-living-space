@@ -51,7 +51,7 @@ const allRooms = [
     moveInDate: '2024-01-15',
     leaseTerm: 'Flexible (3-12 months)',
     deposit: 1700,
-    included: ['Utilities', 'WiFi', 'Cleaning Service', 'Laundry', 'Kitchen Access'],
+    included: ['Electricity', 'Water', '24/7 Security', 'Service Charge', 'Cleaning and Housekeeping', 'WiFi'],
     houseRules: ['No smoking', 'No pets', 'Quiet hours 10PM-8AM', 'Keep common areas clean'],
     highlights: [
       'Prime downtown location',
@@ -82,7 +82,7 @@ const allRooms = [
     moveInDate: '2024-02-01',
     leaseTerm: 'Flexible (1-12 months)',
     deposit: 1440,
-    included: ['Utilities', 'WiFi', 'Gym Access', 'Coworking Space', 'Events'],
+    included: ['Electricity', 'Water', '24/7 Security', 'Service Charge', 'Cleaning and Housekeeping', 'WiFi'],
     houseRules: ['No smoking', 'Guests until 11PM', 'Clean after use', 'Respect community guidelines'],
     highlights: [
       'Tech district location',
