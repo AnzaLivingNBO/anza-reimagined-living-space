@@ -1,4 +1,6 @@
-import { Search, Calendar, Home, Users, RefreshCw, ArrowRight } from 'lucide-react';
+import { useState } from 'react';
+import { Search, Calendar, Home, Users, RefreshCw, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 const steps = [
   {
@@ -34,6 +36,20 @@ const steps = [
 ];
 
 export const HowItWorks = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const stepsToShow = 3;
+  const maxIndex = steps.length - stepsToShow;
+
+  const goToPrevious = () => {
+    setCurrentIndex(prev => Math.max(0, prev - 1));
+  };
+
+  const goToNext = () => {
+    setCurrentIndex(prev => Math.min(maxIndex, prev + 1));
+  };
+
+  const visibleSteps = steps.slice(currentIndex, currentIndex + stepsToShow);
+
   return (
     <section id="about" className="py-20 bg-muted/30">
       <div className="container mx-auto px-4">
@@ -46,67 +62,85 @@ export const HowItWorks = () => {
           </p>
         </div>
         
-        {/* Journey Flow Layout */}
+        {/* Navigation and Steps Container */}
         <div className="max-w-6xl mx-auto">
-          {steps.map((step, index) => {
-            const Icon = step.icon;
-            const isEven = index % 2 === 0;
-            
-            return (
-              <div 
-                key={index}
-                className="relative flex items-center mb-16 last:mb-0"
-                style={{
-                  animationDelay: `${index * 0.2}s`
-                }}
-              >
-                {/* Timeline Line */}
-                {index < steps.length - 1 && (
-                  <div className="absolute left-1/2 top-24 w-0.5 h-16 bg-gradient-to-b from-gray-300 to-gray-200 transform -translate-x-1/2 z-0"></div>
-                )}
-                
-                {/* Step Content */}
-                <div className={`flex w-full items-center ${isEven ? 'flex-row' : 'flex-row-reverse'} gap-8`}>
-                  {/* Content Side */}
-                  <div className={`flex-1 ${isEven ? 'text-right pr-8' : 'text-left pl-8'}`}>
-                    <div className="bg-card rounded-2xl p-8 shadow-soft border border-border/50 hover-lift animate-fade-up">
-                      <h3 className="text-2xl font-bold mb-4 text-card-foreground">
-                        {step.title}
-                      </h3>
-                      <p className="text-muted-foreground leading-relaxed text-lg">
-                        {step.description}
-                      </p>
-                    </div>
-                  </div>
+          <div className="flex items-center justify-between gap-8">
+            {/* Left Arrow */}
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={goToPrevious}
+              disabled={currentIndex === 0}
+              className="flex-shrink-0 w-12 h-12 rounded-full shadow-lg"
+            >
+              <ChevronLeft className="w-6 h-6" />
+            </Button>
+
+            {/* Steps Container */}
+            <div className="flex-1 overflow-hidden">
+              <div className="grid grid-cols-3 gap-8">
+                {visibleSteps.map((step, index) => {
+                  const Icon = step.icon;
+                  const actualIndex = currentIndex + index;
                   
-                  {/* Central Icon */}
-                  <div className="relative z-10 flex-shrink-0">
-                    <div className={`w-20 h-20 rounded-full bg-gradient-to-br ${step.color} flex items-center justify-center shadow-lg border-4 border-white`}>
-                      <Icon className="w-10 h-10 text-white" />
-                    </div>
-                    {/* Step Number */}
-                    <div className="absolute -top-2 -right-2 w-8 h-8 bg-white text-gray-800 rounded-full flex items-center justify-center text-sm font-bold shadow-md border-2 border-gray-200">
-                      {index + 1}
-                    </div>
-                  </div>
-                  
-                  {/* Arrow Connector */}
-                  {index < steps.length - 1 && (
-                    <div className={`flex-1 ${isEven ? 'text-left pl-8' : 'text-right pr-8'}`}>
-                      <div className="flex items-center justify-center">
-                        <ArrowRight className={`w-8 h-8 text-gray-400 ${isEven ? '' : 'rotate-180'}`} />
+                  return (
+                    <div 
+                      key={actualIndex}
+                      className="text-center animate-fade-up"
+                      style={{
+                        animationDelay: `${index * 0.1}s`
+                      }}
+                    >
+                      {/* Step Number and Icon */}
+                      <div className="relative mb-6 flex justify-center">
+                        <div className={`w-20 h-20 rounded-full bg-gradient-to-br ${step.color} flex items-center justify-center shadow-lg`}>
+                          <Icon className="w-10 h-10 text-white" />
+                        </div>
+                        {/* Step Number */}
+                        <div className="absolute -top-2 -right-2 w-8 h-8 bg-white text-gray-800 rounded-full flex items-center justify-center text-sm font-bold shadow-md border-2 border-gray-200">
+                          {actualIndex + 1}
+                        </div>
+                      </div>
+                      
+                      {/* Content */}
+                      <div className="bg-card rounded-2xl p-6 shadow-soft border border-border/50 hover-lift h-full">
+                        <h3 className="text-xl font-bold mb-4 text-card-foreground">
+                          {step.title}
+                        </h3>
+                        <p className="text-muted-foreground leading-relaxed">
+                          {step.description}
+                        </p>
                       </div>
                     </div>
-                  )}
-                  
-                  {/* Empty Space on Opposite Side */}
-                  {index === steps.length - 1 && (
-                    <div className="flex-1"></div>
-                  )}
-                </div>
+                  );
+                })}
               </div>
-            );
-          })}
+            </div>
+
+            {/* Right Arrow */}
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={goToNext}
+              disabled={currentIndex === maxIndex}
+              className="flex-shrink-0 w-12 h-12 rounded-full shadow-lg"
+            >
+              <ChevronRight className="w-6 h-6" />
+            </Button>
+          </div>
+
+          {/* Progress Indicator */}
+          <div className="flex justify-center mt-8 space-x-2">
+            {Array.from({ length: maxIndex + 1 }).map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentIndex(index)}
+                className={`w-3 h-3 rounded-full transition-colors ${
+                  index === currentIndex ? 'bg-primary' : 'bg-gray-300'
+                }`}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </section>
