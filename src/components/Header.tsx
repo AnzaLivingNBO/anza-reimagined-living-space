@@ -26,10 +26,13 @@ export const Header = () => {
     <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
       <nav className="container mx-auto px-4 py-4 flex items-center justify-between">
         {/* Logo */}
-        <Link to="/" className="flex items-center space-x-2">
-          <div className="w-10 h-10 bg-gradient-to-br from-primary to-primary-glow rounded-xl flex items-center justify-center">
-            <span className="text-primary-foreground font-bold text-lg">A</span>
-          </div>
+        <Link to="/" className="flex items-center space-x-3">
+          <img 
+            src="/lovable-uploads/ca558e70-1c78-43e1-901c-87c0aa75d21f.png" 
+            alt="Anza Living Logo" 
+            className="w-12 h-12 hover:scale-105 transition-smooth"
+            style={{ filter: 'hue-rotate(180deg) saturate(1.2)' }}
+          />
           <span className="text-xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
             Anza Living
           </span>
