@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { Button } from '@/components/ui/button';
@@ -311,12 +312,17 @@ const Rooms = () => {
                       </div>
                       
                       <div className="flex items-end justify-between">
-                        <Button 
-                          className={`${room.available ? 'btn-primary' : 'btn-secondary opacity-50 cursor-not-allowed'}`}
-                          disabled={!room.available}
-                        >
-                          {room.available ? 'View Details' : 'Notify When Available'}
-                        </Button>
+                        {room.available ? (
+                          <Link to={`/rooms/${room.id}`}>
+                            <Button className="btn-primary">
+                              View Details
+                            </Button>
+                          </Link>
+                        ) : (
+                          <Button className="btn-secondary opacity-50 cursor-not-allowed" disabled>
+                            Notify When Available
+                          </Button>
+                        )}
                       </div>
                     </div>
                     
