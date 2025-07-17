@@ -297,27 +297,27 @@ const RoomDetail = () => {
                         KES {room.price.toLocaleString()}
                         <span className="text-lg text-muted-foreground">{room.period}</span>
                       </div>
-                      <p className="text-sm text-muted-foreground">Security deposit: KES {(room.price * 2).toLocaleString()}</p>
+                      <p className="text-sm text-muted-foreground">Security deposit: KES {room.deposit.toLocaleString()}</p>
                     </div>
 
-                     <div className="space-y-4 mb-6">
-                       <div className="flex justify-between text-sm">
-                         <span className="text-muted-foreground">Room Size:</span>
-                         <span className="font-medium">12-15 sqm</span>
-                       </div>
-                       <div className="flex justify-between text-sm">
-                         <span className="text-muted-foreground">Max Occupancy:</span>
-                         <span className="font-medium">1 person</span>
-                       </div>
-                       <div className="flex justify-between text-sm">
-                         <span className="text-muted-foreground">Move-in Date:</span>
-                         <span className="font-medium">Available now</span>
-                       </div>
-                       <div className="flex justify-between text-sm">
-                         <span className="text-muted-foreground">Lease Term:</span>
-                         <span className="font-medium">Flexible (3-12 months)</span>
-                       </div>
-                     </div>
+                       <div className="space-y-4 mb-6">
+                        <div className="flex justify-between text-sm">
+                          <span className="text-muted-foreground">Room Size:</span>
+                          <span className="font-medium">{room.roomSize} sqm</span>
+                        </div>
+                        <div className="flex justify-between text-sm">
+                          <span className="text-muted-foreground">Max Occupancy:</span>
+                          <span className="font-medium">{room.maxOccupancy} person{room.maxOccupancy > 1 ? 's' : ''}</span>
+                        </div>
+                        <div className="flex justify-between text-sm">
+                          <span className="text-muted-foreground">Move-in Date:</span>
+                          <span className="font-medium">Available now</span>
+                        </div>
+                        <div className="flex justify-between text-sm">
+                          <span className="text-muted-foreground">Lease Term:</span>
+                          <span className="font-medium">{room.leaseTerm}</span>
+                        </div>
+                      </div>
 
                     <div className="space-y-3">
                       <Button className="w-full btn-primary" size="lg">
@@ -350,15 +350,32 @@ const RoomDetail = () => {
             {/* About the Flat & Images Section */}
             <div className="mt-16 pt-16 border-t border-border">
               
-              {/* Section Header */}
-              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
-                <h2 className="text-3xl font-bold">About the Flat</h2>
-                <Link to={`/flats/${room.flatId}`}>
-                  <Button className="gap-2">
-                    <Home className="w-4 h-4" />
-                    View Flat Details
-                  </Button>
-                </Link>
+              {/* Enhanced Section Header with Gradient Background */}
+              <div className="relative bg-gradient-to-br from-primary/10 via-secondary/5 to-accent/10 rounded-2xl p-8 mb-8 overflow-hidden">
+                {/* Background decoration */}
+                <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-primary/20 to-transparent rounded-full blur-2xl"></div>
+                <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-secondary/20 to-transparent rounded-full blur-xl"></div>
+                
+                <div className="relative flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+                  <div className="flex-1">
+                    <h2 className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
+                      About the Flat
+                    </h2>
+                    <p className="text-lg text-muted-foreground leading-relaxed">
+                      Discover more about this premium flat including all amenities, 
+                      shared spaces, and available rooms in the building.
+                    </p>
+                  </div>
+                  
+                  <div className="flex-shrink-0">
+                    <Link to={`/flats/${room.flatId}`}>
+                      <Button size="lg" className="bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90 text-primary-foreground shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 px-8 py-3">
+                        <Home className="w-5 h-5 mr-3" />
+                        <span className="font-semibold">Explore Full Flat</span>
+                      </Button>
+                    </Link>
+                  </div>
+                </div>
               </div>
 
               <div className="grid lg:grid-cols-2 gap-8">

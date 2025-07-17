@@ -23,6 +23,10 @@ export type RoomDetail = Room & {
   flatDescription: string;
   flatCharacteristics: Array<{ label: string; icon: any }>;
   flatId: string;
+  deposit: number;
+  roomSize: number;
+  leaseTerm: string;
+  maxOccupancy: number;
 };
 
 export const useRoom = (id: string) => {
@@ -101,7 +105,11 @@ export const useRoom = (id: string) => {
               label: fc.characteristics!.name,
               icon: getCharacteristicIcon(fc.characteristics!.name)
             })) || [],
-          flatId: roomData.flat_id
+          flatId: roomData.flat_id,
+          deposit: Number(roomData.deposit || roomData.price * 2),
+          roomSize: Number(roomData.room_size || 12),
+          leaseTerm: roomData.lease_term || 'Flexible (1+ months)',
+          maxOccupancy: roomData.max_occupancy || 1
         };
 
         setRoom(transformedRoom);
