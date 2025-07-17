@@ -305,34 +305,7 @@ const FlatDetail = () => {
                     </div>
                   )}
 
-                   {/* Characteristics & What's Included */}
-                   {characteristics.length > 0 && (
-                     <div>
-                       <h3 className="text-xl font-bold mb-4">Characteristics & What's Included</h3>
-                       <div className="mb-6">
-                         <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-border scrollbar-track-transparent">
-                           {characteristics.map((char) => {
-                             const Icon = getCharacteristicIcon(char.characteristics.name);
-                             return (
-                               <Tooltip key={char.id}>
-                                 <TooltipTrigger asChild>
-                                   <div className="flex items-center gap-3 bg-muted rounded-lg p-3 hover:bg-primary/10 transition-smooth cursor-help whitespace-nowrap flex-shrink-0">
-                                     <Icon className="w-5 h-5 text-primary flex-shrink-0" />
-                                     <span className="text-sm font-medium">{char.characteristics.name}</span>
-                                   </div>
-                                 </TooltipTrigger>
-                                 <TooltipContent>
-                                   <p>Available in this flat</p>
-                                 </TooltipContent>
-                               </Tooltip>
-                             );
-                           })}
-                         </div>
-                       </div>
-                     </div>
-                   )}
-
-                  {/* Location Map */}
+                 {/* Location Map */}
                   <div>
                     <h3 className="text-xl font-bold mb-4">Location</h3>
                     <div className="space-y-4">
@@ -371,15 +344,40 @@ const FlatDetail = () => {
                     </div>
 
                      <div className="space-y-4 mb-6">
-                       <div className="flex justify-between text-sm">
-                         <span className="text-muted-foreground">Available Rooms:</span>
-                         <span className="font-medium">{flat.available_rooms} of {flat.total_rooms}</span>
-                       </div>
-                       <div className="flex justify-between text-sm">
-                         <span className="text-muted-foreground">Building Type:</span>
-                         <span className="font-medium">Apartment Complex</span>
-                       </div>
-                     </div>
+                        <div className="flex justify-between text-sm">
+                          <span className="text-muted-foreground">Available Rooms:</span>
+                          <span className="font-medium">{flat.available_rooms} of {flat.total_rooms}</span>
+                        </div>
+                        <div className="flex justify-between text-sm">
+                          <span className="text-muted-foreground">Building Type:</span>
+                          <span className="font-medium">Apartment Complex</span>
+                        </div>
+                      </div>
+
+                      {/* Characteristics Section */}
+                      {characteristics.length > 0 && (
+                        <div className="mb-6">
+                          <h4 className="text-sm font-semibold mb-3 text-muted-foreground uppercase tracking-wide">What's Included</h4>
+                          <div className="grid grid-cols-2 gap-2">
+                            {characteristics.map((char) => {
+                              const Icon = getCharacteristicIcon(char.characteristics.name);
+                              return (
+                                <Tooltip key={char.id}>
+                                  <TooltipTrigger asChild>
+                                    <div className="flex items-center gap-2 p-2 bg-muted/50 rounded-lg hover:bg-primary/10 transition-smooth cursor-help">
+                                      <Icon className="w-4 h-4 text-primary flex-shrink-0" />
+                                      <span className="text-xs font-medium truncate">{char.characteristics.name}</span>
+                                    </div>
+                                  </TooltipTrigger>
+                                  <TooltipContent>
+                                    <p>Available in this flat</p>
+                                  </TooltipContent>
+                                </Tooltip>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      )}
 
                     <div className="space-y-3">
                       <Button className="w-full btn-primary" size="lg">
