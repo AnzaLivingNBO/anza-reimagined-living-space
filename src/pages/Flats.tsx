@@ -96,8 +96,7 @@ const Flats = () => {
             const currentImageIndex = selectedImageIndex[flat.id] || 0;
             const images = flat.flat_gallery_images?.sort((a, b) => a.display_order - b.display_order) || [];
             const characteristics = flat.flat_characteristics
-              ?.sort((a, b) => a.characteristics.importance_order - b.characteristics.importance_order)
-              ?.slice(0, 6) || [];
+              ?.sort((a, b) => a.characteristics.importance_order - b.characteristics.importance_order) || [];
 
             return (
               <Card key={flat.id} className="overflow-hidden backdrop-blur-sm bg-card/80 border-border/50 hover:shadow-xl transition-all duration-300">
@@ -188,21 +187,23 @@ const Flats = () => {
 
                     {/* Characteristics */}
                     {characteristics.length > 0 && (
-                      <div className="flex flex-wrap gap-2 mb-6">
-                        {characteristics.map((char) => {
-                          const Icon = getCharacteristicIcon(char.characteristics.name);
-                          return (
-                            <Badge key={char.id} variant="secondary" className="flex items-center gap-1">
-                              <Icon className="w-3 h-3" />
-                              <span className="text-xs">{char.characteristics.name}</span>
-                            </Badge>
-                          );
-                        })}
+                      <div className="mb-6">
+                        <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-border scrollbar-track-transparent">
+                          {characteristics.map((char) => {
+                            const Icon = getCharacteristicIcon(char.characteristics.name);
+                            return (
+                              <Badge key={char.id} variant="secondary" className="flex items-center gap-1 whitespace-nowrap flex-shrink-0">
+                                <Icon className="w-3 h-3" />
+                                <span className="text-xs">{char.characteristics.name}</span>
+                              </Badge>
+                            );
+                          })}
+                        </div>
                       </div>
                     )}
 
                     <Button className="w-full lg:w-auto">
-                      View Available Rooms
+                      View Rooms
                     </Button>
                   </div>
 
