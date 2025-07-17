@@ -5,7 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Users, MapPin } from "lucide-react";
+import { Home, MapPin } from "lucide-react";
 import { getCharacteristicIcon } from "@/utils/iconMapping";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Header } from "@/components/Header";
@@ -171,7 +171,7 @@ const Flats = () => {
                               variant="outline" 
                               className="flex items-center gap-2 px-3 py-1 hover:bg-primary/5 transition-colors cursor-help"
                             >
-                              <Users className="w-4 h-4" />
+                              <Home className="w-4 h-4" />
                               <span className="font-medium">{flat.available_rooms}/{flat.total_rooms}</span>
                             </Badge>
                           </TooltipTrigger>
