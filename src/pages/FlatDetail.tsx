@@ -371,14 +371,6 @@ const FlatDetail = () => {
                          <span className="text-muted-foreground">Building Type:</span>
                          <span className="font-medium">Apartment Complex</span>
                        </div>
-                       <div className="flex justify-between text-sm">
-                         <span className="text-muted-foreground">Move-in Date:</span>
-                         <span className="font-medium">Available from next month</span>
-                       </div>
-                       <div className="flex justify-between text-sm">
-                         <span className="text-muted-foreground">Lease Term:</span>
-                         <span className="font-medium">Flexible (3-12 months)</span>
-                       </div>
                      </div>
 
                     <div className="space-y-3">
