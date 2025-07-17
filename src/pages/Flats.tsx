@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Badge } from "@/components/ui/badge";
@@ -202,9 +203,11 @@ const Flats = () => {
                       </div>
                     )}
 
-                    <Button className="w-full lg:w-auto">
-                      View Rooms
-                    </Button>
+                    <Link to={`/flats/${flat.id}`}>
+                      <Button className="w-full lg:w-auto">
+                        View Rooms
+                      </Button>
+                    </Link>
                   </div>
 
                   {/* Map Section */}
