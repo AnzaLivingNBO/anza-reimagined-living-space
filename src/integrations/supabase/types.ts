@@ -221,6 +221,7 @@ export type Database = {
           description: string | null
           flat_id: string
           id: string
+          lease_term: string | null
           max_occupancy: number | null
           price: number
           room_size: number | null
@@ -234,6 +235,7 @@ export type Database = {
           description?: string | null
           flat_id: string
           id?: string
+          lease_term?: string | null
           max_occupancy?: number | null
           price: number
           room_size?: number | null
@@ -247,6 +249,7 @@ export type Database = {
           description?: string | null
           flat_id?: string
           id?: string
+          lease_term?: string | null
           max_occupancy?: number | null
           price?: number
           room_size?: number | null
