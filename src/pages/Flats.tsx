@@ -155,7 +155,7 @@ const Flats = () => {
                     <div className="flex items-start justify-between mb-4">
                       <div>
                         <h2 className="text-2xl lg:text-3xl font-bold mb-2">{flat.name}</h2>
-                        <div className="flex items-center text-muted-foreground mb-4">
+                        <div className="flex items-center text-muted-foreground mb-3">
                           <MapPin className="w-4 h-4 mr-2" />
                           <span>{flat.location}</span>
                         </div>
@@ -180,7 +180,7 @@ const Flats = () => {
                       </TooltipProvider>
                     </div>
 
-                    <p className="text-muted-foreground mb-6 leading-relaxed line-clamp-3">
+                    <p className="text-muted-foreground mb-6 leading-relaxed line-clamp-2">
                       {flat.about_description}
                     </p>
 
