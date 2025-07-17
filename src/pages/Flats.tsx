@@ -203,7 +203,7 @@ const Flats = () => {
 
                     <Link to={`/flats/${flat.id}`}>
                       <Button className="w-full lg:w-auto">
-                        View Rooms
+                        View Flat
                       </Button>
                     </Link>
                   </div>
