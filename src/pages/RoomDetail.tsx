@@ -223,7 +223,7 @@ const RoomDetail = () => {
                     <div className="flex items-center gap-4 mb-4">
                       <div className="flex items-center text-muted-foreground">
                         <MapPin className="w-5 h-5 mr-2" />
-                        <span>{room.location} • {room.neighbourhood}</span>
+                        <span>{room.location}</span>
                       </div>
                       <Badge 
                         variant={room.available ? "default" : "secondary"}
