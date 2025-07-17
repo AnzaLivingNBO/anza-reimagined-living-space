@@ -156,9 +156,9 @@ export const FeaturedRooms = () => {
           </div>
           
           <div className="text-center mt-12">
-            <Link to="/rooms">
+            <Link to="/flats">
               <Button variant="outline" size="lg" className="px-8 py-3">
-                View All Rooms
+                View All Flats
               </Button>
             </Link>
           </div>
