@@ -35,6 +35,42 @@ export type Database = {
         }
         Relationships: []
       }
+      flat_characteristics: {
+        Row: {
+          characteristic_id: string
+          created_at: string
+          flat_id: string
+          id: string
+        }
+        Insert: {
+          characteristic_id: string
+          created_at?: string
+          flat_id: string
+          id?: string
+        }
+        Update: {
+          characteristic_id?: string
+          created_at?: string
+          flat_id?: string
+          id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "flat_characteristics_characteristic_id_fkey"
+            columns: ["characteristic_id"]
+            isOneToOne: false
+            referencedRelation: "characteristics"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "flat_characteristics_flat_id_fkey"
+            columns: ["flat_id"]
+            isOneToOne: false
+            referencedRelation: "flats"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       flat_gallery_images: {
         Row: {
           alt_text: string | null
@@ -73,26 +109,32 @@ export type Database = {
       flats: {
         Row: {
           about_description: string
+          available_rooms: number
           created_at: string
           id: string
           location: string
           name: string
+          total_rooms: number
           updated_at: string
         }
         Insert: {
           about_description: string
+          available_rooms?: number
           created_at?: string
           id?: string
           location: string
           name: string
+          total_rooms?: number
           updated_at?: string
         }
         Update: {
           about_description?: string
+          available_rooms?: number
           created_at?: string
           id?: string
           location?: string
           name?: string
+          total_rooms?: number
           updated_at?: string
         }
         Relationships: []
