@@ -24,9 +24,9 @@ const Rooms = () => {
                          room.location.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesLocation = selectedLocation === 'all' || room.location.toLowerCase().includes(selectedLocation.toLowerCase());
     const matchesPrice = priceRange === 'all' || 
-                        (priceRange === 'low' && room.price < 750) ||
-                        (priceRange === 'medium' && room.price >= 750 && room.price < 1000) ||
-                        (priceRange === 'high' && room.price >= 1000);
+                        (priceRange === 'low' && room.price < 100000) ||
+                        (priceRange === 'medium' && room.price >= 100000 && room.price < 130000) ||
+                        (priceRange === 'high' && room.price >= 130000);
     
     return matchesSearch && matchesLocation && matchesPrice;
   });
@@ -92,9 +92,9 @@ const Rooms = () => {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all">All Prices</SelectItem>
-                  <SelectItem value="low">Under $750</SelectItem>
-                  <SelectItem value="medium">$750 - $1000</SelectItem>
-                  <SelectItem value="high">$1000+</SelectItem>
+                  <SelectItem value="low">Under KES 100,000</SelectItem>
+                  <SelectItem value="medium">KES 100,000 - 130,000</SelectItem>
+                  <SelectItem value="high">KES 130,000+</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -195,7 +195,7 @@ const Rooms = () => {
                           </div>
                           <div className="text-left sm:text-right sm:ml-4">
                             <div className="text-2xl lg:text-3xl font-bold text-primary">
-                              ${Math.round(room.price / 130)}
+                              KES {room.price.toLocaleString()}
                             </div>
                             <div className="text-sm text-muted-foreground">
                               {room.period}

@@ -432,7 +432,7 @@ const FlatDetail = () => {
                         <h3 className="font-semibold mb-2">{room.title}</h3>
                         <div className="flex items-center justify-between">
                           <div className="text-lg font-bold text-primary">
-                            ${Math.round(room.price / 130)}<span className="text-sm text-muted-foreground">/month</span>
+                            KES {room.price.toLocaleString()}<span className="text-sm text-muted-foreground">/month</span>
                           </div>
                           <Link to={`/rooms/${room.id}`}>
                             <Button size="sm">View Details</Button>

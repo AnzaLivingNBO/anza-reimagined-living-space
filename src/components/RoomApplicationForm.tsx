@@ -19,7 +19,7 @@ import { allRooms } from '@/data/rooms';
 const roomOptions = allRooms.map(room => ({
   id: room.id.toString(),
   name: room.location,
-  price: `$${Math.round(room.price / 130)}/month`
+  price: `KES ${room.price.toLocaleString()}/month`
 }));
 
 // Characteristics options
