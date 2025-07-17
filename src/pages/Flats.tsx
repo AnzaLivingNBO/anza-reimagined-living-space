@@ -7,6 +7,7 @@ import { Card } from "@/components/ui/card";
 import { Users, MapPin } from "lucide-react";
 import { getCharacteristicIcon } from "@/utils/iconMapping";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { Header } from "@/components/Header";
 
 interface Flat {
   id: string;
@@ -77,7 +78,9 @@ const Flats = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-secondary/10 to-accent/5 py-20">
+    <>
+      <Header />
+      <div className="min-h-screen bg-gradient-to-br from-background via-secondary/10 to-accent/5 py-20">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h1 className="text-4xl lg:text-6xl font-bold mb-6 bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent">
@@ -173,7 +176,7 @@ const Flats = () => {
                             </Badge>
                           </TooltipTrigger>
                           <TooltipContent>
-                            <p>{flat.available_rooms}/{flat.total_rooms} rooms available from next month onwards</p>
+                            <p className="text-sm">{flat.available_rooms}/{flat.total_rooms} rooms available from next month onwards</p>
                           </TooltipContent>
                         </Tooltip>
                       </TooltipProvider>
@@ -225,6 +228,7 @@ const Flats = () => {
         )}
       </div>
     </div>
+    </>
   );
 };
 
