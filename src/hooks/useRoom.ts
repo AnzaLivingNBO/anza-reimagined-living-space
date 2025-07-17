@@ -7,6 +7,9 @@ import type { Room } from './useRooms';
 type RoomWithFullDetails = Tables<'rooms'> & {
   flats: (Tables<'flats'> & {
     flat_gallery_images: Tables<'flat_gallery_images'>[];
+    flat_characteristics: (Tables<'flat_characteristics'> & {
+      characteristics: Tables<'characteristics'> | null;
+    })[];
   }) | null;
   room_images: Tables<'room_images'>[];
   room_characteristics: (Tables<'room_characteristics'> & {
@@ -18,6 +21,8 @@ export type RoomDetail = Room & {
   roomImages: string[];
   flatGalleryImages: string[];
   flatDescription: string;
+  flatCharacteristics: Array<{ label: string; icon: any }>;
+  flatId: string;
 };
 
 export const useRoom = (id: string) => {
@@ -40,6 +45,12 @@ export const useRoom = (id: string) => {
               *,
               flat_gallery_images (
                 *
+              ),
+              flat_characteristics (
+                *,
+                characteristics (
+                  *
+                )
               )
             ),
             room_images (
@@ -84,7 +95,15 @@ export const useRoom = (id: string) => {
           flatGalleryImages: roomData.flats?.flat_gallery_images
             ?.sort((a, b) => (a.display_order || 0) - (b.display_order || 0))
             .map(img => img.image_url) || [],
-          flatDescription: roomData.flats?.about_description || ''
+          flatDescription: roomData.flats?.about_description || '',
+          flatCharacteristics: roomData.flats?.flat_characteristics
+            ?.filter(fc => fc.characteristics)
+            .sort((a, b) => (a.characteristics?.importance_order || 0) - (b.characteristics?.importance_order || 0))
+            .map(fc => ({
+              label: fc.characteristics!.name,
+              icon: getCharacteristicIcon(fc.characteristics!.name)
+            })) || [],
+          flatId: roomData.flat_id
         };
 
         setRoom(transformedRoom);

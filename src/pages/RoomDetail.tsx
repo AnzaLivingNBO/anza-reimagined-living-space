@@ -348,82 +348,140 @@ const RoomDetail = () => {
             </div>
 
             {/* About the Flat & Images Section */}
-            <div className="grid lg:grid-cols-2 gap-8 mt-16 pt-16 border-t border-border">
+            <div className="mt-16 pt-16 border-t border-border">
               
-              {/* Left Column - About the Flat */}
-              <div className="space-y-6">
-                 <div>
-                   <h2 className="text-3xl font-bold mb-6">About the Flat</h2>
-                   <div className="space-y-4 text-muted-foreground leading-relaxed">
-                     {room.flatDescription ? (
-                       <p>{room.flatDescription}</p>
-                     ) : (
-                       <>
-                         <p>
-                           This beautiful apartment complex offers modern living with premium characteristics in one of Nairobi's most desirable neighborhoods. 
-                           The building features contemporary architecture with thoughtfully designed spaces that promote both comfort and community.
-                         </p>
-                         <p>
-                           Located in a secure compound with 24/7 security, residents enjoy peace of mind along with access to exceptional facilities 
-                           including a swimming pool, fully equipped gym, and a stunning rooftop terrace with panoramic city views.
-                         </p>
-                         <p>
-                           The strategic location provides easy access to major business districts, shopping centers, restaurants, and public transportation. 
-                           UN approved status ensures international standards of safety and quality throughout the property.
-                         </p>
-                         <p>
-                           Each unit comes fully furnished with modern appliances and fixtures, offering a hassle-free move-in experience. 
-                           Professional cleaning and housekeeping services maintain the highest standards of cleanliness and comfort.
-                         </p>
-                       </>
-                     )}
-                   </div>
-                 </div>
+              {/* Section Header */}
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
+                <h2 className="text-3xl font-bold">About the Flat</h2>
+                <Link to={`/flats/${room.flatId}`}>
+                  <Button className="gap-2">
+                    <Home className="w-4 h-4" />
+                    View Flat Details
+                  </Button>
+                </Link>
               </div>
 
-               {/* Right Column - Images */}
-               <div className="space-y-4">
-                 <h3 className="text-xl font-bold mb-4">Property Gallery</h3>
-                 {galleryImages.length > 0 ? (
-                   <div className="relative">
-                     <div className="relative h-80 rounded-lg overflow-hidden">
-                       <img 
-                         src={galleryImages[currentGalleryIndex]} 
-                         alt={`Property gallery image ${currentGalleryIndex + 1}`}
-                         className="w-full h-full object-cover"
-                       />
-                       
-                       {/* Navigation Arrows */}
-                       {galleryImages.length > 1 && (
-                         <>
-                           <button
-                             onClick={prevGalleryImage}
-                             className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white rounded-full p-2 transition-smooth"
-                           >
-                             <PrevIcon className="w-5 h-5" />
-                           </button>
-                           <button
-                             onClick={nextGalleryImage}
-                             className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white rounded-full p-2 transition-smooth"
-                           >
-                             <ChevronRight className="w-5 h-5" />
-                           </button>
-                         </>
-                       )}
-                       
-                       {/* Image Counter */}
-                       <div className="absolute bottom-4 right-4 bg-black/60 text-white px-3 py-1 rounded-full text-sm">
-                         {currentGalleryIndex + 1} / {galleryImages.length}
-                       </div>
-                     </div>
-                   </div>
-                 ) : (
-                   <div className="h-80 rounded-lg bg-muted flex items-center justify-center">
-                     <p className="text-muted-foreground">No gallery images available</p>
-                   </div>
-                 )}
-               </div>
-              
+              <div className="grid lg:grid-cols-2 gap-8">
+                
+                {/* Left Column - Description & Characteristics */}
+                <div className="space-y-8">
+                  {/* Description */}
+                  <div>
+                    <h3 className="text-xl font-bold mb-4">Description</h3>
+                    <div className="space-y-4 text-muted-foreground leading-relaxed">
+                      {room.flatDescription ? (
+                        <p>{room.flatDescription}</p>
+                      ) : (
+                        <>
+                          <p>
+                            This beautiful apartment complex offers modern living with premium characteristics in one of Nairobi's most desirable neighborhoods. 
+                            The building features contemporary architecture with thoughtfully designed spaces that promote both comfort and community.
+                          </p>
+                          <p>
+                            Located in a secure compound with 24/7 security, residents enjoy peace of mind along with access to exceptional facilities 
+                            including a swimming pool, fully equipped gym, and a stunning rooftop terrace with panoramic city views.
+                          </p>
+                          <p>
+                            The strategic location provides easy access to major business districts, shopping centers, restaurants, and public transportation. 
+                            UN approved status ensures international standards of safety and quality throughout the property.
+                          </p>
+                          <p>
+                            Each unit comes fully furnished with modern appliances and fixtures, offering a hassle-free move-in experience. 
+                            Professional cleaning and housekeeping services maintain the highest standards of cleanliness and comfort.
+                          </p>
+                        </>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Flat Characteristics */}
+                  {room.flatCharacteristics.length > 0 && (
+                    <div>
+                      <h3 className="text-xl font-bold mb-4">Flat Features & Amenities</h3>
+                      <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                        {room.flatCharacteristics.map((characteristic, i) => {
+                          const Icon = characteristic.icon;
+                          return (
+                            <Tooltip key={i}>
+                              <TooltipTrigger asChild>
+                                <div className="flex items-center gap-3 bg-muted rounded-lg p-3 hover:bg-primary/10 transition-smooth cursor-help">
+                                  <Icon className="w-5 h-5 text-primary flex-shrink-0" />
+                                  <span className="text-sm font-medium">{characteristic.label}</span>
+                                </div>
+                              </TooltipTrigger>
+                              <TooltipContent>
+                                <p>Flat amenity</p>
+                              </TooltipContent>
+                            </Tooltip>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                {/* Right Column - Images */}
+                <div className="space-y-4">
+                  <h3 className="text-xl font-bold mb-4">Property Gallery</h3>
+                  {galleryImages.length > 0 ? (
+                    <div className="relative">
+                      <div className="relative h-80 rounded-lg overflow-hidden">
+                        <img 
+                          src={galleryImages[currentGalleryIndex]} 
+                          alt={`Property gallery image ${currentGalleryIndex + 1}`}
+                          className="w-full h-full object-cover"
+                        />
+                        
+                        {/* Navigation Arrows */}
+                        {galleryImages.length > 1 && (
+                          <>
+                            <button
+                              onClick={prevGalleryImage}
+                              className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white rounded-full p-2 transition-smooth"
+                            >
+                              <PrevIcon className="w-5 h-5" />
+                            </button>
+                            <button
+                              onClick={nextGalleryImage}
+                              className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white rounded-full p-2 transition-smooth"
+                            >
+                              <ChevronRight className="w-5 h-5" />
+                            </button>
+                          </>
+                        )}
+                        
+                        {/* Image Counter */}
+                        <div className="absolute bottom-4 right-4 bg-black/60 text-white px-3 py-1 rounded-full text-sm">
+                          {currentGalleryIndex + 1} / {galleryImages.length}
+                        </div>
+                      </div>
+                      
+                      {/* Thumbnail Navigation */}
+                      <div className="flex gap-2 mt-4 overflow-x-auto pb-2">
+                        {galleryImages.map((image, index) => (
+                          <button
+                            key={index}
+                            onClick={() => setCurrentGalleryIndex(index)}
+                            className={`flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 transition-smooth ${
+                              index === currentGalleryIndex ? 'border-primary' : 'border-transparent'
+                            }`}
+                          >
+                            <img 
+                              src={image} 
+                              alt={`Gallery thumbnail ${index + 1}`}
+                              className="w-full h-full object-cover"
+                            />
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="h-80 rounded-lg bg-muted flex items-center justify-center text-muted-foreground">
+                      <p>No images available</p>
+                    </div>
+                  )}
+                </div>
+              </div>
             </div>
           </div>
         </section>
