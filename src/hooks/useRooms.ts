@@ -72,7 +72,6 @@ export const useRooms = () => {
           available: room.availability_status === 'available',
           characteristics: room.room_characteristics
             .filter(rc => rc.characteristics)
-            .sort((a, b) => (a.characteristics?.importance_order || 0) - (b.characteristics?.importance_order || 0))
             .map(rc => ({
               label: rc.characteristics!.name,
               icon: getCharacteristicIcon(rc.characteristics!.name)

@@ -84,7 +84,6 @@ export const useRoom = (id: string) => {
           available: roomData.availability_status === 'available',
           characteristics: roomData.room_characteristics
             .filter(rc => rc.characteristics)
-            .sort((a, b) => (a.characteristics?.importance_order || 0) - (b.characteristics?.importance_order || 0))
             .map(rc => ({
               label: rc.characteristics!.name,
               icon: getCharacteristicIcon(rc.characteristics!.name)
@@ -98,7 +97,6 @@ export const useRoom = (id: string) => {
           flatDescription: roomData.flats?.about_description || '',
           flatCharacteristics: roomData.flats?.flat_characteristics
             ?.filter(fc => fc.characteristics)
-            .sort((a, b) => (a.characteristics?.importance_order || 0) - (b.characteristics?.importance_order || 0))
             .map(fc => ({
               label: fc.characteristics!.name,
               icon: getCharacteristicIcon(fc.characteristics!.name)

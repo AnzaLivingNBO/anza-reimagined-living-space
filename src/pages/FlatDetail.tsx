@@ -44,7 +44,6 @@ interface Flat {
     characteristics: {
       id: string;
       name: string;
-      importance_order: number;
     };
   }>;
   rooms: Array<{
@@ -88,7 +87,7 @@ const FlatDetail = () => {
   });
 
   const flatImages = flat ? flat.flat_gallery_images?.sort((a, b) => a.display_order - b.display_order) || [] : [];
-  const characteristics = flat ? flat.flat_characteristics?.sort((a, b) => a.characteristics.importance_order - b.characteristics.importance_order) || [] : [];
+  const characteristics = flat ? flat.flat_characteristics || [] : [];
   const availableRooms = flat ? flat.rooms?.filter(room => room.availability_status === 'available') || [] : [];
 
   if (isLoading) {
@@ -433,7 +432,7 @@ const FlatDetail = () => {
                         <h3 className="font-semibold mb-2">{room.title}</h3>
                         <div className="flex items-center justify-between">
                           <div className="text-lg font-bold text-primary">
-                            ${room.price}<span className="text-sm text-muted-foreground">/month</span>
+                            ${Math.round(room.price / 130)}<span className="text-sm text-muted-foreground">/month</span>
                           </div>
                           <Link to={`/rooms/${room.id}`}>
                             <Button size="sm">View Details</Button>

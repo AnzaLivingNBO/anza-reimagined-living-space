@@ -294,10 +294,10 @@ const RoomDetail = () => {
                   <CardContent className="p-6">
                     <div className="text-center mb-6">
                       <div className="text-3xl font-bold text-primary mb-1">
-                        ${room.price}
+                        ${Math.round(room.price / 130)}
                         <span className="text-lg text-muted-foreground">{room.period}</span>
                       </div>
-                      <p className="text-sm text-muted-foreground">Security deposit: ${room.price * 2}</p>
+                      <p className="text-sm text-muted-foreground">Security deposit: ${Math.round((room.price * 2) / 130)}</p>
                     </div>
 
                      <div className="space-y-4 mb-6">

@@ -111,7 +111,7 @@ export const FeaturedRooms = () => {
                     </div>
                     <div className="text-right">
                       <div className="text-2xl font-bold text-primary">
-                        ${room.price}
+                        ${Math.round(room.price / 130)}
                       </div>
                       <div className="text-sm text-muted-foreground">
                         {room.period}

@@ -28,7 +28,6 @@ interface Flat {
     characteristics: {
       id: string;
       name: string;
-      importance_order: number;
     };
   }>;
 }
@@ -96,8 +95,7 @@ const Flats = () => {
           {flats?.map((flat) => {
             const currentImageIndex = selectedImageIndex[flat.id] || 0;
             const images = flat.flat_gallery_images?.sort((a, b) => a.display_order - b.display_order) || [];
-            const characteristics = flat.flat_characteristics
-              ?.sort((a, b) => a.characteristics.importance_order - b.characteristics.importance_order) || [];
+            const characteristics = flat.flat_characteristics || [];
 
             return (
               <Card key={flat.id} className="overflow-hidden backdrop-blur-sm bg-card/80 border-border/50 hover:shadow-xl transition-all duration-300">

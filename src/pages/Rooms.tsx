@@ -195,7 +195,7 @@ const Rooms = () => {
                           </div>
                           <div className="text-left sm:text-right sm:ml-4">
                             <div className="text-2xl lg:text-3xl font-bold text-primary">
-                              ${room.price}
+                              ${Math.round(room.price / 130)}
                             </div>
                             <div className="text-sm text-muted-foreground">
                               {room.period}
