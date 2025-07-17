@@ -147,18 +147,21 @@ export type Database = {
       }
       room_characteristics: {
         Row: {
+          alt_text: string | null
           characteristic_id: string
           created_at: string
           id: string
           room_id: string
         }
         Insert: {
+          alt_text?: string | null
           characteristic_id: string
           created_at?: string
           id?: string
           room_id: string
         }
         Update: {
+          alt_text?: string | null
           characteristic_id?: string
           created_at?: string
           id?: string

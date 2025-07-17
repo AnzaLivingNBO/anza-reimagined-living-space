@@ -269,27 +269,9 @@ const FlatDetail = () => {
                 <div className="space-y-6">
                   <div>
                     <h1 className="text-3xl md:text-4xl font-bold mb-4">{flat.name}</h1>
-                    <div className="flex items-center gap-4 mb-4">
-                      <div className="flex items-center text-muted-foreground">
-                        <MapPin className="w-5 h-5 mr-2" />
-                        <span>{flat.location}</span>
-                      </div>
-                      <TooltipProvider>
-                        <Tooltip>
-                          <TooltipTrigger asChild>
-                            <Badge 
-                              variant="outline" 
-                              className="flex items-center gap-2 px-3 py-1 hover:bg-primary/5 transition-colors cursor-help"
-                            >
-                              <Users className="w-4 h-4" />
-                              <span className="font-medium">{flat.available_rooms}/{flat.total_rooms}</span>
-                            </Badge>
-                          </TooltipTrigger>
-                          <TooltipContent>
-                            <p className="text-sm">{flat.available_rooms}/{flat.total_rooms} rooms available from next month onwards</p>
-                          </TooltipContent>
-                        </Tooltip>
-                      </TooltipProvider>
+                    <div className="flex items-center text-muted-foreground mb-4">
+                      <MapPin className="w-5 h-5 mr-2" />
+                      <span>{flat.location}</span>
                     </div>
                   </div>
 
