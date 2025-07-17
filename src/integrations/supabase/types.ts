@@ -115,6 +115,7 @@ export type Database = {
           id: string
           location: string
           name: string
+          neighborhood: string | null
           total_rooms: number
           updated_at: string
         }
@@ -126,6 +127,7 @@ export type Database = {
           id?: string
           location: string
           name: string
+          neighborhood?: string | null
           total_rooms?: number
           updated_at?: string
         }
@@ -137,6 +139,7 @@ export type Database = {
           id?: string
           location?: string
           name?: string
+          neighborhood?: string | null
           total_rooms?: number
           updated_at?: string
         }

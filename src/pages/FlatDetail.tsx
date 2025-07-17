@@ -29,6 +29,7 @@ interface Flat {
   id: string;
   name: string;
   location: string;
+  neighborhood?: string;
   about_description: string;
   available_rooms: number;
   total_rooms: number;
@@ -296,6 +297,14 @@ const FlatDetail = () => {
                   <p className="text-lg text-muted-foreground leading-relaxed">
                     {flat.about_description}
                   </p>
+
+                  {/* Neighborhood */}
+                  {flat.neighborhood && (
+                    <div className="bg-muted/50 rounded-lg p-4">
+                      <h3 className="text-lg font-semibold mb-2">Neighborhood</h3>
+                      <p className="text-muted-foreground">{flat.neighborhood}</p>
+                    </div>
+                  )}
 
                    {/* Characteristics & What's Included */}
                    {characteristics.length > 0 && (
