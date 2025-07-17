@@ -18,37 +18,37 @@ export type Database = {
         Row: {
           created_at: string
           id: string
-          importance_order: number
           name: string
         }
         Insert: {
           created_at?: string
           id?: string
-          importance_order: number
           name: string
         }
         Update: {
           created_at?: string
           id?: string
-          importance_order?: number
           name?: string
         }
         Relationships: []
       }
       flat_characteristics: {
         Row: {
+          alt_text: string | null
           characteristic_id: string
           created_at: string
           flat_id: string
           id: string
         }
         Insert: {
+          alt_text?: string | null
           characteristic_id: string
           created_at?: string
           flat_id: string
           id?: string
         }
         Update: {
+          alt_text?: string | null
           characteristic_id?: string
           created_at?: string
           flat_id?: string
