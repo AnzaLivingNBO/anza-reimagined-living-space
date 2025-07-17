@@ -217,30 +217,39 @@ export type Database = {
         Row: {
           availability_status: string
           created_at: string
+          deposit: number | null
           description: string | null
           flat_id: string
           id: string
+          max_occupancy: number | null
           price: number
+          room_size: number | null
           title: string
           updated_at: string
         }
         Insert: {
           availability_status?: string
           created_at?: string
+          deposit?: number | null
           description?: string | null
           flat_id: string
           id?: string
+          max_occupancy?: number | null
           price: number
+          room_size?: number | null
           title: string
           updated_at?: string
         }
         Update: {
           availability_status?: string
           created_at?: string
+          deposit?: number | null
           description?: string | null
           flat_id?: string
           id?: string
+          max_occupancy?: number | null
           price?: number
+          room_size?: number | null
           title?: string
           updated_at?: string
         }
