@@ -23,6 +23,7 @@ import {
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { getCharacteristicIcon } from "@/utils/iconMapping";
+import { StatusBadge } from "@/utils/statusBadge";
 
 interface Flat {
   id: string;
@@ -422,11 +423,10 @@ const FlatDetail = () => {
                             className="w-full h-48 object-cover"
                           />
                         )}
-                        <Badge 
-                          className="absolute top-2 right-2 bg-green-100 text-green-800"
-                        >
-                          Available
-                        </Badge>
+                        <StatusBadge 
+                          status={room.availability_status}
+                          className="absolute top-2 right-2"
+                        />
                       </div>
                       <CardContent className="p-4">
                         <h3 className="font-semibold mb-2">{room.title}</h3>
