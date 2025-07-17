@@ -88,7 +88,7 @@ const FlatDetail = () => {
 
   const flatImages = flat ? flat.flat_gallery_images?.sort((a, b) => a.display_order - b.display_order) || [] : [];
   const characteristics = flat ? flat.flat_characteristics || [] : [];
-  const availableRooms = flat ? flat.rooms?.filter(room => room.availability_status === 'available') || [] : [];
+  const allRooms = flat ? flat.rooms || [] : [];
 
   if (isLoading) {
     return (
@@ -406,12 +406,12 @@ const FlatDetail = () => {
               </div>
             </div>
 
-            {/* Available Rooms Section */}
-            {availableRooms.length > 0 && (
+            {/* All Rooms Section */}
+            {allRooms.length > 0 && (
               <div className="mt-16 pt-16 border-t border-border">
-                <h2 className="text-3xl font-bold mb-8">Available Rooms</h2>
+                <h2 className="text-3xl font-bold mb-8">Rooms</h2>
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {availableRooms.map((room) => (
+                  {allRooms.map((room) => (
                     <Card key={room.id} className="overflow-hidden hover:shadow-lg transition-shadow">
                       <div className="relative">
                         {room.room_images.length > 0 && (
