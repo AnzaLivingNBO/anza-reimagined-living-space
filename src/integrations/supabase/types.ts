@@ -218,7 +218,9 @@ export type Database = {
       }
       rooms: {
         Row: {
-          availability_status: string
+          availability_status:
+            | Database["public"]["Enums"]["availability_status_enum"]
+            | null
           created_at: string
           deposit: number | null
           description: string | null
@@ -232,7 +234,9 @@ export type Database = {
           updated_at: string
         }
         Insert: {
-          availability_status?: string
+          availability_status?:
+            | Database["public"]["Enums"]["availability_status_enum"]
+            | null
           created_at?: string
           deposit?: number | null
           description?: string | null
@@ -246,7 +250,9 @@ export type Database = {
           updated_at?: string
         }
         Update: {
-          availability_status?: string
+          availability_status?:
+            | Database["public"]["Enums"]["availability_status_enum"]
+            | null
           created_at?: string
           deposit?: number | null
           description?: string | null
@@ -277,7 +283,12 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      availability_status_enum:
+        | "available"
+        | "becoming_available"
+        | "unavailable"
+        | "reserved"
+        | "under_maintenance"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -404,6 +415,14 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      availability_status_enum: [
+        "available",
+        "becoming_available",
+        "unavailable",
+        "reserved",
+        "under_maintenance",
+      ],
+    },
   },
 } as const
