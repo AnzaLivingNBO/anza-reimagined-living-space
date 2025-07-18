@@ -28,25 +28,10 @@ const vibeCharacteristics = [
   'Shared cooking experiences',
   'Professional networking',
   'Cultural exchange and diversity',
-  'Fitness and wellness focused',
-  'Creative and artistic vibe',
-  'Tech and startup community',
-  'Environmental consciousness',
-  'Regular house meetings',
-  'Shared hobby interests',
-  'International community',
-  'Local cultural immersion',
   'Work-from-home friendly',
   'Early risers lifestyle',
   'Night owls friendly',
-  'Pet-loving community',
-  'Minimalist living style',
-  'Community events and outings',
-  'Language practice opportunities',
-  'Mentorship and learning',
-  'Business networking',
-  'Outdoor activities together',
-  'Movie nights and entertainment'
+  'Community events and outings'
 ];
 
 interface ApplicationFormProps {
