@@ -35,8 +35,8 @@ interface Flat {
 
 const Flats = () => {
   const [selectedImageIndex, setSelectedImageIndex] = useState<{ [key: string]: number }>({});
-  const [availabilityFilter, setAvailabilityFilter] = useState<string>("");
-  const [locationFilter, setLocationFilter] = useState<string>("");
+  const [availabilityFilter, setAvailabilityFilter] = useState<string>("all");
+  const [locationFilter, setLocationFilter] = useState<string>("all");
 
   const { data: flats, isLoading } = useQuery({
     queryKey: ["flats"],
@@ -94,7 +94,7 @@ const Flats = () => {
     }
     
     // Location filter
-    if (locationFilter && flat.location !== locationFilter) {
+    if (locationFilter !== "all" && flat.location !== locationFilter) {
       return false;
     }
     
@@ -142,7 +142,7 @@ const Flats = () => {
                     <SelectValue placeholder="All flats" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">All flats</SelectItem>
+                    <SelectItem value="all">All flats</SelectItem>
                     <SelectItem value="available">Available rooms</SelectItem>
                     <SelectItem value="unavailable">No available rooms</SelectItem>
                   </SelectContent>
@@ -157,7 +157,7 @@ const Flats = () => {
                     <SelectValue placeholder="All locations" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">All locations</SelectItem>
+                    <SelectItem value="all">All locations</SelectItem>
                     {locations?.map((location) => (
                       <SelectItem key={location} value={location}>
                         {location}
@@ -168,13 +168,13 @@ const Flats = () => {
               </div>
 
               {/* Clear Filters */}
-              {(availabilityFilter || locationFilter) && (
+              {(availabilityFilter !== "all" || locationFilter !== "all") && (
                 <Button
                   variant="outline"
                   size="sm"
                   onClick={() => {
-                    setAvailabilityFilter("");
-                    setLocationFilter("");
+                    setAvailabilityFilter("all");
+                    setLocationFilter("all");
                   }}
                   className="flex items-center gap-2 mt-4 sm:mt-6"
                 >
