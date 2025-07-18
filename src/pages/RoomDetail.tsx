@@ -266,23 +266,16 @@ const RoomDetail = () => {
                   <div>
                     <h3 className="text-xl font-bold mb-4">Location</h3>
                     <div className="grid md:grid-cols-2 gap-4">
-                      {/* Key Takeaways Box - Now on the left */}
+                      {/* Neighborhood Information */}
                       <Card>
                         <CardContent className="p-4">
-                          <h4 className="font-semibold mb-3 text-primary">Key Takeaways</h4>
-                          <div className="space-y-2">
-                            <div className="flex items-center gap-2 text-sm">
-                              <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                              <span>Price includes everything</span>
-                            </div>
-                            <div className="flex items-center gap-2 text-sm">
-                              <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                              <span>Flat is fully furnished</span>
-                            </div>
-                            <div className="flex items-center gap-2 text-sm">
-                              <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                              <span>Offers everything you need</span>
-                            </div>
+                          <h4 className="font-semibold mb-3 text-primary">Neighborhood</h4>
+                          <div className="text-sm text-muted-foreground leading-relaxed">
+                            {room.neighbourhood ? (
+                              <p>{room.neighbourhood}</p>
+                            ) : (
+                              <p>No neighborhood information available.</p>
+                            )}
                           </div>
                         </CardContent>
                       </Card>
