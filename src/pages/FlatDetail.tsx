@@ -92,7 +92,7 @@ const FlatDetail = () => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen">
+      <div className="min-h-screen pt-20">
         <Header />
         <div className="flex items-center justify-center py-20">
           <Loader2 className="w-8 h-8 animate-spin text-primary" />
@@ -104,7 +104,7 @@ const FlatDetail = () => {
 
   if (error || !flat) {
     return (
-      <div className="min-h-screen">
+      <div className="min-h-screen pt-20">
         <Header />
         <div className="flex items-center justify-center py-20">
           <div className="text-center">
@@ -149,19 +149,19 @@ const FlatDetail = () => {
 
   return (
     <TooltipProvider>
-      <div className="min-h-screen">
+      <div className="min-h-screen pt-20">
         <Header />
         
         {/* Mapbox Token Input */}
         {!mapboxToken && (
-          <section className="py-4 bg-yellow-50 border-b border-yellow-200">
+          <section className="py-4 bg-muted/50 border-b border-border">
             <div className="container mx-auto px-4">
               <div className="flex items-center gap-4 max-w-2xl mx-auto">
-                <AlertCircle className="w-5 h-5 text-yellow-600 flex-shrink-0" />
+                <AlertCircle className="w-5 h-5 text-primary flex-shrink-0" />
                 <div className="flex-1">
-                  <p className="text-sm text-yellow-700 mb-2">
+                  <p className="text-sm text-muted-foreground mb-2">
                     To enable interactive maps, please enter your Mapbox public token. Get it from{' '}
-                    <a href="https://mapbox.com/" target="_blank" rel="noopener noreferrer" className="underline">
+                    <a href="https://mapbox.com/" target="_blank" rel="noopener noreferrer" className="underline text-primary hover:text-primary/80">
                       mapbox.com
                     </a>
                   </p>
