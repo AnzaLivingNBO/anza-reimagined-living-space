@@ -166,45 +166,6 @@ export type Database = {
         }
         Relationships: []
       }
-      room_characteristics: {
-        Row: {
-          alt_text: string | null
-          characteristic_id: string
-          created_at: string
-          id: string
-          room_id: string
-        }
-        Insert: {
-          alt_text?: string | null
-          characteristic_id: string
-          created_at?: string
-          id?: string
-          room_id: string
-        }
-        Update: {
-          alt_text?: string | null
-          characteristic_id?: string
-          created_at?: string
-          id?: string
-          room_id?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "room_characteristics_characteristic_id_fkey"
-            columns: ["characteristic_id"]
-            isOneToOne: false
-            referencedRelation: "room_characteristics_types"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "room_characteristics_room_id_fkey"
-            columns: ["room_id"]
-            isOneToOne: false
-            referencedRelation: "rooms"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
       room_characteristics_types: {
         Row: {
           created_at: string
@@ -290,6 +251,45 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "room_images_room_id_fkey"
+            columns: ["room_id"]
+            isOneToOne: false
+            referencedRelation: "rooms"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      room_included: {
+        Row: {
+          alt_text: string | null
+          characteristic_id: string
+          created_at: string
+          id: string
+          room_id: string
+        }
+        Insert: {
+          alt_text?: string | null
+          characteristic_id: string
+          created_at?: string
+          id?: string
+          room_id: string
+        }
+        Update: {
+          alt_text?: string | null
+          characteristic_id?: string
+          created_at?: string
+          id?: string
+          room_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "room_characteristics_characteristic_id_fkey"
+            columns: ["characteristic_id"]
+            isOneToOne: false
+            referencedRelation: "room_characteristics_types"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "room_characteristics_room_id_fkey"
             columns: ["room_id"]
             isOneToOne: false
             referencedRelation: "rooms"
