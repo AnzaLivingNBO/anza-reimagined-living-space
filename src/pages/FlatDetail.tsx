@@ -341,16 +341,13 @@ const FlatDetail = () => {
                         <div className="mb-6">
                           <h4 className="text-sm font-semibold mb-3 text-muted-foreground uppercase tracking-wide">Features</h4>
                           <div className="grid grid-cols-2 gap-2">
-                            {characteristics.map((char, index) => {
+                            {characteristics.map((char) => {
                               const Icon = getCharacteristicIcon(char.characteristics.name);
-                              const colors = ['bg-primary/10 border-primary/30', 'bg-secondary/10 border-secondary/30', 'bg-accent/20 border-accent/40'];
-                              const textColors = ['text-primary', 'text-secondary', 'text-accent-foreground'];
-                              const colorIndex = index % colors.length;
                               return (
                                 <Tooltip key={char.id}>
                                   <TooltipTrigger asChild>
-                                    <div className={`flex items-center gap-2 p-2 ${colors[colorIndex]} border rounded-lg hover:scale-105 transition-smooth cursor-help`}>
-                                      <Icon className={`w-4 h-4 ${textColors[colorIndex]} flex-shrink-0`} />
+                                    <div className="flex items-center gap-2 p-2 bg-muted/50 rounded-lg hover:bg-primary/10 transition-smooth cursor-help">
+                                      <Icon className="w-4 h-4 text-primary flex-shrink-0" />
                                       <span className="text-xs font-medium truncate">{char.characteristics.name}</span>
                                     </div>
                                   </TooltipTrigger>
