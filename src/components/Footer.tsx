@@ -71,13 +71,6 @@ export const Footer = () => {
                 <Mail className="w-5 h-5 text-primary flex-shrink-0" />
                 <span className="text-background/80">hello@anzaliving.com</span>
               </div>
-              <div className="flex items-start space-x-3">
-                <MapPin className="w-5 h-5 text-primary flex-shrink-0 mt-1" />
-                <span className="text-background/80">
-                  123 Co-living Street<br />
-                  Downtown, City 12345
-                </span>
-              </div>
             </div>
           </div>
         </div>

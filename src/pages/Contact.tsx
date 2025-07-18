@@ -14,15 +14,15 @@ import { RoomApplicationForm } from '@/components/RoomApplicationForm';
 const contactInfo = [
   {
     icon: Phone,
-    title: 'Phone',
-    details: ['+1 (555) 123-4567', '+1 (555) 987-6543'],
-    description: 'Mon-Fri 9AM-6PM, Sat 10AM-4PM'
+    title: 'Call Us',
+    details: ['+1 (555) 123-4567'],
+    gradient: 'from-emerald-400 to-teal-500'
   },
   {
     icon: Mail,
-    title: 'Email',
-    details: ['hello@anzaliving.com', 'support@anzaliving.com'],
-    description: 'We respond within 24 hours'
+    title: 'Email Us', 
+    details: ['hello@anzaliving.com'],
+    gradient: 'from-violet-400 to-purple-500'
   }
 ];
 
@@ -102,32 +102,31 @@ const Contact = () => {
       </section>
 
       {/* Contact Information */}
-      <section className="py-20 bg-background">
+      <section className="py-12 bg-background">
         <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-2 gap-6 mb-16">
+          <div className="flex justify-center gap-6 mb-16">
             {contactInfo.map((info, index) => {
               const Icon = info.icon;
               return (
                 <Card 
                   key={index}
-                  className="shadow-soft hover-lift border-border/50 animate-fade-up"
+                  className="shadow-soft hover-lift border-border/50 animate-fade-up max-w-sm w-full"
                   style={{animationDelay: `${index * 0.1}s`}}
                 >
-                  <CardHeader className="text-center pb-2">
-                    <div className="w-12 h-12 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center mx-auto mb-3">
-                      <Icon className="w-6 h-6 text-white" />
+                  <CardHeader className="text-center pb-4">
+                    <div className={`w-16 h-16 bg-gradient-to-br ${info.gradient} rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg`}>
+                      <Icon className="w-8 h-8 text-white" />
                     </div>
-                    <CardTitle className="text-lg">{info.title}</CardTitle>
+                    <CardTitle className="text-xl bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                      {info.title}
+                    </CardTitle>
                   </CardHeader>
                   <CardContent className="text-center pt-0">
                     {info.details.map((detail, i) => (
-                      <p key={i} className="font-medium text-foreground mb-1">
+                      <p key={i} className="text-lg font-semibold text-foreground mb-2">
                         {detail}
                       </p>
                     ))}
-                    <p className="text-sm text-muted-foreground mt-2">
-                      {info.description}
-                    </p>
                   </CardContent>
                 </Card>
               );
