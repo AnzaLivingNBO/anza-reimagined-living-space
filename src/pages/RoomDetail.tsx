@@ -131,7 +131,7 @@ const RoomDetail = () => {
         )}
 
         {/* Breadcrumb */}
-        <section className="pt-6 pb-4 bg-muted/30">
+        <section className="pt-20 pb-4 bg-muted/30">
           <div className="container mx-auto px-4">
             <div className="flex items-center space-x-2 text-sm text-muted-foreground">
               <Link to="/" className="hover:text-primary transition-smooth">Home</Link>
@@ -314,62 +314,73 @@ const RoomDetail = () => {
               {/* Right Column - Booking & Info */}
               <div className="space-y-6">
                 
-                {/* Pricing Card */}
-                <Card className="sticky top-24">
-                  <CardContent className="p-6">
-                    <div className="text-center mb-6">
-                      <div className="text-3xl font-bold text-primary mb-1">
+                {/* Enhanced Info Card */}
+                <Card className="sticky top-24 overflow-hidden border-0 shadow-xl bg-gradient-to-br from-background via-background to-primary/5">
+                  {/* Header Section */}
+                  <div className="bg-gradient-to-r from-primary to-secondary p-6 text-white">
+                    <div className="text-center">
+                      <div className="text-3xl font-bold mb-1">
                         KES {room.price.toLocaleString()}
-                        <span className="text-lg text-muted-foreground">{room.period}</span>
+                        <span className="text-lg opacity-90">{room.period}</span>
                       </div>
-                      <p className="text-sm text-muted-foreground">Security deposit: KES {room.deposit.toLocaleString()}</p>
+                      <p className="text-sm opacity-80">Security deposit: KES {room.deposit.toLocaleString()}</p>
+                    </div>
+                  </div>
+
+                  <CardContent className="p-0">
+                    {/* Room Stats Grid */}
+                    <div className="p-6 bg-gradient-to-br from-secondary/5 to-accent/5">
+                      <div className="grid grid-cols-2 gap-4">
+                        <div className="text-center p-3 bg-background/60 rounded-lg backdrop-blur-sm">
+                          <div className="text-2xl font-bold text-primary">{room.roomSize}</div>
+                          <div className="text-xs text-muted-foreground uppercase tracking-wide">SQM</div>
+                        </div>
+                        <div className="text-center p-3 bg-background/60 rounded-lg backdrop-blur-sm">
+                          <div className="text-2xl font-bold text-primary">{room.maxOccupancy}</div>
+                          <div className="text-xs text-muted-foreground uppercase tracking-wide">MAX OCCUPANCY</div>
+                        </div>
+                      </div>
                     </div>
 
-                       <div className="space-y-4 mb-6">
-                        <div className="flex justify-between text-sm">
-                          <span className="text-muted-foreground">Room Size:</span>
-                          <span className="font-medium">{room.roomSize} sqm</span>
-                        </div>
-                        <div className="flex justify-between text-sm">
-                          <span className="text-muted-foreground">Max Occupancy:</span>
-                          <span className="font-medium">{room.maxOccupancy} person{room.maxOccupancy > 1 ? 's' : ''}</span>
-                        </div>
-                        <div className="flex justify-between text-sm">
-                          <span className="text-muted-foreground">Move-in Date:</span>
-                          <span className="font-medium">Available now</span>
-                        </div>
-                        <div className="flex justify-between text-sm">
-                          <span className="text-muted-foreground">Lease Term:</span>
-                          <span className="font-medium">{room.leaseTerm}</span>
+                    {/* Room Details */}
+                    <div className="px-6 py-4 space-y-3 border-b border-border/50">
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm text-muted-foreground">Move-in Date</span>
+                        <span className="font-medium">Available now</span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm text-muted-foreground">Lease Term</span>
+                        <span className="font-medium">{room.leaseTerm}</span>
+                      </div>
+                    </div>
+
+                    {/* What's Included Section */}
+                    {room.characteristics.length > 0 && (
+                      <div className="px-6 py-4 border-b border-border/50">
+                        <h4 className="text-sm font-semibold mb-3 text-muted-foreground uppercase tracking-wide">What's Included</h4>
+                        <div className="grid grid-cols-2 gap-2">
+                          {room.characteristics.map((characteristic, i) => {
+                            const Icon = characteristic.icon;
+                            return (
+                              <Tooltip key={i}>
+                                <TooltipTrigger asChild>
+                                  <div className="flex items-center gap-2 p-2 bg-muted/30 rounded-lg hover:bg-primary/10 transition-smooth cursor-help">
+                                    <Icon className="w-4 h-4 text-primary flex-shrink-0" />
+                                    <span className="text-xs font-medium truncate">{characteristic.label}</span>
+                                  </div>
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                  <p>Included with this room</p>
+                                </TooltipContent>
+                              </Tooltip>
+                            );
+                          })}
                         </div>
                       </div>
+                    )}
 
-                      {/* Room Characteristics - What's Included */}
-                      {room.characteristics.length > 0 && (
-                        <div className="mb-6">
-                          <h4 className="text-sm font-semibold mb-3 text-muted-foreground uppercase tracking-wide">What's Included</h4>
-                          <div className="grid grid-cols-2 gap-2">
-                            {room.characteristics.map((characteristic, i) => {
-                              const Icon = characteristic.icon;
-                              return (
-                                <Tooltip key={i}>
-                                  <TooltipTrigger asChild>
-                                    <div className="flex items-center gap-2 p-2 bg-muted/50 rounded-lg hover:bg-primary/10 transition-smooth cursor-help">
-                                      <Icon className="w-4 h-4 text-primary flex-shrink-0" />
-                                      <span className="text-xs font-medium truncate">{characteristic.label}</span>
-                                    </div>
-                                  </TooltipTrigger>
-                                  <TooltipContent>
-                                    <p>Included with this room</p>
-                                  </TooltipContent>
-                                </Tooltip>
-                              );
-                            })}
-                          </div>
-                        </div>
-                      )}
-
-                    <div className="space-y-3">
+                    {/* Action Buttons */}
+                    <div className="p-6 space-y-3">
                       <Button className="w-full btn-primary" size="lg">
                         <Home className="w-4 h-4 mr-2" />
                         Start Room Application
