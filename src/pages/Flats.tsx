@@ -5,7 +5,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Home, MapPin } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Home, MapPin, Filter, X } from "lucide-react";
 import { getCharacteristicIcon } from "@/utils/iconMapping";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Header } from "@/components/Header";
@@ -34,6 +35,8 @@ interface Flat {
 
 const Flats = () => {
   const [selectedImageIndex, setSelectedImageIndex] = useState<{ [key: string]: number }>({});
+  const [availabilityFilter, setAvailabilityFilter] = useState<string>("");
+  const [locationFilter, setLocationFilter] = useState<string>("");
 
   const { data: flats, isLoading } = useQuery({
     queryKey: ["flats"],
@@ -52,6 +55,19 @@ const Flats = () => {
     },
   });
 
+  const { data: locations } = useQuery({
+    queryKey: ["locations"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("flats")
+        .select("location")
+        .order("location");
+
+      if (error) throw error;
+      return [...new Set(data.map(item => item.location))];
+    },
+  });
+
   const handleImageChange = (flatId: string, direction: 'next' | 'prev', totalImages: number) => {
     setSelectedImageIndex(prev => {
       const currentIndex = prev[flatId] || 0;
@@ -66,6 +82,24 @@ const Flats = () => {
       return { ...prev, [flatId]: newIndex };
     });
   };
+
+  // Filter flats based on selected filters
+  const filteredFlats = flats?.filter(flat => {
+    // Availability filter
+    if (availabilityFilter === "available" && flat.available_rooms === 0) {
+      return false;
+    }
+    if (availabilityFilter === "unavailable" && flat.available_rooms > 0) {
+      return false;
+    }
+    
+    // Location filter
+    if (locationFilter && flat.location !== locationFilter) {
+      return false;
+    }
+    
+    return true;
+  });
 
   if (isLoading) {
     return (
@@ -82,17 +116,78 @@ const Flats = () => {
       <Header />
       <div className="min-h-screen bg-gradient-to-br from-background via-secondary/10 to-accent/5 py-20">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
-          <h1 className="text-4xl lg:text-6xl font-bold mb-6 bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent">
+        <div className="text-center mb-12">
+          <h1 className="text-4xl lg:text-6xl font-bold mb-4 bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent">
             Available Flats
           </h1>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Discover our collection of premium flats across Nairobi's most desirable neighborhoods
           </p>
         </div>
 
-        <div className="space-y-8">
-          {flats?.map((flat) => {
+        {/* Filters Section */}
+        <div className="mb-8">
+          <div className="flex flex-col sm:flex-row gap-4 items-center justify-between bg-card/50 p-4 rounded-lg border border-border/50">
+            <div className="flex items-center gap-2 text-sm font-medium">
+              <Filter className="w-4 h-4" />
+              Filter by:
+            </div>
+            
+            <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+              {/* Availability Filter */}
+              <div className="flex flex-col gap-1">
+                <label className="text-xs text-muted-foreground">Availability</label>
+                <Select value={availabilityFilter} onValueChange={setAvailabilityFilter}>
+                  <SelectTrigger className="w-full sm:w-[180px]">
+                    <SelectValue placeholder="All flats" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="">All flats</SelectItem>
+                    <SelectItem value="available">Available rooms</SelectItem>
+                    <SelectItem value="unavailable">No available rooms</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* Location Filter */}
+              <div className="flex flex-col gap-1">
+                <label className="text-xs text-muted-foreground">Location</label>
+                <Select value={locationFilter} onValueChange={setLocationFilter}>
+                  <SelectTrigger className="w-full sm:w-[180px]">
+                    <SelectValue placeholder="All locations" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="">All locations</SelectItem>
+                    {locations?.map((location) => (
+                      <SelectItem key={location} value={location}>
+                        {location}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* Clear Filters */}
+              {(availabilityFilter || locationFilter) && (
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => {
+                    setAvailabilityFilter("");
+                    setLocationFilter("");
+                  }}
+                  className="flex items-center gap-2 mt-4 sm:mt-6"
+                >
+                  <X className="w-3 h-3" />
+                  Clear
+                </Button>
+              )}
+            </div>
+          </div>
+        </div>
+
+        <div className="space-y-6">
+          {filteredFlats?.map((flat) => {
             const currentImageIndex = selectedImageIndex[flat.id] || 0;
             const images = flat.flat_gallery_images?.sort((a, b) => a.display_order - b.display_order) || [];
             const characteristics = flat.flat_characteristics || [];
@@ -151,11 +246,11 @@ const Flats = () => {
                   </div>
 
                   {/* Content Section */}
-                  <div className="lg:col-span-1 p-6 lg:p-8">
-                    <div className="flex items-start justify-between mb-4">
+                  <div className="lg:col-span-1 p-5 lg:p-6">
+                    <div className="flex items-start justify-between mb-3">
                       <div>
-                        <h2 className="text-2xl lg:text-3xl font-bold mb-2">{flat.name}</h2>
-                        <div className="flex items-center text-muted-foreground mb-3">
+                        <h2 className="text-xl lg:text-2xl font-bold mb-2">{flat.name}</h2>
+                        <div className="flex items-center text-muted-foreground mb-2">
                           <MapPin className="w-4 h-4 mr-2" />
                           <span>{flat.location}</span>
                         </div>
@@ -180,13 +275,13 @@ const Flats = () => {
                       </TooltipProvider>
                     </div>
 
-                    <p className="text-muted-foreground mb-6 leading-relaxed line-clamp-2">
+                    <p className="text-muted-foreground mb-4 leading-relaxed line-clamp-2">
                       {flat.about_description}
                     </p>
 
                     {/* Characteristics */}
                     {characteristics.length > 0 && (
-                      <div className="mb-6">
+                      <div className="mb-4">
                         <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-border scrollbar-track-transparent">
                           {characteristics.map((char) => {
                             const Icon = getCharacteristicIcon(char.characteristics.name);
@@ -221,6 +316,13 @@ const Flats = () => {
             );
           })}
         </div>
+
+        {filteredFlats?.length === 0 && flats && flats.length > 0 && (
+          <div className="text-center py-12">
+            <h3 className="text-lg font-semibold mb-2">No flats match your filters</h3>
+            <p className="text-muted-foreground">Try adjusting your search criteria</p>
+          </div>
+        )}
 
         {flats?.length === 0 && (
           <div className="text-center py-16">
