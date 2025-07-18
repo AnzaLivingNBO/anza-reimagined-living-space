@@ -1,9 +1,10 @@
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
+import { Card, CardContent } from '@/components/ui/card';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { MapPin, Loader2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useRooms } from '@/hooks/useRooms';
+import { StatusBadge } from "@/utils/statusBadge";
 
 export const FeaturedRooms = () => {
   const { rooms, loading, error } = useRooms();
@@ -71,87 +72,72 @@ export const FeaturedRooms = () => {
             </p>
           </div>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {featuredRooms.map((room, index) => (
-              <div 
-                key={room.id}
-                className="group bg-card rounded-2xl overflow-hidden shadow-soft hover-lift border border-border/50 animate-fade-up"
+              <Card 
+                key={room.id} 
+                className="overflow-hidden hover:shadow-xl transition-smooth transform hover:scale-105 hover:-translate-y-1 border-2 border-transparent hover:border-primary/30 animate-fade-up"
                 style={{
                   animationDelay: `${index * 0.1}s`
                 }}
               >
-                {/* Image */}
-                <div className="relative overflow-hidden">
+                <div className="relative">
                   <img 
                     src={room.image} 
                     alt={room.title}
-                    className="w-full h-64 object-cover group-hover:scale-110 transition-smooth"
+                    className="w-full h-48 object-cover"
                   />
-                  <div className="absolute top-4 left-4">
-                    <Badge 
-                      variant={room.available ? "default" : "secondary"}
-                      className={room.available ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"}
-                    >
-                      {room.available ? 'Available' : 'Coming Soon'}
-                    </Badge>
-                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 hover:opacity-100 transition-smooth"></div>
+                  <StatusBadge 
+                    status={room.available ? 'available' : 'coming_soon'}
+                    className="absolute top-2 right-2"
+                  />
                 </div>
-                
-                {/* Content */}
-                <div className="p-6">
-                  <div className="flex items-start justify-between mb-4">
-                    <div>
-                      <h3 className="text-xl font-bold mb-2 text-card-foreground">
-                        {room.title}
-                      </h3>
-                      <div className="flex items-center text-muted-foreground mb-2">
-                        <MapPin className="w-4 h-4 mr-1" />
-                        <span className="text-sm">{room.location}</span>
-                      </div>
-                    </div>
-                    <div className="text-right">
-                      <div className="text-2xl font-bold text-primary">
-                        KES {room.price.toLocaleString()}
-                      </div>
-                      <div className="text-sm text-muted-foreground">
-                        {room.period}
-                      </div>
-                    </div>
+                <CardContent className="p-6 bg-gradient-to-br from-background to-primary/5">
+                  <h3 className="font-semibold mb-2 text-foreground">{room.title}</h3>
+                  <div className="flex items-center text-muted-foreground mb-2">
+                    <MapPin className="w-4 h-4 mr-1" />
+                    <span className="text-sm">{room.location}</span>
                   </div>
-                  
-                  <p className="text-muted-foreground text-sm mb-4 leading-relaxed line-clamp-3">
+                  <p className="text-muted-foreground text-sm mb-4 leading-relaxed line-clamp-2">
                     {room.description}
                   </p>
                   
-                   {/* Characteristics - Show first 6 characteristics */}
-                   <div className="flex items-center gap-2 mb-6 overflow-x-auto">
-                     {room.characteristics.slice(0, 6).map((characteristic, i) => {
-                       const Icon = characteristic.icon;
+                  {/* Characteristics - Show first 6 characteristics */}
+                  <div className="flex items-center gap-2 mb-4 overflow-x-auto">
+                    {room.characteristics.slice(0, 6).map((characteristic, i) => {
+                      const Icon = characteristic.icon;
                       return (
                         <Tooltip key={i}>
                           <TooltipTrigger asChild>
                             <div className="flex items-center justify-center w-8 h-8 bg-muted rounded-lg hover:bg-primary/20 transition-smooth cursor-help shrink-0">
                               <Icon className="w-4 h-4 text-muted-foreground hover:text-primary transition-smooth" />
                             </div>
-                           </TooltipTrigger>
-                           <TooltipContent>
-                             <p>{characteristic.label}</p>
-                           </TooltipContent>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>{characteristic.label}</p>
+                          </TooltipContent>
                         </Tooltip>
                       );
                     })}
                   </div>
                   
-                  <Link to={`/rooms/${room.id}`}>
-                    <Button 
-                      className={`w-full ${room.available ? 'btn-primary' : 'btn-secondary opacity-50 cursor-not-allowed'}`}
-                      disabled={!room.available}
-                    >
-                      {room.available ? 'View Details' : 'Notify When Available'}
-                    </Button>
-                  </Link>
-                </div>
-              </div>
+                  <div className="flex items-center justify-between">
+                    <div className="text-lg font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                      KES {room.price.toLocaleString()}<span className="text-sm text-muted-foreground">/{room.period}</span>
+                    </div>
+                    <Link to={`/rooms/${room.id}`}>
+                      <Button 
+                        size="sm" 
+                        className="bg-gradient-to-r from-primary to-primary-glow hover:shadow-medium transition-smooth"
+                        disabled={!room.available}
+                      >
+                        View Details
+                      </Button>
+                    </Link>
+                  </div>
+                </CardContent>
+              </Card>
             ))}
           </div>
           
