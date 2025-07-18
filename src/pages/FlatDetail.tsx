@@ -339,7 +339,7 @@ const FlatDetail = () => {
                       {/* Characteristics Section */}
                       {characteristics.length > 0 && (
                         <div className="mb-6">
-                          <h4 className="text-sm font-semibold mb-3 text-muted-foreground uppercase tracking-wide">What's Included</h4>
+                          <h4 className="text-sm font-semibold mb-3 text-muted-foreground uppercase tracking-wide">Features</h4>
                           <div className="grid grid-cols-2 gap-2">
                             {characteristics.map((char) => {
                               const Icon = getCharacteristicIcon(char.characteristics.name);
