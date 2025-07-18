@@ -6,8 +6,8 @@ import type { Tables } from '@/integrations/supabase/types';
 type RoomWithDetails = Tables<'rooms'> & {
   flats: Tables<'flats'> | null;
   room_images: Tables<'room_images'>[];
-  room_characteristics: (Tables<'room_characteristics'> & {
-    characteristics: Tables<'characteristics'> | null;
+  room_included: (Tables<'room_included'> & {
+    included: Tables<'included'> | null;
   })[];
 };
 
@@ -47,9 +47,9 @@ export const useRooms = () => {
             room_images (
               *
             ),
-            room_characteristics (
+            room_included (
               *,
-              characteristics (
+              included (
                 *
               )
             )
@@ -70,11 +70,11 @@ export const useRooms = () => {
           neighbourhood: room.flats?.location || '',
           image: room.room_images[0]?.image_url || '/placeholder.svg',
           available: room.availability_status === 'available',
-          characteristics: room.room_characteristics
-            .filter(rc => rc.characteristics)
+          characteristics: room.room_included
+            .filter(rc => rc.included)
             .map(rc => ({
-              label: rc.characteristics!.name,
-              icon: getCharacteristicIcon(rc.characteristics!.name)
+              label: rc.included!.name,
+              icon: getCharacteristicIcon(rc.included!.name)
             }))
         }));
 

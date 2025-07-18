@@ -12,8 +12,8 @@ type RoomWithFullDetails = Tables<'rooms'> & {
     })[];
   }) | null;
   room_images: Tables<'room_images'>[];
-  room_characteristics: (Tables<'room_characteristics'> & {
-    characteristics: Tables<'characteristics'> | null;
+  room_included: (Tables<'room_included'> & {
+    included: Tables<'included'> | null;
   })[];
   room_furniture: (Tables<'room_furniture'> & {
     furniture: Tables<'furniture'> | null;
@@ -64,9 +64,9 @@ export const useRoom = (id: string) => {
             room_images (
               *
             ),
-            room_characteristics (
+            room_included (
               *,
-              characteristics (
+              included (
                 *
               )
             ),
@@ -96,11 +96,11 @@ export const useRoom = (id: string) => {
           neighbourhood: roomData.flats?.location || '',
           image: roomData.room_images[0]?.image_url || '/placeholder.svg',
           available: roomData.availability_status === 'available',
-          characteristics: roomData.room_characteristics
-            .filter(rc => rc.characteristics)
+          characteristics: roomData.room_included
+            .filter(rc => rc.included)
             .map(rc => ({
-              label: rc.characteristics!.name,
-              icon: getCharacteristicIcon(rc.characteristics!.name)
+              label: rc.included!.name,
+              icon: getCharacteristicIcon(rc.included!.name)
             })),
           roomImages: roomData.room_images
             .sort((a, b) => (a.display_order || 0) - (b.display_order || 0))
