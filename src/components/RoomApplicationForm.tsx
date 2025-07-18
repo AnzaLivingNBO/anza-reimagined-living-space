@@ -85,12 +85,33 @@ export const RoomApplicationForm = ({ onClose }: ApplicationFormProps) => {
   };
 
   const handleCharacteristicToggle = (characteristic: string) => {
-    setFormData(prev => ({
-      ...prev,
-      selectedCharacteristics: prev.selectedCharacteristics.includes(characteristic)
-        ? prev.selectedCharacteristics.filter(c => c !== characteristic)
-        : [...prev.selectedCharacteristics, characteristic]
-    }));
+    setFormData(prev => {
+      const isCurrentlySelected = prev.selectedCharacteristics.includes(characteristic);
+      
+      if (isCurrentlySelected) {
+        // Always allow deselection
+        return {
+          ...prev,
+          selectedCharacteristics: prev.selectedCharacteristics.filter(c => c !== characteristic)
+        };
+      } else {
+        // Only allow selection if less than 3 are currently selected
+        if (prev.selectedCharacteristics.length < 3) {
+          return {
+            ...prev,
+            selectedCharacteristics: [...prev.selectedCharacteristics, characteristic]
+          };
+        } else {
+          // Show toast when trying to select more than 3
+          toast({
+            title: "Maximum reached",
+            description: "You can only select exactly 3 characteristics. Deselect one first.",
+            variant: "destructive"
+          });
+          return prev;
+        }
+      }
+    });
   };
 
   const validateStep1 = () => {
@@ -102,10 +123,10 @@ export const RoomApplicationForm = ({ onClose }: ApplicationFormProps) => {
       });
       return false;
     }
-    if (formData.selectedCharacteristics.length < 3) {
+    if (formData.selectedCharacteristics.length !== 3) {
       toast({
-        title: "Select Characteristics",
-        description: "Please select at least 3 characteristics that are important to you.",
+        title: "Select Exactly 3 Vibes",
+        description: "Please select exactly 3 characteristics that are important to you.",
         variant: "destructive"
       });
       return false;
@@ -255,7 +276,7 @@ export const RoomApplicationForm = ({ onClose }: ApplicationFormProps) => {
               </div>
 
               <div className="space-y-4">
-                <Label>Select 3 or more vibes that are important to you in a shared flat *</Label>
+                <Label>Select exactly 3 vibes that are important to you in a shared flat *</Label>
                 <p className="text-sm text-muted-foreground">What kind of atmosphere and social environment are you looking for?</p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-60 overflow-y-auto border rounded-lg p-4">
                   {vibeCharacteristics.map((characteristic) => (
@@ -272,7 +293,7 @@ export const RoomApplicationForm = ({ onClose }: ApplicationFormProps) => {
                   ))}
                 </div>
                 <p className="text-xs text-muted-foreground">
-                  Selected: {formData.selectedCharacteristics.length} (minimum 3 required)
+                  Selected: {formData.selectedCharacteristics.length}/3 (exactly 3 required)
                 </p>
               </div>
 
