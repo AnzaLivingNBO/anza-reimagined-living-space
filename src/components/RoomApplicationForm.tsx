@@ -8,19 +8,12 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { CalendarIcon, ChevronLeft, ChevronRight, Send } from 'lucide-react';
+import { CalendarIcon, ChevronLeft, ChevronRight, Send, Loader2 } from 'lucide-react';
 import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
+import { useAllRoomsWithFlats } from '@/hooks/useAllRoomsWithFlats';
 
-import { allRooms } from '@/data/rooms';
-
-// Room options for the dropdown - using the actual room data
-const roomOptions = allRooms.map(room => ({
-  id: room.id.toString(),
-  name: room.location,
-  price: `KES ${room.price.toLocaleString()}/month`
-}));
 
 // Characteristics options
 const characteristicsOptions = [
@@ -80,6 +73,7 @@ interface FormData {
 
 export const RoomApplicationForm = ({ onClose }: ApplicationFormProps) => {
   const { toast } = useToast();
+  const { data: roomsWithFlats, isLoading: roomsLoading, error: roomsError } = useAllRoomsWithFlats();
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState<FormData>({
     selectedRoom: '',
@@ -178,15 +172,39 @@ export const RoomApplicationForm = ({ onClose }: ApplicationFormProps) => {
               <div className="space-y-2">
                 <Label htmlFor="room">Which room are you applying for? *</Label>
                 <Select value={formData.selectedRoom} onValueChange={(value) => handleInputChange('selectedRoom', value)}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select a room" />
+                  <SelectTrigger className="bg-background">
+                    <SelectValue placeholder={roomsLoading ? "Loading rooms..." : "Select a room"} />
                   </SelectTrigger>
-                  <SelectContent className="bg-background border border-border z-50">
-                    {roomOptions.map((room) => (
-                      <SelectItem key={room.id} value={room.id}>
-                        {room.name} - {room.price}
-                      </SelectItem>
-                    ))}
+                  <SelectContent className="bg-background border border-border shadow-lg z-50">
+                    {roomsLoading && (
+                      <div className="flex items-center justify-center p-4">
+                        <Loader2 className="w-4 h-4 animate-spin mr-2" />
+                        <span className="text-sm text-muted-foreground">Loading rooms...</span>
+                      </div>
+                    )}
+                    {roomsError && (
+                      <div className="p-4 text-center">
+                        <span className="text-sm text-destructive">Error loading rooms</span>
+                      </div>
+                    )}
+                    {roomsWithFlats && !roomsLoading && !roomsError && (
+                      roomsWithFlats.map((room) => (
+                        <SelectItem 
+                          key={room.id} 
+                          value={room.id}
+                          className="bg-background hover:bg-muted cursor-pointer"
+                        >
+                          <div className="flex items-center justify-between w-full">
+                            <span className="font-medium">
+                              {room.title} <span className="text-muted-foreground">IN</span> {room.flats.name}
+                            </span>
+                            <span className="text-sm text-primary font-semibold ml-2">
+                              KES {room.price.toLocaleString()}/month
+                            </span>
+                          </div>
+                        </SelectItem>
+                      ))
+                    )}
                   </SelectContent>
                 </Select>
               </div>
