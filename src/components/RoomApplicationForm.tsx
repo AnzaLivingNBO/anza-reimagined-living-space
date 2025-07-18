@@ -52,8 +52,6 @@ interface FormData {
   phone: string;
   nationality: string;
   occupation: string;
-  emergencyContact: string;
-  emergencyPhone: string;
   additionalMessage: string;
 }
 
@@ -72,8 +70,6 @@ export const RoomApplicationForm = ({ onClose }: ApplicationFormProps) => {
     phone: '',
     nationality: '',
     occupation: '',
-    emergencyContact: '',
-    emergencyPhone: '',
     additionalMessage: ''
   });
 
@@ -135,10 +131,10 @@ export const RoomApplicationForm = ({ onClose }: ApplicationFormProps) => {
   };
 
   const validateStep2 = () => {
-    if (!formData.name || !formData.email || !formData.phone) {
+    if (!formData.name || !formData.email || !formData.phone || !formData.nationality) {
       toast({
         title: "Missing Information",
-        description: "Please fill in all required contact details.",
+        description: "Please fill in all required contact details including nationality.",
         variant: "destructive"
       });
       return false;
@@ -342,7 +338,7 @@ export const RoomApplicationForm = ({ onClose }: ApplicationFormProps) => {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="nationality">Nationality</Label>
+                  <Label htmlFor="nationality">Nationality *</Label>
                   <Input
                     id="nationality"
                     value={formData.nationality}
@@ -360,28 +356,6 @@ export const RoomApplicationForm = ({ onClose }: ApplicationFormProps) => {
                   onChange={(e) => handleInputChange('occupation', e.target.value)}
                   placeholder="Your current occupation"
                 />
-              </div>
-
-              <div className="grid md:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="emergencyContact">Emergency Contact Name</Label>
-                  <Input
-                    id="emergencyContact"
-                    value={formData.emergencyContact}
-                    onChange={(e) => handleInputChange('emergencyContact', e.target.value)}
-                    placeholder="Emergency contact person"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="emergencyPhone">Emergency Contact Phone</Label>
-                  <Input
-                    id="emergencyPhone"
-                    type="tel"
-                    value={formData.emergencyPhone}
-                    onChange={(e) => handleInputChange('emergencyPhone', e.target.value)}
-                    placeholder="+254 700 000 000"
-                  />
-                </div>
               </div>
 
               <div className="space-y-2">
