@@ -116,6 +116,7 @@ export type Database = {
           name: string
           neighborhood: string | null
           total_rooms: number
+          Type: Database["public"]["Enums"]["Flat_type"] | null
           updated_at: string
         }
         Insert: {
@@ -127,6 +128,7 @@ export type Database = {
           name: string
           neighborhood?: string | null
           total_rooms?: number
+          Type?: Database["public"]["Enums"]["Flat_type"] | null
           updated_at?: string
         }
         Update: {
@@ -138,6 +140,7 @@ export type Database = {
           name?: string
           neighborhood?: string | null
           total_rooms?: number
+          Type?: Database["public"]["Enums"]["Flat_type"] | null
           updated_at?: string
         }
         Relationships: []
@@ -289,6 +292,7 @@ export type Database = {
         | "unavailable"
         | "reserved"
         | "under_maintenance"
+      Flat_type: "Shared Flat" | "Whole Apartment"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -423,6 +427,7 @@ export const Constants = {
         "reserved",
         "under_maintenance",
       ],
+      Flat_type: ["Shared Flat", "Whole Apartment"],
     },
   },
 } as const

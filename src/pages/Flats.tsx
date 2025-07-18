@@ -17,6 +17,7 @@ interface Flat {
   location: string;
   about_description: string;
   total_rooms: number;
+  Type: string | null;
   rooms: Array<{
     id: string;
     title: string;
@@ -44,6 +45,7 @@ const Flats = () => {
   const [selectedImageIndex, setSelectedImageIndex] = useState<{ [key: string]: number }>({});
   const [availabilityFilter, setAvailabilityFilter] = useState<string>("all");
   const [locationFilter, setLocationFilter] = useState<string>("all");
+  const [typeFilter, setTypeFilter] = useState<string>("all");
 
   const { data: flats, isLoading } = useQuery({
     queryKey: ["flats"],
@@ -73,6 +75,19 @@ const Flats = () => {
 
       if (error) throw error;
       return [...new Set(data.map(item => item.location))];
+    },
+  });
+
+  const { data: types } = useQuery({
+    queryKey: ["types"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("flats")
+        .select("Type")
+        .order("Type");
+
+      if (error) throw error;
+      return [...new Set(data.map(item => item.Type).filter(Boolean))];
     },
   });
 
@@ -106,6 +121,11 @@ const Flats = () => {
     
     // Location filter
     if (locationFilter !== "all" && flat.location !== locationFilter) {
+      return false;
+    }
+    
+    // Type filter
+    if (typeFilter !== "all" && flat.Type !== typeFilter) {
       return false;
     }
     
@@ -178,14 +198,33 @@ const Flats = () => {
                 </Select>
               </div>
 
+              {/* Type Filter */}
+              <div className="flex flex-col gap-1">
+                <label className="text-xs text-muted-foreground">Type</label>
+                <Select value={typeFilter} onValueChange={setTypeFilter}>
+                  <SelectTrigger className="w-full sm:w-[180px]">
+                    <SelectValue placeholder="All types" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All types</SelectItem>
+                    {types?.map((type) => (
+                      <SelectItem key={type} value={type}>
+                        {type}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
               {/* Clear Filters */}
-              {(availabilityFilter !== "all" || locationFilter !== "all") && (
+              {(availabilityFilter !== "all" || locationFilter !== "all" || typeFilter !== "all") && (
                 <Button
                   variant="outline"
                   size="sm"
                   onClick={() => {
                     setAvailabilityFilter("all");
                     setLocationFilter("all");
+                    setTypeFilter("all");
                   }}
                   className="flex items-center gap-2 mt-4 sm:mt-6"
                 >
