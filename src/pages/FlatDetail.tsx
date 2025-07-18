@@ -31,7 +31,6 @@ interface Flat {
   location: string;
   neighborhood?: string;
   about_description: string;
-  available_rooms: number;
   total_rooms: number;
   flat_gallery_images: Array<{
     id: string;
@@ -89,6 +88,7 @@ const FlatDetail = () => {
   const flatImages = flat ? flat.flat_gallery_images?.sort((a, b) => a.display_order - b.display_order) || [] : [];
   const characteristics = flat ? flat.flat_characteristics || [] : [];
   const allRooms = flat ? flat.rooms || [] : [];
+  const availableRooms = flat ? flat.rooms?.filter(room => room.availability_status === 'available').length || 0 : 0;
 
   if (isLoading) {
     return (
@@ -328,7 +328,7 @@ const FlatDetail = () => {
                      <div className="space-y-4 mb-6">
                         <div className="flex justify-between text-sm">
                           <span className="text-muted-foreground">Available Rooms:</span>
-                          <span className="font-medium">{flat.available_rooms} of {flat.total_rooms}</span>
+                          <span className="font-medium">{availableRooms} of {flat.total_rooms}</span>
                         </div>
                         <div className="flex justify-between text-sm">
                           <span className="text-muted-foreground">Building Type:</span>

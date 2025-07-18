@@ -109,7 +109,6 @@ export type Database = {
       flats: {
         Row: {
           about_description: string
-          available_rooms: number
           building_type: string | null
           created_at: string
           id: string
@@ -121,7 +120,6 @@ export type Database = {
         }
         Insert: {
           about_description: string
-          available_rooms?: number
           building_type?: string | null
           created_at?: string
           id?: string
@@ -133,7 +131,6 @@ export type Database = {
         }
         Update: {
           about_description?: string
-          available_rooms?: number
           building_type?: string | null
           created_at?: string
           id?: string

@@ -16,8 +16,15 @@ interface Flat {
   name: string;
   location: string;
   about_description: string;
-  available_rooms: number;
   total_rooms: number;
+  rooms: Array<{
+    id: string;
+    title: string;
+    price: number;
+    availability_status: string;
+    room_size: number | null;
+    max_occupancy: number | null;
+  }>;
   flat_gallery_images: Array<{
     id: string;
     image_url: string;
@@ -45,6 +52,7 @@ const Flats = () => {
         .from("flats")
         .select(`
           *,
+          rooms(id, title, price, availability_status, room_size, max_occupancy),
           flat_gallery_images(*),
           flat_characteristics(*, characteristics(*))
         `)
@@ -85,11 +93,14 @@ const Flats = () => {
 
   // Filter flats based on selected filters
   const filteredFlats = flats?.filter(flat => {
+    // Calculate available rooms based on room status
+    const availableRooms = flat.rooms?.filter(room => room.availability_status === 'available').length || 0;
+    
     // Availability filter
-    if (availabilityFilter === "available" && flat.available_rooms === 0) {
+    if (availabilityFilter === "available" && availableRooms === 0) {
       return false;
     }
-    if (availabilityFilter === "unavailable" && flat.available_rooms > 0) {
+    if (availabilityFilter === "unavailable" && availableRooms > 0) {
       return false;
     }
     
@@ -191,6 +202,7 @@ const Flats = () => {
             const currentImageIndex = selectedImageIndex[flat.id] || 0;
             const images = flat.flat_gallery_images?.sort((a, b) => a.display_order - b.display_order) || [];
             const characteristics = flat.flat_characteristics || [];
+            const availableRooms = flat.rooms?.filter(room => room.availability_status === 'available').length || 0;
 
             return (
               <Card key={flat.id} className="overflow-hidden backdrop-blur-sm bg-card/80 border-border/50 hover:shadow-xl transition-all duration-300">
@@ -260,16 +272,16 @@ const Flats = () => {
                       <TooltipProvider>
                         <Tooltip>
                           <TooltipTrigger asChild>
-                            <Badge 
-                              variant="outline" 
-                              className="flex items-center gap-2 px-3 py-1 hover:bg-primary/5 transition-colors cursor-help"
-                            >
-                              <Home className="w-4 h-4" />
-                              <span className="font-medium">{flat.available_rooms}/{flat.total_rooms}</span>
-                            </Badge>
-                          </TooltipTrigger>
-                          <TooltipContent>
-                            <p className="text-sm">{flat.available_rooms}/{flat.total_rooms} rooms available from next month onwards</p>
+                             <Badge 
+                               variant="outline" 
+                               className="flex items-center gap-2 px-3 py-1 hover:bg-primary/5 transition-colors cursor-help"
+                             >
+                               <Home className="w-4 h-4" />
+                               <span className="font-medium">{availableRooms}/{flat.total_rooms}</span>
+                             </Badge>
+                           </TooltipTrigger>
+                           <TooltipContent>
+                             <p className="text-sm">{availableRooms}/{flat.total_rooms} rooms available from next month onwards</p>
                           </TooltipContent>
                         </Tooltip>
                       </TooltipProvider>
