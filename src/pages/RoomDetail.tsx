@@ -265,42 +265,27 @@ const RoomDetail = () => {
                   {/* Location Map & Key Takeaways */}
                   <div>
                     <h3 className="text-xl font-bold mb-4">Location</h3>
-                    <div className="grid md:grid-cols-2 gap-4">
-                      {/* Neighborhood Information */}
-                      <Card>
-                        <CardContent className="p-4">
-                          <h4 className="font-semibold mb-3 text-primary">Neighborhood</h4>
-                          <div className="text-sm text-muted-foreground leading-relaxed">
-                            {room.neighbourhood ? (
-                              <p>{room.neighbourhood}</p>
-                            ) : (
-                              <p>No neighborhood information available.</p>
-                            )}
-                          </div>
-                        </CardContent>
-                      </Card>
-                      
-                      {/* Map - Now on the right */}
-                      <div className="space-y-2">
-                        <div className="h-32 rounded-lg overflow-hidden border border-border">
-                          <RoomMap 
-                            location={room.location}
-                            neighbourhood={room.neighbourhood}
-                            mapboxToken={mapboxToken}
-                          />
-                        </div>
-                        <p className="text-sm text-muted-foreground">
-                          📍 {room.location}, {room.neighbourhood}
-                        </p>
-                        {!mapboxToken && (
-                          <div className="text-xs text-muted-foreground bg-muted p-2 rounded">
-                            Add Mapbox token to enable interactive map
-                          </div>
+                    <div className="space-y-2">
+                      <div className="h-32 rounded-lg overflow-hidden border border-border">
+                        <RoomMap 
+                          location={room.location}
+                          neighbourhood={room.neighbourhood}
+                          mapboxToken={mapboxToken}
+                        />
+                      </div>
+                      <div className="text-sm text-muted-foreground">
+                        <p className="font-medium mb-2">📍 {room.location}</p>
+                        {room.neighbourhood && (
+                          <p className="leading-relaxed">{room.neighbourhood}</p>
                         )}
                       </div>
+                      {!mapboxToken && (
+                        <div className="text-xs text-muted-foreground bg-muted p-2 rounded">
+                          Add Mapbox token to enable interactive map
+                        </div>
+                      )}
                     </div>
                   </div>
-
                 </div>
               </div>
 
