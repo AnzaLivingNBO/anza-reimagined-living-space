@@ -362,7 +362,14 @@ const FlatDetail = () => {
                       )}
 
                     <div className="space-y-3">
-                      <Button className="w-full btn-primary" size="lg">
+                      <Button 
+                        className="w-full btn-primary" 
+                        size="lg"
+                        onClick={() => {
+                          const roomsSection = document.getElementById('rooms-section');
+                          roomsSection?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }}
+                      >
                         <Home className="w-4 h-4 mr-2" />
                         View Available Rooms
                       </Button>
@@ -390,7 +397,7 @@ const FlatDetail = () => {
 
             {/* All Rooms Section */}
             {allRooms.length > 0 && (
-              <div className="mt-16 pt-16 border-t border-border">
+              <div id="rooms-section" className="mt-16 pt-16 border-t border-border">
                 <h2 className="text-3xl font-bold mb-8">Rooms</h2>
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {allRooms.map((room) => (
