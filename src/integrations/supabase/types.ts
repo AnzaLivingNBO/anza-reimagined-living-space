@@ -145,6 +145,30 @@ export type Database = {
         }
         Relationships: []
       }
+      furniture: {
+        Row: {
+          category: string | null
+          created_at: string
+          description: string | null
+          id: string
+          name: string
+        }
+        Insert: {
+          category?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          name: string
+        }
+        Update: {
+          category?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          name?: string
+        }
+        Relationships: []
+      }
       room_characteristics: {
         Row: {
           alt_text: string | null
@@ -177,6 +201,45 @@ export type Database = {
           },
           {
             foreignKeyName: "room_characteristics_room_id_fkey"
+            columns: ["room_id"]
+            isOneToOne: false
+            referencedRelation: "rooms"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      room_furniture: {
+        Row: {
+          created_at: string
+          furniture_id: string
+          id: string
+          quantity: number
+          room_id: string
+        }
+        Insert: {
+          created_at?: string
+          furniture_id: string
+          id?: string
+          quantity?: number
+          room_id: string
+        }
+        Update: {
+          created_at?: string
+          furniture_id?: string
+          id?: string
+          quantity?: number
+          room_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "room_furniture_furniture_id_fkey"
+            columns: ["furniture_id"]
+            isOneToOne: false
+            referencedRelation: "furniture"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "room_furniture_room_id_fkey"
             columns: ["room_id"]
             isOneToOne: false
             referencedRelation: "rooms"

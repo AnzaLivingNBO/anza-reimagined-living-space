@@ -15,6 +15,9 @@ type RoomWithFullDetails = Tables<'rooms'> & {
   room_characteristics: (Tables<'room_characteristics'> & {
     characteristics: Tables<'characteristics'> | null;
   })[];
+  room_furniture: (Tables<'room_furniture'> & {
+    furniture: Tables<'furniture'> | null;
+  })[];
 };
 
 export type RoomDetail = Room & {
@@ -27,6 +30,7 @@ export type RoomDetail = Room & {
   roomSize: number;
   leaseTerm: string;
   maxOccupancy: number;
+  furniture: Array<{ name: string; category: string; description: string; quantity: number }>;
 };
 
 export const useRoom = (id: string) => {
@@ -63,6 +67,12 @@ export const useRoom = (id: string) => {
             room_characteristics (
               *,
               characteristics (
+                *
+              )
+            ),
+            room_furniture (
+              *,
+              furniture (
                 *
               )
             )
@@ -109,7 +119,15 @@ export const useRoom = (id: string) => {
           deposit: Number(roomData.deposit || roomData.price * 2),
           roomSize: Number(roomData.room_size || 12),
           leaseTerm: roomData.lease_term || 'Flexible (1+ months)',
-          maxOccupancy: roomData.max_occupancy || 1
+          maxOccupancy: roomData.max_occupancy || 1,
+          furniture: roomData.room_furniture
+            .filter(rf => rf.furniture)
+            .map(rf => ({
+              name: rf.furniture!.name,
+              category: rf.furniture!.category || '',
+              description: rf.furniture!.description || '',
+              quantity: rf.quantity
+            }))
         };
 
         setRoom(transformedRoom);

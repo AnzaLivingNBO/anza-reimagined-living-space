@@ -238,48 +238,76 @@ const RoomDetail = () => {
                     {room.description}
                   </p>
 
-                   {/* Characteristics & What's Included */}
-                   <div>
-                     <h3 className="text-xl font-bold mb-4">Characteristics & What's Included</h3>
-                     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                       {room.characteristics.map((characteristic, i) => {
-                         const Icon = characteristic.icon;
-                        return (
-                          <Tooltip key={i}>
-                            <TooltipTrigger asChild>
-                               <div className="flex items-center gap-3 bg-muted rounded-lg p-3 hover:bg-primary/10 transition-smooth cursor-help">
-                                 <Icon className="w-5 h-5 text-primary flex-shrink-0" />
-                                 <span className="text-sm font-medium">{characteristic.label}</span>
-                               </div>
-                            </TooltipTrigger>
-                            <TooltipContent>
-                              <p>Included with this room</p>
-                            </TooltipContent>
-                          </Tooltip>
-                        );
-                      })}
+                  {/* Room Setup - Furniture Section */}
+                  {room.furniture.length > 0 && (
+                    <div>
+                      <h3 className="text-xl font-bold mb-4">Room Setup</h3>
+                      <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                        {room.furniture.map((item, i) => (
+                          <div key={i} className="bg-muted/50 rounded-lg p-4">
+                            <div className="flex items-center justify-between mb-2">
+                              <h4 className="font-medium text-sm">{item.name}</h4>
+                              {item.quantity > 1 && (
+                                <Badge variant="secondary" className="text-xs">
+                                  {item.quantity}x
+                                </Badge>
+                              )}
+                            </div>
+                            {item.category && (
+                              <p className="text-xs text-muted-foreground mb-1">{item.category}</p>
+                            )}
+                            {item.description && (
+                              <p className="text-xs text-muted-foreground">{item.description}</p>
+                            )}
+                          </div>
+                        ))}
+                      </div>
                     </div>
-                  </div>
+                  )}
 
-                  {/* Location Map */}
+                  {/* Location Map & Key Takeaways */}
                   <div>
                     <h3 className="text-xl font-bold mb-4">Location</h3>
-                    <div className="space-y-4">
-                      <div className="h-48 rounded-lg overflow-hidden border border-border">
-                        <RoomMap 
-                          location={room.location}
-                          neighbourhood={room.neighbourhood}
-                          mapboxToken={mapboxToken}
-                        />
-                      </div>
-                      <p className="text-sm text-muted-foreground">
-                        📍 {room.location}, {room.neighbourhood}
-                      </p>
-                      {!mapboxToken && (
-                        <div className="text-xs text-muted-foreground bg-muted p-2 rounded">
-                          Add Mapbox token to enable interactive map
+                    <div className="grid md:grid-cols-2 gap-4">
+                      {/* Map - Now smaller */}
+                      <div className="space-y-2">
+                        <div className="h-32 rounded-lg overflow-hidden border border-border">
+                          <RoomMap 
+                            location={room.location}
+                            neighbourhood={room.neighbourhood}
+                            mapboxToken={mapboxToken}
+                          />
                         </div>
-                      )}
+                        <p className="text-sm text-muted-foreground">
+                          📍 {room.location}, {room.neighbourhood}
+                        </p>
+                        {!mapboxToken && (
+                          <div className="text-xs text-muted-foreground bg-muted p-2 rounded">
+                            Add Mapbox token to enable interactive map
+                          </div>
+                        )}
+                      </div>
+                      
+                      {/* Key Takeaways Box */}
+                      <Card>
+                        <CardContent className="p-4">
+                          <h4 className="font-semibold mb-3 text-primary">Key Takeaways</h4>
+                          <div className="space-y-2">
+                            <div className="flex items-center gap-2 text-sm">
+                              <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                              <span>Price includes everything</span>
+                            </div>
+                            <div className="flex items-center gap-2 text-sm">
+                              <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                              <span>Flat is fully furnished</span>
+                            </div>
+                            <div className="flex items-center gap-2 text-sm">
+                              <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                              <span>Offers everything you need</span>
+                            </div>
+                          </div>
+                        </CardContent>
+                      </Card>
                     </div>
                   </div>
 
@@ -318,6 +346,31 @@ const RoomDetail = () => {
                           <span className="font-medium">{room.leaseTerm}</span>
                         </div>
                       </div>
+
+                      {/* Room Characteristics - What's Included */}
+                      {room.characteristics.length > 0 && (
+                        <div className="mb-6">
+                          <h4 className="text-sm font-semibold mb-3 text-muted-foreground uppercase tracking-wide">What's Included</h4>
+                          <div className="grid grid-cols-2 gap-2">
+                            {room.characteristics.map((characteristic, i) => {
+                              const Icon = characteristic.icon;
+                              return (
+                                <Tooltip key={i}>
+                                  <TooltipTrigger asChild>
+                                    <div className="flex items-center gap-2 p-2 bg-muted/50 rounded-lg hover:bg-primary/10 transition-smooth cursor-help">
+                                      <Icon className="w-4 h-4 text-primary flex-shrink-0" />
+                                      <span className="text-xs font-medium truncate">{characteristic.label}</span>
+                                    </div>
+                                  </TooltipTrigger>
+                                  <TooltipContent>
+                                    <p>Included with this room</p>
+                                  </TooltipContent>
+                                </Tooltip>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      )}
 
                     <div className="space-y-3">
                       <Button className="w-full btn-primary" size="lg">
