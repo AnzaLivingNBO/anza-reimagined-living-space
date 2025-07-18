@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -36,6 +36,7 @@ const vibeCharacteristics = [
 
 interface ApplicationFormProps {
   onClose: () => void;
+  preSelectedRoomId?: string;
 }
 
 interface FormData {
@@ -55,12 +56,12 @@ interface FormData {
   additionalMessage: string;
 }
 
-export const RoomApplicationForm = ({ onClose }: ApplicationFormProps) => {
+export const RoomApplicationForm = ({ onClose, preSelectedRoomId }: ApplicationFormProps) => {
   const { toast } = useToast();
   const { data: roomsWithFlats, isLoading: roomsLoading, error: roomsError } = useAllRoomsWithFlats();
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState<FormData>({
-    selectedRoom: '',
+    selectedRoom: preSelectedRoomId || '',
     moveInDate: undefined,
     stayDuration: '',
     nairobiPurpose: '',
@@ -72,6 +73,16 @@ export const RoomApplicationForm = ({ onClose }: ApplicationFormProps) => {
     occupation: '',
     additionalMessage: ''
   });
+
+  // Set pre-selected room when component mounts or when preSelectedRoomId changes
+  useEffect(() => {
+    if (preSelectedRoomId) {
+      setFormData(prev => ({
+        ...prev,
+        selectedRoom: preSelectedRoomId
+      }));
+    }
+  }, [preSelectedRoomId]);
 
   const handleInputChange = (field: keyof FormData, value: string | Date | string[]) => {
     setFormData(prev => ({

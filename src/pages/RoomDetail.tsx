@@ -21,6 +21,7 @@ import {
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useRoom } from '@/hooks/useRoom';
+import { RoomApplicationForm } from '@/components/RoomApplicationForm';
 
 const RoomDetail = () => {
   const { id } = useParams();
@@ -29,6 +30,7 @@ const RoomDetail = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [currentGalleryIndex, setCurrentGalleryIndex] = useState(0);
   const [mapboxToken, setMapboxToken] = useState('');
+  const [showApplicationForm, setShowApplicationForm] = useState(false);
   
   const roomImages = room ? [room.image, ...room.roomImages] : [];
   const galleryImages = room ? room.flatGalleryImages : [];
@@ -364,7 +366,11 @@ const RoomDetail = () => {
 
                     {/* Action Buttons */}
                     <div className="p-6 space-y-3">
-                      <Button className="w-full btn-primary" size="lg">
+                      <Button 
+                        className="w-full btn-primary" 
+                        size="lg"
+                        onClick={() => setShowApplicationForm(true)}
+                      >
                         <Home className="w-4 h-4 mr-2" />
                         Start Room Application
                       </Button>
@@ -548,6 +554,13 @@ const RoomDetail = () => {
         </section>
 
         <Footer />
+
+        {showApplicationForm && (
+          <RoomApplicationForm 
+            onClose={() => setShowApplicationForm(false)} 
+            preSelectedRoomId={room.id}
+          />
+        )}
       </div>
     </TooltipProvider>
   );

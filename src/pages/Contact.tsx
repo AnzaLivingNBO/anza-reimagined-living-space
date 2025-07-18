@@ -247,9 +247,27 @@ const Contact = () => {
 
 
                 <div className="bg-gradient-to-br from-primary/5 to-secondary/5 rounded-2xl p-6">
-                  <h4 className="text-lg font-semibold mb-3">Follow Us</h4>
+                  <h4 className="text-lg font-semibold mb-4">Connect with Us</h4>
+                  
+                  {/* Contact Information */}
+                  <div className="space-y-3 mb-4">
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-lg flex items-center justify-center">
+                        <Phone className="w-4 h-4 text-white" />
+                      </div>
+                      <span className="font-medium">+1 (555) 123-4567</span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 bg-gradient-to-br from-violet-400 to-purple-500 rounded-lg flex items-center justify-center">
+                        <Mail className="w-4 h-4 text-white" />
+                      </div>
+                      <span className="font-medium">hello@anzaliving.com</span>
+                    </div>
+                  </div>
+                  
+                  {/* Social Media */}
                   <p className="text-sm text-muted-foreground mb-4">
-                    Stay updated with our latest news and community events
+                    Follow us for updates and community news
                   </p>
                   <div className="flex space-x-3">
                     <Button variant="outline" size="sm">
