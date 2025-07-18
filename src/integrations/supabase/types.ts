@@ -193,7 +193,7 @@ export type Database = {
             foreignKeyName: "room_characteristics_characteristic_id_fkey"
             columns: ["characteristic_id"]
             isOneToOne: false
-            referencedRelation: "characteristics"
+            referencedRelation: "room_characteristics_types"
             referencedColumns: ["id"]
           },
           {
@@ -204,6 +204,24 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      room_characteristics_types: {
+        Row: {
+          created_at: string
+          id: string
+          name: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          name: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string
+        }
+        Relationships: []
       }
       room_furniture: {
         Row: {
