@@ -178,7 +178,7 @@ const FlatDetail = () => {
         )}
 
         {/* Breadcrumb */}
-        <section className="pt-6 pb-4 bg-muted/30">
+        <section className="pt-6 pb-4 bg-gradient-to-r from-primary/5 via-secondary/5 to-primary/5">
           <div className="container mx-auto px-4">
             <div className="flex items-center space-x-2 text-sm text-muted-foreground">
               <Link to="/" className="hover:text-primary transition-smooth">Home</Link>
@@ -191,10 +191,10 @@ const FlatDetail = () => {
         </section>
 
         {/* Back Button */}
-        <section className="pb-4 bg-muted/30">
+        <section className="pb-4 bg-gradient-to-r from-primary/5 via-secondary/5 to-primary/5">
           <div className="container mx-auto px-4">
             <Link to="/flats">
-              <Button variant="outline" size="sm" className="gap-2">
+              <Button variant="outline" size="sm" className="gap-2 hover:bg-primary hover:text-primary-foreground transition-smooth">
                 <ChevronLeft className="w-4 h-4" />
                 Back to Flats
               </Button>
@@ -281,8 +281,8 @@ const FlatDetail = () => {
 
                   {/* Neighborhood */}
                   {flat.neighborhood && (
-                    <div className="bg-muted/50 rounded-lg p-4">
-                      <h3 className="text-lg font-semibold mb-2">Neighborhood</h3>
+                    <div className="bg-gradient-to-r from-secondary/20 to-primary/10 rounded-lg p-4 border-l-4 border-secondary">
+                      <h3 className="text-lg font-semibold mb-2 text-secondary">Neighborhood</h3>
                       <p className="text-muted-foreground">{flat.neighborhood}</p>
                     </div>
                   )}
@@ -316,23 +316,23 @@ const FlatDetail = () => {
               <div className="space-y-6">
                 
                 {/* Flat Info Card */}
-                <Card className="sticky top-24">
+                <Card className="sticky top-24 border-2 border-primary/20 shadow-large hover:shadow-xl transition-smooth bg-gradient-to-br from-background via-primary/5 to-secondary/10">
                   <CardContent className="p-6">
                     <div className="text-center mb-6">
-                      <div className="text-2xl font-bold text-primary mb-1">
+                      <div className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent mb-1">
                         {flat.name}
                       </div>
                       <p className="text-sm text-muted-foreground">{flat.location}</p>
                     </div>
 
                      <div className="space-y-4 mb-6">
-                        <div className="flex justify-between text-sm">
+                        <div className="flex justify-between text-sm p-3 bg-primary/10 rounded-lg border-l-4 border-primary">
                           <span className="text-muted-foreground">Available Rooms:</span>
-                          <span className="font-medium">{availableRooms} of {flat.total_rooms}</span>
+                          <span className="font-bold text-primary">{availableRooms} of {flat.total_rooms}</span>
                         </div>
-                        <div className="flex justify-between text-sm">
+                        <div className="flex justify-between text-sm p-3 bg-secondary/10 rounded-lg border-l-4 border-secondary">
                           <span className="text-muted-foreground">Building Type:</span>
-                          <span className="font-medium">Apartment Complex</span>
+                          <span className="font-bold text-secondary">Apartment Complex</span>
                         </div>
                       </div>
 
@@ -341,13 +341,16 @@ const FlatDetail = () => {
                         <div className="mb-6">
                           <h4 className="text-sm font-semibold mb-3 text-muted-foreground uppercase tracking-wide">Features</h4>
                           <div className="grid grid-cols-2 gap-2">
-                            {characteristics.map((char) => {
+                            {characteristics.map((char, index) => {
                               const Icon = getCharacteristicIcon(char.characteristics.name);
+                              const colors = ['bg-primary/10 border-primary/30', 'bg-secondary/10 border-secondary/30', 'bg-accent/20 border-accent/40'];
+                              const textColors = ['text-primary', 'text-secondary', 'text-accent-foreground'];
+                              const colorIndex = index % colors.length;
                               return (
                                 <Tooltip key={char.id}>
                                   <TooltipTrigger asChild>
-                                    <div className="flex items-center gap-2 p-2 bg-muted/50 rounded-lg hover:bg-primary/10 transition-smooth cursor-help">
-                                      <Icon className="w-4 h-4 text-primary flex-shrink-0" />
+                                    <div className={`flex items-center gap-2 p-2 ${colors[colorIndex]} border rounded-lg hover:scale-105 transition-smooth cursor-help`}>
+                                      <Icon className={`w-4 h-4 ${textColors[colorIndex]} flex-shrink-0`} />
                                       <span className="text-xs font-medium truncate">{char.characteristics.name}</span>
                                     </div>
                                   </TooltipTrigger>
@@ -363,7 +366,7 @@ const FlatDetail = () => {
 
                     <div className="space-y-3">
                       <Button 
-                        className="w-full btn-primary" 
+                        className="w-full bg-gradient-to-r from-primary to-primary-glow hover:from-primary/90 hover:to-primary-glow/90 text-primary-foreground shadow-large hover:shadow-xl transition-smooth transform hover:scale-105" 
                         size="lg"
                         onClick={() => {
                           const roomsSection = document.getElementById('rooms-section');
@@ -374,13 +377,13 @@ const FlatDetail = () => {
                         View Available Rooms
                       </Button>
                       <div className="flex gap-3">
-                        <Button variant="outline" className="flex-1" size="lg">
+                        <Button variant="outline" className="flex-1 border-primary/30 hover:bg-primary hover:text-primary-foreground transition-smooth" size="lg">
                           <MessageSquare className="w-4 h-4 mr-2" />
                           Ask Question
                         </Button>
                         <Button 
                           variant="outline" 
-                          className="flex-1" 
+                          className="flex-1 border-secondary/30 hover:bg-secondary hover:text-secondary-foreground transition-smooth" 
                           size="lg"
                           onClick={handleShare}
                         >
@@ -397,11 +400,14 @@ const FlatDetail = () => {
 
             {/* All Rooms Section */}
             {allRooms.length > 0 && (
-              <div id="rooms-section" className="mt-16 pt-16 border-t border-border">
-                <h2 className="text-3xl font-bold mb-8">Rooms</h2>
+              <div id="rooms-section" className="mt-16 pt-16 border-t-4 border-gradient-to-r from-primary to-secondary">
+                <div className="flex items-center gap-3 mb-8">
+                  <h2 className="text-3xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Rooms</h2>
+                  <div className="flex-1 h-1 bg-gradient-to-r from-primary/50 to-secondary/50 rounded-full"></div>
+                </div>
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {allRooms.map((room) => (
-                    <Card key={room.id} className="overflow-hidden hover:shadow-lg transition-shadow">
+                  {allRooms.map((room, index) => (
+                    <Card key={room.id} className="overflow-hidden hover:shadow-xl transition-smooth transform hover:scale-105 hover:-translate-y-1 border-2 border-transparent hover:border-primary/30">
                       <div className="relative">
                         {room.room_images.length > 0 && (
                           <img 
@@ -410,19 +416,20 @@ const FlatDetail = () => {
                             className="w-full h-48 object-cover"
                           />
                         )}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 hover:opacity-100 transition-smooth"></div>
                         <StatusBadge 
                           status={room.availability_status}
                           className="absolute top-2 right-2"
                         />
                       </div>
-                      <CardContent className="p-4">
-                        <h3 className="font-semibold mb-2">{room.title}</h3>
+                      <CardContent className="p-4 bg-gradient-to-br from-background to-primary/5">
+                        <h3 className="font-semibold mb-2 text-foreground">{room.title}</h3>
                         <div className="flex items-center justify-between">
-                          <div className="text-lg font-bold text-primary">
+                          <div className="text-lg font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
                             KES {room.price.toLocaleString()}<span className="text-sm text-muted-foreground">/month</span>
                           </div>
                           <Link to={`/rooms/${room.id}`}>
-                            <Button size="sm">View Details</Button>
+                            <Button size="sm" className="bg-gradient-to-r from-primary to-primary-glow hover:shadow-medium transition-smooth">View Details</Button>
                           </Link>
                         </div>
                       </CardContent>
