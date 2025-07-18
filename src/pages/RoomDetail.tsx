@@ -328,22 +328,12 @@ const RoomDetail = () => {
                   </div>
 
                   <CardContent className="p-0">
-                    {/* Room Stats Grid */}
-                    <div className="p-6 bg-gradient-to-br from-secondary/5 to-accent/5">
-                      <div className="grid grid-cols-2 gap-4">
-                        <div className="text-center p-3 bg-background/60 rounded-lg backdrop-blur-sm">
-                          <div className="text-2xl font-bold text-primary">{room.roomSize}</div>
-                          <div className="text-xs text-muted-foreground uppercase tracking-wide">SQM</div>
-                        </div>
-                        <div className="text-center p-3 bg-background/60 rounded-lg backdrop-blur-sm">
-                          <div className="text-2xl font-bold text-primary">{room.maxOccupancy}</div>
-                          <div className="text-xs text-muted-foreground uppercase tracking-wide">MAX OCCUPANCY</div>
-                        </div>
-                      </div>
-                    </div>
-
                     {/* Room Details */}
                     <div className="px-6 py-4 space-y-3 border-b border-border/50">
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm text-muted-foreground">Room Size</span>
+                        <span className="font-medium">{room.roomSize} sqm</span>
+                      </div>
                       <div className="flex items-center justify-between">
                         <span className="text-sm text-muted-foreground">Move-in Date</span>
                         <span className="font-medium">Available now</span>
