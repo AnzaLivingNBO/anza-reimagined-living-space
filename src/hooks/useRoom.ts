@@ -93,7 +93,7 @@ export const useRoom = (id: string) => {
           price: Number(roomData.price),
           period: '/month',
           location: roomData.flats?.location || '',
-          neighbourhood: roomData.flats?.about_description || '',
+          neighbourhood: roomData.flats?.location || '',
           image: roomData.room_images[0]?.image_url || '/placeholder.svg',
           available: roomData.availability_status === 'available',
           characteristics: roomData.room_included
