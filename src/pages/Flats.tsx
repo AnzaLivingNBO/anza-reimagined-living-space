@@ -10,6 +10,7 @@ import { Home, MapPin, Filter, X } from "lucide-react";
 import { getCharacteristicIcon } from "@/utils/iconMapping";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Header } from "@/components/Header";
+import { Footer } from "@/components/Footer";
 
 interface Flat {
   id: string;
@@ -145,7 +146,7 @@ const Flats = () => {
   return (
     <>
       <Header />
-      <div className="min-h-screen bg-gradient-to-br from-background via-secondary/10 to-accent/5 py-20">
+      <div className="min-h-screen bg-gradient-to-br from-background via-secondary/10 to-accent/5 pt-24 pb-20">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h1 className="text-4xl lg:text-6xl font-bold mb-4 bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent">
@@ -165,17 +166,20 @@ const Flats = () => {
             </div>
             
             <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
-              {/* Availability Filter */}
+              {/* Type Filter */}
               <div className="flex flex-col gap-1">
-                <label className="text-xs text-muted-foreground">Availability</label>
-                <Select value={availabilityFilter} onValueChange={setAvailabilityFilter}>
+                <label className="text-xs text-muted-foreground">Type</label>
+                <Select value={typeFilter} onValueChange={setTypeFilter}>
                   <SelectTrigger className="w-full sm:w-[180px]">
-                    <SelectValue placeholder="All flats" />
+                    <SelectValue placeholder="All types" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="all">All flats</SelectItem>
-                    <SelectItem value="available">Available rooms</SelectItem>
-                    <SelectItem value="unavailable">No available rooms</SelectItem>
+                    <SelectItem value="all">All types</SelectItem>
+                    {types?.map((type) => (
+                      <SelectItem key={type} value={type}>
+                        {type}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               </div>
@@ -198,20 +202,17 @@ const Flats = () => {
                 </Select>
               </div>
 
-              {/* Type Filter */}
+              {/* Availability Filter */}
               <div className="flex flex-col gap-1">
-                <label className="text-xs text-muted-foreground">Type</label>
-                <Select value={typeFilter} onValueChange={setTypeFilter}>
+                <label className="text-xs text-muted-foreground">Availability</label>
+                <Select value={availabilityFilter} onValueChange={setAvailabilityFilter}>
                   <SelectTrigger className="w-full sm:w-[180px]">
-                    <SelectValue placeholder="All types" />
+                    <SelectValue placeholder="All flats" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="all">All types</SelectItem>
-                    {types?.map((type) => (
-                      <SelectItem key={type} value={type}>
-                        {type}
-                      </SelectItem>
-                    ))}
+                    <SelectItem value="all">All flats</SelectItem>
+                    <SelectItem value="available">Available rooms</SelectItem>
+                    <SelectItem value="unavailable">No available rooms</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -383,6 +384,7 @@ const Flats = () => {
         )}
       </div>
     </div>
+    <Footer />
     </>
   );
 };
