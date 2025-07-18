@@ -316,39 +316,60 @@ const FlatDetail = () => {
               <div className="space-y-6">
                 
                 {/* Flat Info Card */}
-                <Card className="sticky top-24 border-2 border-primary/20 shadow-large hover:shadow-xl transition-smooth bg-gradient-to-br from-background via-primary/5 to-secondary/10">
-                  <CardContent className="p-6">
-                    <div className="text-center mb-6">
-                      <div className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent mb-1">
-                        {flat.name}
+                <Card className="sticky top-24 border border-border/50 shadow-soft hover:shadow-medium transition-smooth bg-card backdrop-blur-sm">
+                  <CardContent className="p-0">
+                    {/* Header Section with Gradient */}
+                    <div className="bg-gradient-to-br from-primary/10 via-primary/5 to-secondary/10 p-6 border-b border-border/30">
+                      <div className="text-center">
+                        <div className="text-2xl font-bold text-foreground mb-1">
+                          {flat.name}
+                        </div>
+                        <p className="text-sm text-muted-foreground flex items-center justify-center gap-1">
+                          <MapPin className="w-3 h-3" />
+                          {flat.location}
+                        </p>
                       </div>
-                      <p className="text-sm text-muted-foreground">{flat.location}</p>
                     </div>
 
-                     <div className="space-y-4 mb-6">
-                        <div className="flex justify-between text-sm p-3 bg-primary/10 rounded-lg border-l-4 border-primary">
-                          <span className="text-muted-foreground">Available Rooms:</span>
-                          <span className="font-bold text-primary">{availableRooms} of {flat.total_rooms}</span>
+                    {/* Content Section */}
+                    <div className="p-6 space-y-6">
+
+                     {/* Stats Grid */}
+                     <div className="grid grid-cols-2 gap-3">
+                        <div className="text-center p-4 bg-muted/30 rounded-xl border border-border/40">
+                          <div className="text-2xl font-bold text-primary mb-1">{availableRooms}</div>
+                          <div className="text-xs text-muted-foreground">Available</div>
                         </div>
-                        <div className="flex justify-between text-sm p-3 bg-secondary/10 rounded-lg border-l-4 border-secondary">
-                          <span className="text-muted-foreground">Building Type:</span>
-                          <span className="font-bold text-secondary">Apartment Complex</span>
+                        <div className="text-center p-4 bg-muted/30 rounded-xl border border-border/40">
+                          <div className="text-2xl font-bold text-secondary mb-1">{flat.total_rooms}</div>
+                          <div className="text-xs text-muted-foreground">Total Rooms</div>
+                        </div>
+                      </div>
+
+                      {/* Building Info */}
+                      <div className="bg-accent/20 rounded-xl p-4 border-l-4 border-primary">
+                        <div className="flex items-center justify-between">
+                          <span className="text-sm text-muted-foreground">Building Type</span>
+                          <span className="text-sm font-medium text-foreground">Apartment Complex</span>
                         </div>
                       </div>
 
                       {/* Characteristics Section */}
                       {characteristics.length > 0 && (
-                        <div className="mb-6">
-                          <h4 className="text-sm font-semibold mb-3 text-muted-foreground uppercase tracking-wide">Features</h4>
+                        <div>
+                          <h4 className="text-sm font-semibold mb-4 text-foreground flex items-center gap-2">
+                            <div className="w-1 h-4 bg-gradient-to-b from-primary to-secondary rounded-full"></div>
+                            Features & Amenities
+                          </h4>
                           <div className="grid grid-cols-2 gap-2">
                             {characteristics.map((char) => {
                               const Icon = getCharacteristicIcon(char.characteristics.name);
                               return (
                                 <Tooltip key={char.id}>
                                   <TooltipTrigger asChild>
-                                    <div className="flex items-center gap-2 p-2 bg-muted/50 rounded-lg hover:bg-primary/10 transition-smooth cursor-help">
-                                      <Icon className="w-4 h-4 text-primary flex-shrink-0" />
-                                      <span className="text-xs font-medium truncate">{char.characteristics.name}</span>
+                                    <div className="flex items-center gap-2 p-3 bg-muted/30 hover:bg-primary/5 rounded-lg border border-border/30 hover:border-primary/30 transition-smooth cursor-help group">
+                                      <Icon className="w-4 h-4 text-primary group-hover:text-primary flex-shrink-0" />
+                                      <span className="text-xs font-medium truncate text-foreground">{char.characteristics.name}</span>
                                     </div>
                                   </TooltipTrigger>
                                   <TooltipContent>
@@ -361,32 +382,37 @@ const FlatDetail = () => {
                         </div>
                       )}
 
-                    <div className="space-y-3">
-                      <Button 
-                        className="w-full bg-gradient-to-r from-primary to-primary-glow hover:from-primary/90 hover:to-primary-glow/90 text-primary-foreground shadow-large hover:shadow-xl transition-smooth transform hover:scale-105" 
-                        size="lg"
-                        onClick={() => {
-                          const roomsSection = document.getElementById('rooms-section');
-                          roomsSection?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                        }}
-                      >
-                        <Home className="w-4 h-4 mr-2" />
-                        View Available Rooms
-                      </Button>
-                      <div className="flex gap-3">
-                        <Button variant="outline" className="flex-1 border-primary/30 hover:bg-primary hover:text-primary-foreground transition-smooth" size="lg">
-                          <MessageSquare className="w-4 h-4 mr-2" />
-                          Ask Question
-                        </Button>
+                    </div>
+
+                    {/* Action Buttons Section */}
+                    <div className="p-6 bg-muted/20 border-t border-border/30">
+                      <div className="space-y-3">
                         <Button 
-                          variant="outline" 
-                          className="flex-1 border-secondary/30 hover:bg-secondary hover:text-secondary-foreground transition-smooth" 
+                          className="w-full bg-gradient-to-r from-primary to-primary hover:from-primary/90 hover:to-primary/90 text-primary-foreground shadow-medium hover:shadow-large transition-smooth transform hover:-translate-y-0.5" 
                           size="lg"
-                          onClick={handleShare}
+                          onClick={() => {
+                            const roomsSection = document.getElementById('rooms-section');
+                            roomsSection?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                          }}
                         >
-                          <Share2 className="w-4 h-4 mr-2" />
-                          Share
+                          <Home className="w-4 h-4 mr-2" />
+                          View Available Rooms
                         </Button>
+                        <div className="flex gap-3">
+                          <Button variant="outline" className="flex-1 hover:bg-muted hover:text-foreground transition-smooth" size="lg">
+                            <MessageSquare className="w-4 h-4 mr-2" />
+                            Ask Question
+                          </Button>
+                          <Button 
+                            variant="outline" 
+                            className="flex-1 hover:bg-muted hover:text-foreground transition-smooth" 
+                            size="lg"
+                            onClick={handleShare}
+                          >
+                            <Share2 className="w-4 h-4 mr-2" />
+                            Share
+                          </Button>
+                        </div>
                       </div>
                     </div>
                   </CardContent>
