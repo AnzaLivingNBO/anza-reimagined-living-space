@@ -30,7 +30,7 @@ export type RoomDetail = Room & {
   roomSize: number;
   leaseTerm: string;
   maxOccupancy: number;
-  furniture: Array<{ name: string; category: string; description: string; quantity: number }>;
+  furniture: Array<{ name: string; description: string; quantity: number }>;
 };
 
 export const useRoom = (id: string) => {
@@ -120,11 +120,10 @@ export const useRoom = (id: string) => {
           roomSize: Number(roomData.room_size || 12),
           leaseTerm: roomData.lease_term || 'Flexible (1+ months)',
           maxOccupancy: roomData.max_occupancy || 1,
-          furniture: roomData.room_furniture
+           furniture: roomData.room_furniture
             .filter(rf => rf.furniture)
             .map(rf => ({
               name: rf.furniture!.name,
-              category: rf.furniture!.category || '',
               description: rf.furniture!.description || '',
               quantity: rf.quantity
             }))

@@ -243,7 +243,7 @@ const RoomDetail = () => {
                     <div>
                       <h3 className="text-xl font-bold mb-4">Room Setup</h3>
                       <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                        {room.furniture.map((item, i) => (
+                         {room.furniture.map((item, i) => (
                           <div key={i} className="bg-muted/50 rounded-lg p-4">
                             <div className="flex items-center justify-between mb-2">
                               <h4 className="font-medium text-sm">{item.name}</h4>
@@ -253,9 +253,6 @@ const RoomDetail = () => {
                                 </Badge>
                               )}
                             </div>
-                            {item.category && (
-                              <p className="text-xs text-muted-foreground mb-1">{item.category}</p>
-                            )}
                             {item.description && (
                               <p className="text-xs text-muted-foreground">{item.description}</p>
                             )}
@@ -269,26 +266,7 @@ const RoomDetail = () => {
                   <div>
                     <h3 className="text-xl font-bold mb-4">Location</h3>
                     <div className="grid md:grid-cols-2 gap-4">
-                      {/* Map - Now smaller */}
-                      <div className="space-y-2">
-                        <div className="h-32 rounded-lg overflow-hidden border border-border">
-                          <RoomMap 
-                            location={room.location}
-                            neighbourhood={room.neighbourhood}
-                            mapboxToken={mapboxToken}
-                          />
-                        </div>
-                        <p className="text-sm text-muted-foreground">
-                          📍 {room.location}, {room.neighbourhood}
-                        </p>
-                        {!mapboxToken && (
-                          <div className="text-xs text-muted-foreground bg-muted p-2 rounded">
-                            Add Mapbox token to enable interactive map
-                          </div>
-                        )}
-                      </div>
-                      
-                      {/* Key Takeaways Box */}
+                      {/* Key Takeaways Box - Now on the left */}
                       <Card>
                         <CardContent className="p-4">
                           <h4 className="font-semibold mb-3 text-primary">Key Takeaways</h4>
@@ -308,6 +286,25 @@ const RoomDetail = () => {
                           </div>
                         </CardContent>
                       </Card>
+                      
+                      {/* Map - Now on the right */}
+                      <div className="space-y-2">
+                        <div className="h-32 rounded-lg overflow-hidden border border-border">
+                          <RoomMap 
+                            location={room.location}
+                            neighbourhood={room.neighbourhood}
+                            mapboxToken={mapboxToken}
+                          />
+                        </div>
+                        <p className="text-sm text-muted-foreground">
+                          📍 {room.location}, {room.neighbourhood}
+                        </p>
+                        {!mapboxToken && (
+                          <div className="text-xs text-muted-foreground bg-muted p-2 rounded">
+                            Add Mapbox token to enable interactive map
+                          </div>
+                        )}
+                      </div>
                     </div>
                   </div>
 
