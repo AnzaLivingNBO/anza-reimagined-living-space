@@ -15,38 +15,38 @@ import { useToast } from '@/hooks/use-toast';
 import { useAllRoomsWithFlats } from '@/hooks/useAllRoomsWithFlats';
 
 
-// Characteristics options
-const characteristicsOptions = [
-  'WiFi included',
-  'Gym access',
-  'Swimming pool',
-  'Parking space',
-  'Balcony',
-  'Rooftop terrace',
-  '24/7 security',
-  'Cleaning service',
-  'Laundry facilities',
-  'Air conditioning',
-  'Co-working space',
-  'Social areas',
-  'Kitchen facilities',
-  'Near public transport',
-  'Quiet environment',
-  'Pet-friendly',
-  'Furnished room',
-  'Private bathroom',
-  'Good lighting',
-  'Storage space',
-  'Outdoor space',
-  'Events and community',
-  'Professional residents',
-  'Student-friendly',
-  'Short-term stays',
-  'Flexible lease terms',
-  'Bills included',
-  'Weekly cleaning',
-  'Reception service',
-  'Package handling'
+// Vibe characteristics options - focused on social atmosphere and living style
+const vibeCharacteristics = [
+  'Common dinners together',
+  'Clean and organized environment',
+  'Roommates as close friends',
+  'Evening drinks and socializing',
+  'Having friends over often',
+  'Quiet and respectful atmosphere',
+  'Study-friendly environment',
+  'Weekend social activities',
+  'Shared cooking experiences',
+  'Professional networking',
+  'Cultural exchange and diversity',
+  'Fitness and wellness focused',
+  'Creative and artistic vibe',
+  'Tech and startup community',
+  'Environmental consciousness',
+  'Regular house meetings',
+  'Shared hobby interests',
+  'International community',
+  'Local cultural immersion',
+  'Work-from-home friendly',
+  'Early risers lifestyle',
+  'Night owls friendly',
+  'Pet-loving community',
+  'Minimalist living style',
+  'Community events and outings',
+  'Language practice opportunities',
+  'Mentorship and learning',
+  'Business networking',
+  'Outdoor activities together',
+  'Movie nights and entertainment'
 ];
 
 interface ApplicationFormProps {
@@ -57,6 +57,7 @@ interface FormData {
   // Step 1
   selectedRoom: string;
   moveInDate: Date | undefined;
+  stayDuration: string;
   nairobiPurpose: string;
   selectedCharacteristics: string[];
   
@@ -78,6 +79,7 @@ export const RoomApplicationForm = ({ onClose }: ApplicationFormProps) => {
   const [formData, setFormData] = useState<FormData>({
     selectedRoom: '',
     moveInDate: undefined,
+    stayDuration: '',
     nairobiPurpose: '',
     selectedCharacteristics: [],
     name: '',
@@ -107,7 +109,7 @@ export const RoomApplicationForm = ({ onClose }: ApplicationFormProps) => {
   };
 
   const validateStep1 = () => {
-    if (!formData.selectedRoom || !formData.moveInDate || !formData.nairobiPurpose.trim()) {
+    if (!formData.selectedRoom || !formData.moveInDate || !formData.stayDuration || !formData.nairobiPurpose.trim()) {
       toast({
         title: "Missing Information",
         description: "Please fill in all required fields before proceeding.",
@@ -238,6 +240,24 @@ export const RoomApplicationForm = ({ onClose }: ApplicationFormProps) => {
               </div>
 
               <div className="space-y-2">
+                <Label htmlFor="duration">How long are you looking to stay? *</Label>
+                <Select value={formData.stayDuration} onValueChange={(value) => handleInputChange('stayDuration', value)}>
+                  <SelectTrigger className="bg-background">
+                    <SelectValue placeholder="Select duration" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-background border border-border shadow-lg z-50">
+                    <SelectItem value="1" className="bg-background hover:bg-muted cursor-pointer">1 month</SelectItem>
+                    <SelectItem value="2" className="bg-background hover:bg-muted cursor-pointer">2 months</SelectItem>
+                    <SelectItem value="3" className="bg-background hover:bg-muted cursor-pointer">3 months</SelectItem>
+                    <SelectItem value="4" className="bg-background hover:bg-muted cursor-pointer">4 months</SelectItem>
+                    <SelectItem value="5" className="bg-background hover:bg-muted cursor-pointer">5 months</SelectItem>
+                    <SelectItem value="6" className="bg-background hover:bg-muted cursor-pointer">6 months</SelectItem>
+                    <SelectItem value="6+" className="bg-background hover:bg-muted cursor-pointer">6+ months</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="space-y-2">
                 <Label htmlFor="purpose">Tell us in one sentence what you are doing in Nairobi *</Label>
                 <Input
                   id="purpose"
@@ -250,9 +270,10 @@ export const RoomApplicationForm = ({ onClose }: ApplicationFormProps) => {
               </div>
 
               <div className="space-y-4">
-                <Label>Select 3 or more characteristics that are important to you in a shared flat *</Label>
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-3 max-h-60 overflow-y-auto border rounded-lg p-4">
-                  {characteristicsOptions.map((characteristic) => (
+                <Label>Select 3 or more vibes that are important to you in a shared flat *</Label>
+                <p className="text-sm text-muted-foreground">What kind of atmosphere and social environment are you looking for?</p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-60 overflow-y-auto border rounded-lg p-4">
+                  {vibeCharacteristics.map((characteristic) => (
                     <div key={characteristic} className="flex items-center space-x-2">
                       <Checkbox
                         id={characteristic}
