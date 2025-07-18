@@ -166,7 +166,7 @@ export type Database = {
         }
         Relationships: []
       }
-      room_characteristics_types: {
+      included: {
         Row: {
           created_at: string
           id: string
@@ -285,7 +285,7 @@ export type Database = {
             foreignKeyName: "room_characteristics_characteristic_id_fkey"
             columns: ["characteristic_id"]
             isOneToOne: false
-            referencedRelation: "room_characteristics_types"
+            referencedRelation: "included"
             referencedColumns: ["id"]
           },
           {
