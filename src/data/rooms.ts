@@ -1,4 +1,4 @@
-import { Waves, Dumbbell, Shield, Building, Sunrise, Users, Zap, Droplets, Wifi, Receipt, Sparkles } from 'lucide-react';
+import { Waves, Dumbbell, Shield, Home, Mountain, Users, Zap, Droplets, Wifi, Receipt, SprayCan } from 'lucide-react';
 import room1 from '@/assets/room-1.jpg';
 import room2 from '@/assets/room-2.jpg';
 import room3 from '@/assets/room-3.jpg';
@@ -29,12 +29,12 @@ export const allRooms: Room[] = [
     characteristics: [
       { icon: Wifi, label: 'Wifi' },
       { icon: Shield, label: '24/7 Security' },
-      { icon: Sparkles, label: 'Cleaning' },
+      { icon: SprayCan, label: 'Cleaning' },
       { icon: Shield, label: 'UN Approved' },
       { icon: Waves, label: 'Pool' },
       { icon: Dumbbell, label: 'Gym' },
-      { icon: Building, label: 'Balcony' },
-      { icon: Sunrise, label: 'Roof Terrace' }
+      { icon: Home, label: 'Balcony' },
+      { icon: Mountain, label: 'Roof Terrace' }
     ],
     description: 'A beautiful private room in a modern shared apartment with all characteristics included.',
     available: true,
@@ -51,12 +51,12 @@ export const allRooms: Room[] = [
     characteristics: [
       { icon: Wifi, label: 'Wifi' },
       { icon: Shield, label: '24/7 Security' },
-      { icon: Sparkles, label: 'Cleaning' },
+      { icon: SprayCan, label: 'Cleaning' },
       { icon: Shield, label: 'UN Approved' },
       { icon: Waves, label: 'Pool' },
       { icon: Dumbbell, label: 'Gym' },
-      { icon: Building, label: 'Balcony' },
-      { icon: Sunrise, label: 'Roof Terrace' }
+      { icon: Home, label: 'Balcony' },
+      { icon: Mountain, label: 'Roof Terrace' }
     ],
     description: 'Perfect for young professionals looking for a vibrant community atmosphere.',
     available: true,
@@ -73,12 +73,12 @@ export const allRooms: Room[] = [
     characteristics: [
       { icon: Wifi, label: 'Wifi' },
       { icon: Shield, label: '24/7 Security' },
-      { icon: Sparkles, label: 'Cleaning' },
+      { icon: SprayCan, label: 'Cleaning' },
       { icon: Shield, label: 'UN Approved' },
       { icon: Waves, label: 'Pool' },
       { icon: Dumbbell, label: 'Gym' },
-      { icon: Building, label: 'Balcony' },
-      { icon: Sunrise, label: 'Roof Terrace' }
+      { icon: Home, label: 'Balcony' },
+      { icon: Mountain, label: 'Roof Terrace' }
     ],
     description: 'Premium co-living experience with stunning views and top-tier characteristics.',
     available: false,
@@ -95,12 +95,12 @@ export const allRooms: Room[] = [
     characteristics: [
       { icon: Wifi, label: 'Wifi' },
       { icon: Shield, label: '24/7 Security' },
-      { icon: Sparkles, label: 'Cleaning' },
+      { icon: SprayCan, label: 'Cleaning' },
       { icon: Shield, label: 'UN Approved' },
       { icon: Waves, label: 'Pool' },
       { icon: Dumbbell, label: 'Gym' },
-      { icon: Building, label: 'Balcony' },
-      { icon: Sunrise, label: 'Roof Terrace' }
+      { icon: Home, label: 'Balcony' },
+      { icon: Mountain, label: 'Roof Terrace' }
     ],
     description: 'Perfect for students with dedicated study spaces and social areas.',
     available: true,
@@ -117,12 +117,12 @@ export const allRooms: Room[] = [
     characteristics: [
       { icon: Wifi, label: 'Wifi' },
       { icon: Shield, label: '24/7 Security' },
-      { icon: Sparkles, label: 'Cleaning' },
+      { icon: SprayCan, label: 'Cleaning' },
       { icon: Shield, label: 'UN Approved' },
       { icon: Waves, label: 'Pool' },
       { icon: Dumbbell, label: 'Gym' },
-      { icon: Building, label: 'Balcony' },
-      { icon: Sunrise, label: 'Roof Terrace' }
+      { icon: Home, label: 'Balcony' },
+      { icon: Mountain, label: 'Roof Terrace' }
     ],
     description: 'Premium accommodation for business professionals with executive characteristics.',
     available: true,
@@ -139,12 +139,12 @@ export const allRooms: Room[] = [
     characteristics: [
       { icon: Wifi, label: 'Wifi' },
       { icon: Shield, label: '24/7 Security' },
-      { icon: Sparkles, label: 'Cleaning' },
+      { icon: SprayCan, label: 'Cleaning' },
       { icon: Shield, label: 'UN Approved' },
       { icon: Waves, label: 'Pool' },
       { icon: Dumbbell, label: 'Gym' },
-      { icon: Building, label: 'Balcony' },
-      { icon: Sunrise, label: 'Roof Terrace' }
+      { icon: Home, label: 'Balcony' },
+      { icon: Mountain, label: 'Roof Terrace' }
     ],
     description: 'Inspiring space for creative professionals with dedicated studio areas.',
     available: true,
