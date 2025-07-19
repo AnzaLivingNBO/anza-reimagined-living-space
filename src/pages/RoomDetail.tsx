@@ -341,7 +341,7 @@ const RoomDetail = () => {
 
                     {/* What's Included Section */}
                     {room.characteristics.length > 0 && (
-                      <div className="px-6 py-4 border-b border-border/50">
+                      <div className="px-6 py-4 border-b border-border/50 overflow-visible">
                         <h4 className="text-sm font-semibold mb-3 text-muted-foreground uppercase tracking-wide">What's Included</h4>
                         <div className="grid grid-cols-2 gap-2">
                           {room.characteristics.map((characteristic, i) => {
@@ -349,12 +349,12 @@ const RoomDetail = () => {
                             return (
                               <Tooltip key={i}>
                                 <TooltipTrigger asChild>
-                                  <div className="flex items-center gap-2 p-2 bg-muted/30 rounded-lg hover:bg-primary/10 transition-smooth cursor-help">
+                                  <div className="flex items-center gap-2 p-2 bg-muted/30 rounded-lg hover:bg-primary/10 transition-smooth cursor-help relative z-10">
                                     <Icon className="w-4 h-4 text-primary flex-shrink-0" />
                                     <span className="text-xs font-medium truncate">{characteristic.label}</span>
                                   </div>
                                 </TooltipTrigger>
-                                <TooltipContent>
+                                <TooltipContent side="top" className="z-50">
                                   <p>Included with this room</p>
                                 </TooltipContent>
                               </Tooltip>
