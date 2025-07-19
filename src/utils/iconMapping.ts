@@ -7,6 +7,8 @@ import {
   Car, 
   Home, 
   Mountain,
+  Droplets,
+  Zap,
   CheckCircle,
   type LucideIcon 
 } from 'lucide-react';
@@ -15,6 +17,9 @@ import {
 export const iconMapping: Record<string, LucideIcon> = {
   'Wifi': Wifi,
   'Cleaning': SprayCan,
+  'Cleaning 3x/Week': SprayCan,
+  'Water': Droplets,
+  'Electricity': Zap,
   '24/7 Security': Shield,
   'Pool': Waves,
   'Gym': Dumbbell,
