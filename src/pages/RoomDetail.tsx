@@ -59,8 +59,8 @@ const RoomDetail = () => {
             <p className="text-muted-foreground mb-4">
               {error || 'The room you are looking for does not exist.'}
             </p>
-            <Link to="/rooms">
-              <Button>Back to Rooms</Button>
+            <Link to="/flats">
+              <Button>Back to Flats</Button>
             </Link>
           </div>
         </div>
@@ -138,7 +138,9 @@ const RoomDetail = () => {
             <div className="flex items-center space-x-2 text-sm text-muted-foreground">
               <Link to="/" className="hover:text-primary transition-smooth">Home</Link>
               <span>/</span>
-              <Link to="/rooms" className="hover:text-primary transition-smooth">Rooms</Link>
+              <Link to="/flats" className="hover:text-primary transition-smooth">Flats</Link>
+              <span>/</span>
+              <Link to={`/flats/${room.flatId}`} className="hover:text-primary transition-smooth">Flat Details</Link>
               <span>/</span>
               <span className="text-foreground">{room.title}</span>
             </div>
@@ -148,10 +150,10 @@ const RoomDetail = () => {
         {/* Back Button */}
         <section className="pb-4 bg-muted/30">
           <div className="container mx-auto px-4">
-            <Link to="/rooms">
+            <Link to={`/flats/${room.flatId}`}>
               <Button variant="outline" size="sm" className="gap-2">
                 <ChevronLeft className="w-4 h-4" />
-                Back to Rooms
+                Back to Flat Details
               </Button>
             </Link>
           </div>
