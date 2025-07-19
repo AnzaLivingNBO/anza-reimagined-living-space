@@ -104,17 +104,17 @@ export const FeaturedRooms = () => {
                   </p>
                   
                   {/* Characteristics - Show first 6 characteristics */}
-                  <div className="flex items-center gap-2 mb-4 overflow-x-auto">
+                  <div className="flex items-center gap-2 mb-4 overflow-visible">
                     {room.characteristics.slice(0, 6).map((characteristic, i) => {
                       const Icon = characteristic.icon;
                       return (
                         <Tooltip key={i}>
                           <TooltipTrigger asChild>
-                            <div className="flex items-center justify-center w-8 h-8 bg-muted rounded-lg hover:bg-primary/20 transition-smooth cursor-help shrink-0">
+                            <div className="flex items-center justify-center w-8 h-8 bg-muted rounded-lg hover:bg-primary/20 transition-smooth cursor-help shrink-0 relative z-10">
                               <Icon className="w-4 h-4 text-muted-foreground hover:text-primary transition-smooth" />
                             </div>
                           </TooltipTrigger>
-                          <TooltipContent>
+                          <TooltipContent side="top" className="z-50">
                             <p>{characteristic.label}</p>
                           </TooltipContent>
                         </Tooltip>
