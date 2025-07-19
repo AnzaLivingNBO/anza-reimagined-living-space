@@ -1,8 +1,15 @@
+import React, { useState } from 'react';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Button } from '@/components/ui/button';
-import { HelpCircle, MessageCircle, Mail, Phone } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { HelpCircle, MessageCircle, Mail, Phone, Send } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
 
 const faqCategories = [
   {
@@ -122,6 +129,55 @@ const contactOptions = [
 ];
 
 const FAQs = () => {
+  const { toast } = useToast();
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    subject: '',
+    message: '',
+    inquiry: ''
+  });
+
+  const handleInputChange = (field: string, value: string) => {
+    setFormData(prev => ({
+      ...prev,
+      [field]: value
+    }));
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    // Validate required fields
+    if (!formData.name || !formData.email || !formData.message) {
+      toast({
+        title: "Missing Information",
+        description: "Please fill in all required fields.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    // Here you would typically send the form data to your backend
+    console.log('Form submitted:', formData);
+    
+    toast({
+      title: "Message Sent!",
+      description: "Thank you for your message. We'll get back to you within 24 hours.",
+    });
+
+    // Reset form
+    setFormData({
+      name: '',
+      email: '',
+      phone: '',
+      subject: '',
+      message: '',
+      inquiry: ''
+    });
+  };
+
   return (
     <div className="min-h-screen">
       <Header />
@@ -183,36 +239,108 @@ const FAQs = () => {
         </div>
       </section>
 
-      {/* Contact Support Section */}
+      {/* Contact Form Section */}
       <section className="py-20 bg-muted/30">
         <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-4xl font-bold mb-6">Still Have Questions?</h2>
-            <p className="text-xl text-muted-foreground mb-12">
-              Our support team is here to help you with any questions not covered in our FAQ
-            </p>
-            
-            <div className="grid md:grid-cols-3 gap-6">
-              {contactOptions.map((option, index) => {
-                const Icon = option.icon;
-                return (
-                  <div 
-                    key={index}
-                    className="bg-card rounded-2xl p-6 shadow-soft hover-lift border border-border/50 animate-fade-up"
-                    style={{animationDelay: `${index * 0.1}s`}}
-                  >
-                    <div className="w-12 h-12 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center mx-auto mb-4">
-                      <Icon className="w-6 h-6 text-white" />
-                    </div>
-                    <h3 className="text-lg font-semibold mb-2">{option.title}</h3>
-                    <p className="text-muted-foreground text-sm mb-4">{option.description}</p>
-                    <Button variant="outline" size="sm" className="w-full">
-                      {option.action}
-                    </Button>
-                  </div>
-                );
-              })}
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-12">
+              <h2 className="text-4xl font-bold mb-6">Still Have Questions?</h2>
+              <p className="text-xl text-muted-foreground">
+                Our support team is here to help you with any questions not covered in our FAQ
+              </p>
             </div>
+            
+            <Card className="shadow-medium border-border/50 animate-slide-in-left">
+              <CardHeader>
+                <CardTitle className="text-2xl">Send us a Message</CardTitle>
+                <p className="text-muted-foreground">
+                  Fill out the form below and we'll get back to you as soon as possible.
+                </p>
+              </CardHeader>
+              <CardContent>
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="name">Full Name *</Label>
+                      <Input
+                        id="name"
+                        value={formData.name}
+                        onChange={(e) => handleInputChange('name', e.target.value)}
+                        placeholder="Your full name"
+                        required
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="email">Email Address *</Label>
+                      <Input
+                        id="email"
+                        type="email"
+                        value={formData.email}
+                        onChange={(e) => handleInputChange('email', e.target.value)}
+                        placeholder="your.email@example.com"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="phone">Phone Number</Label>
+                      <Input
+                        id="phone"
+                        type="tel"
+                        value={formData.phone}
+                        onChange={(e) => handleInputChange('phone', e.target.value)}
+                        placeholder="+1 (555) 123-4567"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="inquiry">Inquiry Type</Label>
+                      <Select value={formData.inquiry} onValueChange={(value) => handleInputChange('inquiry', value)}>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select inquiry type" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="room-availability">Room Availability</SelectItem>
+                          <SelectItem value="pricing">Pricing Information</SelectItem>
+                          <SelectItem value="application">Application Process</SelectItem>
+                          <SelectItem value="support">Customer Support</SelectItem>
+                          <SelectItem value="partnership">Partnership</SelectItem>
+                          <SelectItem value="other">Other</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="subject">Subject</Label>
+                    <Input
+                      id="subject"
+                      value={formData.subject}
+                      onChange={(e) => handleInputChange('subject', e.target.value)}
+                      placeholder="Brief subject of your message"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="message">Message *</Label>
+                    <Textarea
+                      id="message"
+                      value={formData.message}
+                      onChange={(e) => handleInputChange('message', e.target.value)}
+                      placeholder="Tell us more about your inquiry..."
+                      rows={5}
+                      required
+                    />
+                  </div>
+
+                  <Button type="submit" className="btn-primary w-full">
+                    <Send className="w-4 h-4 mr-2" />
+                    Send Message
+                  </Button>
+                </form>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </section>
