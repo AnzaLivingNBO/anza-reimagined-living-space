@@ -399,9 +399,16 @@ const FlatDetail = () => {
                           View Available Rooms
                         </Button>
                         <div className="flex gap-3">
-                          <Button variant="outline" className="flex-1 hover:bg-muted hover:text-foreground transition-smooth" size="lg">
-                            <MessageSquare className="w-4 h-4 mr-2" />
-                            Ask Question
+                          <Button 
+                            variant="outline" 
+                            className="flex-1 hover:bg-muted hover:text-foreground transition-smooth" 
+                            size="lg"
+                            asChild
+                          >
+                            <Link to="/contact">
+                              <MessageSquare className="w-4 h-4 mr-2" />
+                              Ask Question
+                            </Link>
                           </Button>
                           <Button 
                             variant="outline" 

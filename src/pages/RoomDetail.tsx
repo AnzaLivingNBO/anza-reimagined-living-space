@@ -377,9 +377,16 @@ const RoomDetail = () => {
                         Start Room Application
                       </Button>
                       <div className="flex gap-3">
-                        <Button variant="outline" className="flex-1" size="lg">
-                          <MessageSquare className="w-4 h-4 mr-2" />
-                          Ask Question
+                        <Button 
+                          variant="outline" 
+                          className="flex-1" 
+                          size="lg"
+                          asChild
+                        >
+                          <Link to="/contact">
+                            <MessageSquare className="w-4 h-4 mr-2" />
+                            Ask Question
+                          </Link>
                         </Button>
                         <Button 
                           variant="outline" 
