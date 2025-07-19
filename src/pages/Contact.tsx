@@ -101,38 +101,9 @@ const Contact = () => {
         </div>
       </section>
 
-      {/* Contact Information */}
+      {/* Contact Form */}
       <section className="py-12 bg-background">
         <div className="container mx-auto px-4">
-          <div className="flex justify-center gap-6 mb-16">
-            {contactInfo.map((info, index) => {
-              const Icon = info.icon;
-              return (
-                <Card 
-                  key={index}
-                  className="shadow-soft hover-lift border-border/50 animate-fade-up max-w-sm w-full"
-                  style={{animationDelay: `${index * 0.1}s`}}
-                >
-                  <CardHeader className="text-center pb-4">
-                    <div className={`w-16 h-16 bg-gradient-to-br ${info.gradient} rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg`}>
-                      <Icon className="w-8 h-8 text-white" />
-                    </div>
-                    <CardTitle className="text-xl bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-                      {info.title}
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="text-center pt-0">
-                    {info.details.map((detail, i) => (
-                      <p key={i} className="text-lg font-semibold text-foreground mb-2">
-                        {detail}
-                      </p>
-                    ))}
-                  </CardContent>
-                </Card>
-              );
-            })}
-          </div>
-
           {/* Contact Form */}
           <div className="max-w-4xl mx-auto">
             <div className="grid lg:grid-cols-2 gap-12 items-start">
