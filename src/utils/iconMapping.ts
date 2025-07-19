@@ -1,12 +1,12 @@
 import { 
   Wifi, 
-  Sparkles, 
+  SprayCan, 
   Shield, 
   Waves, 
   Dumbbell, 
   Car, 
-  Building, 
-  Sunrise,
+  Home, 
+  Mountain,
   CheckCircle,
   type LucideIcon 
 } from 'lucide-react';
@@ -14,13 +14,13 @@ import {
 // Map characteristic names to their corresponding icons
 export const iconMapping: Record<string, LucideIcon> = {
   'Wifi': Wifi,
-  'Cleaning': Sparkles,
+  'Cleaning': SprayCan,
   '24/7 Security': Shield,
   'Pool': Waves,
   'Gym': Dumbbell,
   'Parking': Car,
-  'Balcony': Building,
-  'Roof Terrace': Sunrise,
+  'Balcony': Home,
+  'Roof Terrace': Mountain,
   'UN Approved': CheckCircle,
 };
 
