@@ -48,7 +48,7 @@ export const Footer = () => {
                 {[
                   { name: 'Home', href: '/' },
                   { name: 'About', href: '/about' },
-                  { name: 'Rooms', href: '/rooms' },
+                  { name: 'Flats', href: '/flats' },
                   { name: 'FAQs', href: '/faqs' },
                   { name: 'Contact', href: '/contact' }
                 ].map((item) => (
