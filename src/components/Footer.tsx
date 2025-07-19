@@ -70,11 +70,11 @@ export const Footer = () => {
               <div className="space-y-3">
                 <div className="flex items-center space-x-3">
                   <Phone className="w-5 h-5 text-primary flex-shrink-0" />
-                  <span className="text-background/80">+1 (555) 123-4567</span>
+                  <span className="text-background/80">+254 (0) 797758485</span>
                 </div>
                 <div className="flex items-center space-x-3">
                   <Mail className="w-5 h-5 text-primary flex-shrink-0" />
-                  <span className="text-background/80">hello@anzaliving.com</span>
+                  <span className="text-background/80">anzalivingnbo@gmail.com</span>
                 </div>
               </div>
             </div>

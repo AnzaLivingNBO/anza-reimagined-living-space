@@ -15,13 +15,13 @@ const contactInfo = [
   {
     icon: Phone,
     title: 'Call Us',
-    details: ['+1 (555) 123-4567'],
+    details: ['+254 (0) 797758485'],
     gradient: 'from-emerald-400 to-teal-500'
   },
   {
     icon: Mail,
     title: 'Email Us', 
-    details: ['hello@anzaliving.com'],
+    details: ['anzalivingnbo@gmail.com'],
     gradient: 'from-violet-400 to-purple-500'
   }
 ];
@@ -149,7 +149,7 @@ const Contact = () => {
                           type="tel"
                           value={formData.phone}
                           onChange={(e) => handleInputChange('phone', e.target.value)}
-                          placeholder="+1 (555) 123-4567"
+                          placeholder="+254 (0) 797758485"
                         />
                       </div>
                       <div className="space-y-2">
@@ -226,13 +226,13 @@ const Contact = () => {
                       <div className="w-8 h-8 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-lg flex items-center justify-center">
                         <Phone className="w-4 h-4 text-white" />
                       </div>
-                      <span className="font-medium">+1 (555) 123-4567</span>
+                      <span className="font-medium">+254 (0) 797758485</span>
                     </div>
                     <div className="flex items-center gap-3">
                       <div className="w-8 h-8 bg-gradient-to-br from-violet-400 to-purple-500 rounded-lg flex items-center justify-center">
                         <Mail className="w-4 h-4 text-white" />
                       </div>
-                      <span className="font-medium">hello@anzaliving.com</span>
+                      <span className="font-medium">anzalivingnbo@gmail.com</span>
                     </div>
                   </div>
                   
