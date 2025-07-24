@@ -48,6 +48,8 @@ const Rooms = () => {
   const [availabilityFilter, setAvailabilityFilter] = useState<string>("all");
   const [locationFilter, setLocationFilter] = useState<string>("all");
   const [priceFilter, setPriceFilter] = useState<string>("all");
+  const [roomSizeFilter, setRoomSizeFilter] = useState<string>("all");
+  const [occupancyFilter, setOccupancyFilter] = useState<string>("all");
 
   const { data: rooms, isLoading } = useQuery({
     queryKey: ["rooms"],
@@ -148,6 +150,38 @@ const Rooms = () => {
           break;
       }
     }
+
+    // Room Size filter
+    if (roomSizeFilter !== "all" && room.room_size) {
+      const size = Number(room.room_size);
+      switch (roomSizeFilter) {
+        case "small":
+          if (size >= 300) return false;
+          break;
+        case "medium":
+          if (size < 300 || size >= 500) return false;
+          break;
+        case "large":
+          if (size < 500) return false;
+          break;
+      }
+    }
+
+    // Occupancy filter
+    if (occupancyFilter !== "all" && room.max_occupancy) {
+      const occupancy = Number(room.max_occupancy);
+      switch (occupancyFilter) {
+        case "single":
+          if (occupancy !== 1) return false;
+          break;
+        case "double":
+          if (occupancy !== 2) return false;
+          break;
+        case "multiple":
+          if (occupancy <= 2) return false;
+          break;
+      }
+    }
     
     return true;
   });
@@ -189,7 +223,7 @@ const Rooms = () => {
                 <div className="flex flex-col gap-1">
                   <label className="text-xs text-muted-foreground">Location</label>
                   <Select value={locationFilter} onValueChange={setLocationFilter}>
-                    <SelectTrigger className="w-full sm:w-[180px]">
+                    <SelectTrigger className="w-full sm:w-[140px]">
                       <SelectValue placeholder="All locations" />
                     </SelectTrigger>
                     <SelectContent>
@@ -207,15 +241,47 @@ const Rooms = () => {
                 <div className="flex flex-col gap-1">
                   <label className="text-xs text-muted-foreground">Price Range</label>
                   <Select value={priceFilter} onValueChange={setPriceFilter}>
-                    <SelectTrigger className="w-full sm:w-[180px]">
+                    <SelectTrigger className="w-full sm:w-[140px]">
                       <SelectValue placeholder="All prices" />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="all">All prices</SelectItem>
-                      <SelectItem value="under-15000">Under KSh 15,000</SelectItem>
-                      <SelectItem value="15000-25000">KSh 15,000 - 25,000</SelectItem>
-                      <SelectItem value="25000-35000">KSh 25,000 - 35,000</SelectItem>
-                      <SelectItem value="over-35000">Over KSh 35,000</SelectItem>
+                      <SelectItem value="under-15000">Under 15K</SelectItem>
+                      <SelectItem value="15000-25000">15K - 25K</SelectItem>
+                      <SelectItem value="25000-35000">25K - 35K</SelectItem>
+                      <SelectItem value="over-35000">Over 35K</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {/* Room Size Filter */}
+                <div className="flex flex-col gap-1">
+                  <label className="text-xs text-muted-foreground">Room Size</label>
+                  <Select value={roomSizeFilter} onValueChange={setRoomSizeFilter}>
+                    <SelectTrigger className="w-full sm:w-[140px]">
+                      <SelectValue placeholder="All sizes" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">All sizes</SelectItem>
+                      <SelectItem value="small">Small (&lt;300 sq ft)</SelectItem>
+                      <SelectItem value="medium">Medium (300-499 sq ft)</SelectItem>
+                      <SelectItem value="large">Large (500+ sq ft)</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {/* Occupancy Filter */}
+                <div className="flex flex-col gap-1">
+                  <label className="text-xs text-muted-foreground">Occupancy</label>
+                  <Select value={occupancyFilter} onValueChange={setOccupancyFilter}>
+                    <SelectTrigger className="w-full sm:w-[140px]">
+                      <SelectValue placeholder="All occupancy" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">All occupancy</SelectItem>
+                      <SelectItem value="single">Single person</SelectItem>
+                      <SelectItem value="double">Double occupancy</SelectItem>
+                      <SelectItem value="multiple">Multiple (3+)</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -224,7 +290,7 @@ const Rooms = () => {
                 <div className="flex flex-col gap-1">
                   <label className="text-xs text-muted-foreground">Availability</label>
                   <Select value={availabilityFilter} onValueChange={setAvailabilityFilter}>
-                    <SelectTrigger className="w-full sm:w-[180px]">
+                    <SelectTrigger className="w-full sm:w-[140px]">
                       <SelectValue placeholder="All rooms" />
                     </SelectTrigger>
                     <SelectContent>
@@ -238,7 +304,7 @@ const Rooms = () => {
                 </div>
 
                 {/* Clear Filters */}
-                {(availabilityFilter !== "all" || locationFilter !== "all" || priceFilter !== "all") && (
+                {(availabilityFilter !== "all" || locationFilter !== "all" || priceFilter !== "all" || roomSizeFilter !== "all" || occupancyFilter !== "all") && (
                   <Button
                     variant="outline"
                     size="sm"
@@ -246,6 +312,8 @@ const Rooms = () => {
                       setAvailabilityFilter("all");
                       setLocationFilter("all");
                       setPriceFilter("all");
+                      setRoomSizeFilter("all");
+                      setOccupancyFilter("all");
                     }}
                     className="flex items-center gap-2 mt-4 sm:mt-6"
                   >
