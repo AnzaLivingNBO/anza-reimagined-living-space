@@ -6,7 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ScrollToTop from "./components/ScrollToTop";
 import Index from "./pages/Index";
 import About from "./pages/About";
-
+import Rooms from "./pages/Rooms";
 import Flats from "./pages/Flats";
 import RoomDetail from "./pages/RoomDetail";
 import FlatDetail from "./pages/FlatDetail";
@@ -26,7 +26,7 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/about" element={<About />} />
-          
+          <Route path="/rooms" element={<Rooms />} />
           <Route path="/flats" element={<Flats />} />
           <Route path="/rooms/:id" element={<RoomDetail />} />
           <Route path="/flats/:id" element={<FlatDetail />} />
