@@ -250,7 +250,7 @@ const RoomDetail = () => {
                          {room.furniture.map((item, i) => {
                           const colors = [
                             'bg-primary/20 border-primary/30',
-                            'bg-secondary/20 border-secondary/30'
+                            'bg-blue-400/20 border-blue-400/30'
                           ];
                           const colorClass = colors[i % 2];
                           
