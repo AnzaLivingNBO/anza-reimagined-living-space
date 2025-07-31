@@ -249,14 +249,10 @@ const RoomDetail = () => {
                       <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                          {room.furniture.map((item, i) => {
                           const colors = [
-                            'bg-gradient-to-br from-primary/20 to-primary/10 border-primary/30',
-                            'bg-gradient-to-br from-secondary/20 to-secondary/10 border-secondary/30',
-                            'bg-gradient-to-br from-accent/20 to-accent/10 border-accent/30',
-                            'bg-gradient-to-br from-blue-500/20 to-blue-400/10 border-blue-400/30',
-                            'bg-gradient-to-br from-green-500/20 to-green-400/10 border-green-400/30',
-                            'bg-gradient-to-br from-purple-500/20 to-purple-400/10 border-purple-400/30'
+                            'bg-primary/20 border-primary/30',
+                            'bg-secondary/20 border-secondary/30'
                           ];
-                          const colorClass = colors[i % colors.length];
+                          const colorClass = colors[i % 2];
                           
                           return (
                             <div key={i} className={`${colorClass} rounded-xl p-4 border-2 transition-smooth hover:scale-105`}>
