@@ -186,6 +186,7 @@ export type Database = {
       }
       room_furniture: {
         Row: {
+          alt_text: string | null
           created_at: string
           furniture_id: string
           id: string
@@ -193,6 +194,7 @@ export type Database = {
           room_id: string
         }
         Insert: {
+          alt_text?: string | null
           created_at?: string
           furniture_id: string
           id?: string
@@ -200,6 +202,7 @@ export type Database = {
           room_id: string
         }
         Update: {
+          alt_text?: string | null
           created_at?: string
           furniture_id?: string
           id?: string
@@ -302,6 +305,7 @@ export type Database = {
           availability_status:
             | Database["public"]["Enums"]["availability_status_enum"]
             | null
+          available_from: string | null
           created_at: string
           deposit: number | null
           description: string | null
@@ -318,6 +322,7 @@ export type Database = {
           availability_status?:
             | Database["public"]["Enums"]["availability_status_enum"]
             | null
+          available_from?: string | null
           created_at?: string
           deposit?: number | null
           description?: string | null
@@ -334,6 +339,7 @@ export type Database = {
           availability_status?:
             | Database["public"]["Enums"]["availability_status_enum"]
             | null
+          available_from?: string | null
           created_at?: string
           deposit?: number | null
           description?: string | null
