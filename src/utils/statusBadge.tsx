@@ -15,7 +15,7 @@ export const getStatusConfig = (status: string) => {
       };
     case 'becoming_available':
       return {
-        label: 'Becoming Available',
+        label: 'Available Soon',
         variant: 'secondary' as const,
         className: 'bg-yellow-100 text-yellow-800 border-yellow-200 hover:bg-yellow-200'
       };

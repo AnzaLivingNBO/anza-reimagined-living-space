@@ -3,14 +3,24 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { MapPin, Loader2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { useRooms } from '@/hooks/useRooms';
+import { useAllRoomsWithFlats } from '@/hooks/useAllRoomsWithFlats';
 import { StatusBadge } from "@/utils/statusBadge";
 
 export const FeaturedRooms = () => {
-  const { rooms, loading, error } = useRooms();
+  const { data: rooms, isLoading: loading, error } = useAllRoomsWithFlats();
   
-  // Get the first 3 rooms for featured display
-  const featuredRooms = rooms.slice(0, 3);
+  // Prioritize rooms by availability status: available > becoming_available > others
+  const featuredRooms = (() => {
+    if (!rooms) return [];
+    
+    const available = rooms.filter(room => room.availability_status === 'available');
+    const becomingAvailable = rooms.filter(room => room.availability_status === 'becoming_available');
+    const others = rooms.filter(room => !['available', 'becoming_available'].includes(room.availability_status));
+    
+    // Take up to 3 rooms, prioritizing available first
+    const prioritized = [...available, ...becomingAvailable, ...others];
+    return prioritized.slice(0, 3);
+  })();
 
   if (loading) {
     return (
@@ -83,13 +93,13 @@ export const FeaturedRooms = () => {
               >
                 <div className="relative">
                   <img 
-                    src={room.image} 
+                    src="/placeholder.svg" 
                     alt={room.title}
                     className="w-full h-48 object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 hover:opacity-100 transition-smooth"></div>
                   <StatusBadge 
-                    status={room.available ? 'available' : 'coming_soon'}
+                    status={room.availability_status}
                     className="absolute top-2 right-2"
                   />
                 </div>
@@ -97,40 +107,18 @@ export const FeaturedRooms = () => {
                   <h3 className="font-semibold mb-2 text-foreground">{room.title}</h3>
                   <div className="flex items-center text-muted-foreground mb-2">
                     <MapPin className="w-4 h-4 mr-1" />
-                    <span className="text-sm">{room.location}</span>
-                  </div>
-                  <p className="text-muted-foreground text-sm mb-4 leading-relaxed line-clamp-2">
-                    {room.description}
-                  </p>
-                  
-                  {/* Characteristics - Show first 6 characteristics */}
-                  <div className="flex items-center gap-2 mb-4 overflow-visible">
-                    {room.characteristics.slice(0, 6).map((characteristic, i) => {
-                      const Icon = characteristic.icon;
-                      return (
-                        <Tooltip key={i}>
-                          <TooltipTrigger asChild>
-                            <div className="flex items-center justify-center w-8 h-8 bg-muted rounded-lg hover:bg-primary/20 transition-smooth cursor-help shrink-0 relative z-10">
-                              <Icon className="w-4 h-4 text-muted-foreground hover:text-primary transition-smooth" />
-                            </div>
-                          </TooltipTrigger>
-                          <TooltipContent side="top" className="z-50">
-                            <p>{characteristic.label}</p>
-                          </TooltipContent>
-                        </Tooltip>
-                      );
-                    })}
+                    <span className="text-sm">{room.flats.location}</span>
                   </div>
                   
                   <div className="flex items-center justify-between">
                     <div className="text-lg font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-                      KES {room.price.toLocaleString()}<span className="text-sm text-muted-foreground">/{room.period}</span>
+                      KES {room.price.toLocaleString()}<span className="text-sm text-muted-foreground">/month</span>
                     </div>
                     <Link to={`/rooms/${room.id}`}>
                       <Button 
                         size="sm" 
                         className="bg-gradient-to-r from-primary to-primary-glow hover:shadow-medium transition-smooth"
-                        disabled={!room.available}
+                        disabled={room.availability_status === 'unavailable'}
                       >
                         View Details
                       </Button>
