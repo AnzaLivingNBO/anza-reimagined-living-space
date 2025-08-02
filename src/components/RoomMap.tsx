@@ -8,6 +8,8 @@ interface RoomMapProps {
   mapboxToken?: string;
 }
 
+const DEFAULT_MAPBOX_TOKEN = 'pk.eyJ1IjoiYW56YWxpdmluZ25ibyIsImEiOiJjbWR0emZod3YxOWF5MmpzYWVsOGZsZzdwIn0.jou78c2_qlselxazx4Lecw';
+
 // Coordinates for Nairobi neighbourhoods
 const neighbourhoodCoordinates: Record<string, [number, number]> = {
   'kileleshwa': [36.7665, -1.2921],
@@ -21,13 +23,16 @@ export const RoomMap: React.FC<RoomMapProps> = ({ location, neighbourhood, mapbo
   const map = useRef<mapboxgl.Map | null>(null);
 
   useEffect(() => {
-    if (!mapContainer.current || !mapboxToken) return;
+    if (!mapContainer.current) return;
+    
+    const token = mapboxToken || DEFAULT_MAPBOX_TOKEN;
+    if (!token) return;
 
     // Get coordinates for the neighbourhood
     const coordinates = neighbourhoodCoordinates[neighbourhood.toLowerCase()] || [36.8219, -1.2921]; // Default to Nairobi center
 
     try {
-      mapboxgl.accessToken = mapboxToken;
+      mapboxgl.accessToken = token;
       
       map.current = new mapboxgl.Map({
         container: mapContainer.current,
@@ -58,7 +63,8 @@ export const RoomMap: React.FC<RoomMapProps> = ({ location, neighbourhood, mapbo
     };
   }, [location, neighbourhood, mapboxToken]);
 
-  if (!mapboxToken) {
+  const token = mapboxToken || DEFAULT_MAPBOX_TOKEN;
+  if (!token) {
     return (
       <div className="w-full h-full bg-muted rounded-lg flex items-center justify-center">
         <div className="text-center p-4">
