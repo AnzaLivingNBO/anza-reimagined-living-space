@@ -22,6 +22,7 @@ import {
 import { useToast } from '@/hooks/use-toast';
 import { useRoom } from '@/hooks/useRoom';
 import { RoomApplicationForm } from '@/components/RoomApplicationForm';
+import { StatusBadge } from '@/utils/statusBadge';
 
 const RoomDetail = () => {
   const { id } = useParams();
@@ -229,12 +230,10 @@ const RoomDetail = () => {
                         <MapPin className="w-5 h-5 mr-2" />
                         <span>{room.location}</span>
                       </div>
-                      <Badge 
-                        variant={room.available ? "default" : "secondary"}
-                        className={room.available ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}
-                      >
-                        {room.available ? 'Available Now' : 'Coming Soon'}
-                      </Badge>
+                      <StatusBadge 
+                        status={room.availabilityStatus}
+                        className=""
+                      />
                     </div>
                   </div>
 
@@ -340,8 +339,15 @@ const RoomDetail = () => {
                         <span className="font-medium">{room.roomSize} sqm</span>
                       </div>
                       <div className="flex items-center justify-between">
-                        <span className="text-sm text-muted-foreground">Move-in Date</span>
-                        <span className="font-medium">Available now</span>
+                        <span className="text-sm text-muted-foreground">Availability</span>
+                        <span className="font-medium">
+                          {room.availabilityStatus === 'becoming_available' && room.availableFrom 
+                            ? new Date(room.availableFrom).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })
+                            : room.availabilityStatus === 'available' 
+                              ? 'Available now'
+                              : 'Unavailable'
+                          }
+                        </span>
                       </div>
                       <div className="flex items-center justify-between">
                         <span className="text-sm text-muted-foreground">Lease Term</span>
