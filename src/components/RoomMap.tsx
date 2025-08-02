@@ -5,6 +5,8 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 interface RoomMapProps {
   location: string;
   neighbourhood: string;
+  latitude?: number;
+  longitude?: number;
   mapboxToken?: string;
 }
 
@@ -18,7 +20,7 @@ const neighbourhoodCoordinates: Record<string, [number, number]> = {
   'parklands': [36.8581, -1.2574]
 };
 
-export const RoomMap: React.FC<RoomMapProps> = ({ location, neighbourhood, mapboxToken }) => {
+export const RoomMap: React.FC<RoomMapProps> = ({ location, neighbourhood, latitude, longitude, mapboxToken }) => {
   const mapContainer = useRef<HTMLDivElement>(null);
   const map = useRef<mapboxgl.Map | null>(null);
 
@@ -28,8 +30,10 @@ export const RoomMap: React.FC<RoomMapProps> = ({ location, neighbourhood, mapbo
     const token = mapboxToken || DEFAULT_MAPBOX_TOKEN;
     if (!token) return;
 
-    // Get coordinates for the neighbourhood
-    const coordinates = neighbourhoodCoordinates[neighbourhood.toLowerCase()] || [36.8219, -1.2921]; // Default to Nairobi center
+    // Get coordinates - use exact coordinates if available, otherwise fallback to neighborhood
+    const coordinates: [number, number] = (latitude && longitude) 
+      ? [longitude, latitude] 
+      : neighbourhoodCoordinates[neighbourhood.toLowerCase()] || [36.8219, -1.2921]; // Default to Nairobi center
 
     try {
       mapboxgl.accessToken = token;
@@ -61,7 +65,7 @@ export const RoomMap: React.FC<RoomMapProps> = ({ location, neighbourhood, mapbo
     return () => {
       map.current?.remove();
     };
-  }, [location, neighbourhood, mapboxToken]);
+  }, [location, neighbourhood, latitude, longitude, mapboxToken]);
 
   const token = mapboxToken || DEFAULT_MAPBOX_TOKEN;
   if (!token) {

@@ -112,7 +112,9 @@ export type Database = {
           building_type: string | null
           created_at: string
           id: string
+          latitude: number | null
           location: string
+          longitude: number | null
           name: string
           neighborhood: string | null
           total_rooms: number
@@ -124,7 +126,9 @@ export type Database = {
           building_type?: string | null
           created_at?: string
           id?: string
+          latitude?: number | null
           location: string
+          longitude?: number | null
           name: string
           neighborhood?: string | null
           total_rooms?: number
@@ -136,7 +140,9 @@ export type Database = {
           building_type?: string | null
           created_at?: string
           id?: string
+          latitude?: number | null
           location?: string
+          longitude?: number | null
           name?: string
           neighborhood?: string | null
           total_rooms?: number
