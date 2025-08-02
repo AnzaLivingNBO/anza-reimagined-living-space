@@ -124,7 +124,7 @@ export const useRoom = (id: string) => {
           maxOccupancy: roomData.max_occupancy || 1,
           availabilityStatus: roomData.availability_status || 'available',
           availableFrom: roomData.available_from,
-           furniture: roomData.room_furniture
+          furniture: roomData.room_furniture
             .filter(rf => rf.furniture)
             .map(rf => ({
               name: rf.furniture!.name,
