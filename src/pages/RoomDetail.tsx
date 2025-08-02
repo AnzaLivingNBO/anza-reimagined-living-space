@@ -33,7 +33,7 @@ const RoomDetail = () => {
   const [mapboxToken, setMapboxToken] = useState('');
   const [showApplicationForm, setShowApplicationForm] = useState(false);
   
-  const roomImages = room ? [room.image, ...room.roomImages] : [];
+  const roomImages = room ? (room.roomImages.length > 0 ? room.roomImages : [room.image]) : [];
   const galleryImages = room ? room.flatGalleryImages : [];
 
   if (loading) {
