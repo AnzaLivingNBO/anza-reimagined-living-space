@@ -62,11 +62,18 @@ const Flats = () => {
           rooms(id, title, price, availability_status, room_size, max_occupancy),
           flat_gallery_images(*),
           flat_characteristics(*, characteristics(*))
-        `)
-        .order("created_at", { ascending: false });
+        `);
 
       if (error) throw error;
-      return data as Flat[];
+      
+      // Sort flats by number of available rooms (descending)
+      const sortedFlats = (data as Flat[]).sort((a, b) => {
+        const availableRoomsA = a.rooms?.filter(room => room.availability_status === 'available').length || 0;
+        const availableRoomsB = b.rooms?.filter(room => room.availability_status === 'available').length || 0;
+        return availableRoomsB - availableRoomsA;
+      });
+      
+      return sortedFlats;
     },
   });
 
