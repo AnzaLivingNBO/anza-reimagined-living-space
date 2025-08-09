@@ -171,11 +171,12 @@ const RoomDetail = () => {
                 {/* Image Gallery */}
                 <div className="relative">
                   <div className="relative h-96 md:h-[500px] rounded-2xl overflow-hidden">
-                    <img 
-                      src={roomImages[currentImageIndex]} 
-                      alt={`${room.title} - Image ${currentImageIndex + 1}`}
-                      className="w-full h-full object-cover"
-                    />
+                     <img 
+                       src={roomImages[currentImageIndex]} 
+                       alt={`${room.title} - Image ${currentImageIndex + 1}`}
+                       className="w-full h-full object-cover"
+                       loading="eager"
+                     />
                     
                     {/* Navigation Arrows */}
                     {roomImages.length > 1 && (
@@ -201,24 +202,25 @@ const RoomDetail = () => {
                     </div>
                   </div>
                   
-                  {/* Thumbnail Navigation */}
-                  <div className="flex gap-2 mt-4 overflow-x-auto pb-2">
-                    {roomImages.map((image, index) => (
-                      <button
-                        key={index}
-                        onClick={() => setCurrentImageIndex(index)}
-                        className={`flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 transition-smooth ${
-                          index === currentImageIndex ? 'border-primary' : 'border-transparent'
-                        }`}
-                      >
-                        <img 
-                          src={image} 
-                          alt={`Thumbnail ${index + 1}`}
-                          className="w-full h-full object-cover"
-                        />
-                      </button>
-                    ))}
-                  </div>
+                   {/* Image Grid Navigation - Full Size Previews */}
+                   <div className="grid grid-cols-4 md:grid-cols-6 gap-2 mt-4">
+                     {roomImages.map((image, index) => (
+                       <button
+                         key={index}
+                         onClick={() => setCurrentImageIndex(index)}
+                         className={`aspect-square rounded-lg overflow-hidden border-2 transition-smooth hover:shadow-md ${
+                           index === currentImageIndex ? 'border-primary shadow-lg' : 'border-border hover:border-primary/50'
+                         }`}
+                       >
+                         <img 
+                           src={image} 
+                           alt={`Room view ${index + 1}`}
+                           className="w-full h-full object-cover hover:scale-110 transition-smooth"
+                           loading="lazy"
+                         />
+                       </button>
+                     ))}
+                   </div>
                 </div>
 
                 {/* Room Details */}

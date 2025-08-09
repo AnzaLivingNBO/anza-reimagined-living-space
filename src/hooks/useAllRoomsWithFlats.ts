@@ -6,6 +6,10 @@ interface RoomWithFlat {
   title: string;
   price: number;
   availability_status: string;
+  room_images: Array<{
+    image_url: string;
+    display_order: number;
+  }>;
   flat: {
     id: string;
     name: string;
@@ -24,6 +28,10 @@ export const useAllRoomsWithFlats = () => {
           title,
           price,
           availability_status,
+          room_images (
+            image_url,
+            display_order
+          ),
           flats!inner (
             id,
             name,

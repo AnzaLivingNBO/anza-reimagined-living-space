@@ -93,9 +93,10 @@ export const FeaturedRooms = () => {
               >
                 <div className="relative">
                   <img 
-                    src="/placeholder.svg" 
+                    src={room.room_images?.[0]?.image_url || "/placeholder.svg"}
                     alt={room.title}
                     className="w-full h-48 object-cover"
+                    loading="eager"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 hover:opacity-100 transition-smooth"></div>
                   <StatusBadge 
