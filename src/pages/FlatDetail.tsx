@@ -155,30 +155,6 @@ const FlatDetail = () => {
       <div className="min-h-screen pt-20">
         <Header />
         
-        {/* Mapbox Token Input */}
-        {!mapboxToken && (
-          <section className="py-4 bg-muted/50 border-b border-border">
-            <div className="container mx-auto px-4">
-              <div className="flex items-center gap-4 max-w-2xl mx-auto">
-                <AlertCircle className="w-5 h-5 text-primary flex-shrink-0" />
-                <div className="flex-1">
-                  <p className="text-sm text-muted-foreground mb-2">
-                    To enable interactive maps, please enter your Mapbox public token. Get it from{' '}
-                    <a href="https://mapbox.com/" target="_blank" rel="noopener noreferrer" className="underline text-primary hover:text-primary/80">
-                      mapbox.com
-                    </a>
-                  </p>
-                  <Input
-                    placeholder="Enter your Mapbox public token (pk.xxx...)"
-                    value={mapboxToken}
-                    onChange={(e) => setMapboxToken(e.target.value)}
-                    className="text-sm"
-                  />
-                </div>
-              </div>
-            </div>
-          </section>
-        )}
 
         {/* Breadcrumb */}
         <section className="pt-6 pb-4 bg-gradient-to-r from-primary/5 via-secondary/5 to-primary/5">
@@ -306,11 +282,6 @@ const FlatDetail = () => {
                       <p className="text-sm text-muted-foreground">
                         📍 {flat.location}
                       </p>
-                      {!mapboxToken && (
-                        <div className="text-xs text-muted-foreground bg-muted p-2 rounded">
-                          Add Mapbox token to enable interactive map
-                        </div>
-                      )}
                     </div>
                   </div>
 
