@@ -43,8 +43,11 @@ export const RoomMap: React.FC<RoomMapProps> = ({ location, neighbourhood, latit
         style: 'mapbox://styles/mapbox/light-v11',
         center: coordinates,
         zoom: 14,
-        interactive: false, // Disable interaction for embedded maps
+        interactive: true, // Enable interaction for embedded maps
       });
+
+      // Add navigation controls (zoom in/out, compass)
+      map.current.addControl(new mapboxgl.NavigationControl(), 'top-right');
 
       // Add a marker
       new mapboxgl.Marker({
