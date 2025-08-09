@@ -24,12 +24,15 @@ import {
 import { useToast } from '@/hooks/use-toast';
 import { getCharacteristicIcon } from "@/utils/iconMapping";
 import { StatusBadge } from "@/utils/statusBadge";
+import { RoomMap } from '@/components/RoomMap';
 
 interface Flat {
   id: string;
   name: string;
   location: string;
   neighborhood?: string;
+  latitude?: number;
+  longitude?: number;
   about_description: string;
   total_rooms: number;
   flat_gallery_images: Array<{
@@ -291,12 +294,14 @@ const FlatDetail = () => {
                   <div>
                     <h3 className="text-xl font-bold mb-4">Location</h3>
                     <div className="space-y-4">
-                      <div className="h-48 rounded-lg overflow-hidden border border-border bg-muted flex items-center justify-center">
-                        <div className="text-center text-muted-foreground">
-                          <MapPin className="w-8 h-8 mx-auto mb-2" />
-                          <p className="text-sm">Map integration coming soon</p>
-                          <p className="text-xs">{flat.location}</p>
-                        </div>
+                      <div className="h-48 rounded-lg overflow-hidden border border-border">
+                        <RoomMap 
+                          location={flat.location}
+                          neighbourhood={flat.neighborhood || ''}
+                          latitude={flat.latitude ? Number(flat.latitude) : undefined}
+                          longitude={flat.longitude ? Number(flat.longitude) : undefined}
+                          mapboxToken={mapboxToken}
+                        />
                       </div>
                       <p className="text-sm text-muted-foreground">
                         📍 {flat.location}
