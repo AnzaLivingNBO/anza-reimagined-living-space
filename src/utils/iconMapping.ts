@@ -33,7 +33,7 @@ export const iconMapping: Record<string, LucideIcon> = {
   'Gym': Dumbbell,
   'Gym Access': Dumbbell,
   'Parking': Car,
-  'Parking Available': ParkingMeter,
+  'Parking Available': Car,
   'Balcony': Home,
   'Roof Terrace': Mountain,
   'UN Approved': CheckCircle,
