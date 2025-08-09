@@ -33,6 +33,8 @@ export type RoomDetail = Room & {
   furniture: Array<{ name: string; description: string; quantity: number }>;
   availabilityStatus: string;
   availableFrom: string | null;
+  latitude: number | null;
+  longitude: number | null;
 };
 
 export const useRoom = (id: string) => {
@@ -130,7 +132,9 @@ export const useRoom = (id: string) => {
               name: rf.furniture!.name,
               description: rf.furniture!.description || '',
               quantity: rf.quantity
-            }))
+            })),
+          latitude: roomData.flats?.latitude ? Number(roomData.flats.latitude) : null,
+          longitude: roomData.flats?.longitude ? Number(roomData.flats.longitude) : null
         };
 
         setRoom(transformedRoom);

@@ -297,6 +297,8 @@ const RoomDetail = () => {
                           <RoomMap 
                             location={room.location}
                             neighbourhood={room.neighbourhood}
+                            latitude={room.latitude}
+                            longitude={room.longitude}
                             mapboxToken={mapboxToken}
                           />
                         </div>
