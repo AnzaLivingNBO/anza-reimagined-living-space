@@ -11,11 +11,15 @@ import { getCharacteristicIcon } from "@/utils/iconMapping";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { RoomMap } from "@/components/RoomMap";
 
 interface Flat {
   id: string;
   name: string;
   location: string;
+  neighborhood?: string;
+  latitude?: number;
+  longitude?: number;
   about_description: string;
   total_rooms: number;
   Type: string | null;
@@ -356,12 +360,13 @@ const Flats = () => {
                   </div>
 
                   {/* Map Section */}
-                  <div className="lg:col-span-1 h-64 lg:h-80 bg-muted flex items-center justify-center">
-                    <div className="text-center text-muted-foreground">
-                      <MapPin className="w-8 h-8 mx-auto mb-2" />
-                      <p className="text-sm">Map integration coming soon</p>
-                      <p className="text-xs">{flat.location}</p>
-                    </div>
+                  <div className="lg:col-span-1 h-64 lg:h-80">
+                    <RoomMap 
+                      location={flat.location}
+                      neighbourhood={flat.neighborhood || flat.location}
+                      latitude={flat.latitude ? Number(flat.latitude) : undefined}
+                      longitude={flat.longitude ? Number(flat.longitude) : undefined}
+                    />
                   </div>
                 </div>
               </Card>
