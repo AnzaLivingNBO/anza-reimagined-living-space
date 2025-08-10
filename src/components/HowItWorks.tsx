@@ -10,7 +10,7 @@ const steps = [
   {
     icon: Calendar,
     title: 'Book Your Room',
-    description: 'Reserve your spot online quickly and easily. Flexible terms mean no hassle!',
+    description: 'Apply online in just a few clicks, then connect with our team and meet your potential future roommates.',
     color: 'from-blue-400 to-indigo-500'
   },
   {
