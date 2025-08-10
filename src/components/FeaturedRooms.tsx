@@ -5,26 +5,26 @@ import { MapPin, Loader2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useAllRoomsWithFlats } from '@/hooks/useAllRoomsWithFlats';
 import { StatusBadge } from "@/utils/statusBadge";
-
 export const FeaturedRooms = () => {
-  const { data: rooms, isLoading: loading, error } = useAllRoomsWithFlats();
-  
+  const {
+    data: rooms,
+    isLoading: loading,
+    error
+  } = useAllRoomsWithFlats();
+
   // Prioritize rooms by availability status: available > becoming_available > others
   const featuredRooms = (() => {
     if (!rooms) return [];
-    
     const available = rooms.filter(room => room.availability_status === 'available');
     const becomingAvailable = rooms.filter(room => room.availability_status === 'becoming_available');
     const others = rooms.filter(room => !['available', 'becoming_available'].includes(room.availability_status));
-    
+
     // Take up to 3 rooms, prioritizing available first
     const prioritized = [...available, ...becomingAvailable, ...others];
     return prioritized.slice(0, 3);
   })();
-
   if (loading) {
-    return (
-      <TooltipProvider>
+    return <TooltipProvider>
         <section id="rooms" className="py-20 bg-background">
           <div className="container mx-auto px-4">
             <div className="text-center mb-16 animate-fade-up">
@@ -42,13 +42,10 @@ export const FeaturedRooms = () => {
             </div>
           </div>
         </section>
-      </TooltipProvider>
-    );
+      </TooltipProvider>;
   }
-
   if (error) {
-    return (
-      <TooltipProvider>
+    return <TooltipProvider>
         <section id="rooms" className="py-20 bg-background">
           <div className="container mx-auto px-4">
             <div className="text-center mb-16 animate-fade-up">
@@ -65,44 +62,26 @@ export const FeaturedRooms = () => {
             </div>
           </div>
         </section>
-      </TooltipProvider>
-    );
+      </TooltipProvider>;
   }
-
-  return (
-    <TooltipProvider>
+  return <TooltipProvider>
       <section id="rooms" className="py-20 bg-background">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16 animate-fade-up">
             <h2 className="text-4xl md:text-5xl font-bold mb-6">
               Featured Furnished Rooms
             </h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Browse our carefully curated selection of fully furnished rooms in prime locations
-            </p>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">Browse our selection of fully furnished rooms in prime locations</p>
           </div>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {featuredRooms.map((room, index) => (
-              <Card 
-                key={room.id} 
-                className="overflow-hidden hover:shadow-xl transition-smooth transform hover:scale-105 hover:-translate-y-1 border-2 border-transparent hover:border-primary/30 animate-fade-up"
-                style={{
-                  animationDelay: `${index * 0.1}s`
-                }}
-              >
+            {featuredRooms.map((room, index) => <Card key={room.id} className="overflow-hidden hover:shadow-xl transition-smooth transform hover:scale-105 hover:-translate-y-1 border-2 border-transparent hover:border-primary/30 animate-fade-up" style={{
+            animationDelay: `${index * 0.1}s`
+          }}>
                 <div className="relative">
-                  <img 
-                    src={room.room_images?.[0]?.image_url || "/placeholder.svg"}
-                    alt={room.title}
-                    className="w-full h-48 object-cover"
-                    loading="eager"
-                  />
+                  <img src={room.room_images?.[0]?.image_url || "/placeholder.svg"} alt={room.title} className="w-full h-48 object-cover" loading="eager" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 hover:opacity-100 transition-smooth"></div>
-                  <StatusBadge 
-                    status={room.availability_status}
-                    className="absolute top-2 right-2"
-                  />
+                  <StatusBadge status={room.availability_status} className="absolute top-2 right-2" />
                 </div>
                 <CardContent className="p-6 bg-gradient-to-br from-background to-primary/5">
                   <h3 className="font-semibold mb-2 text-foreground">{room.title}</h3>
@@ -116,29 +95,23 @@ export const FeaturedRooms = () => {
                       KES {room.price.toLocaleString()}<span className="text-sm text-muted-foreground">/month</span>
                     </div>
                     <Link to={`/rooms/${room.id}`}>
-                      <Button 
-                        size="sm" 
-                        className="bg-gradient-to-r from-primary to-primary-glow hover:shadow-medium transition-smooth"
-                        disabled={room.availability_status === 'unavailable'}
-                      >
+                      <Button size="sm" className="bg-gradient-to-r from-primary to-primary-glow hover:shadow-medium transition-smooth" disabled={room.availability_status === 'unavailable'}>
                         View Details
                       </Button>
                     </Link>
                   </div>
                 </CardContent>
-              </Card>
-            ))}
+              </Card>)}
           </div>
           
           <div className="text-center mt-12">
             <Link to="/flats">
-              <Button variant="outline" size="lg" className="px-8 py-3">
+              <Button variant="outline" size="lg" className="px-8 py-3 text-emerald-500">
                 View All Flats
               </Button>
             </Link>
           </div>
         </div>
       </section>
-    </TooltipProvider>
-  );
+    </TooltipProvider>;
 };
