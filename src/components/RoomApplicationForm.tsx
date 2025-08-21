@@ -159,14 +159,47 @@ export const RoomApplicationForm = ({ onClose, preSelectedRoomId }: ApplicationF
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (validateStep2()) {
-      console.log('Application submitted:', formData);
-      toast({
-        title: "Application Submitted!",
-        description: "Thank you for your application. We'll contact you within 24 hours.",
-      });
-      onClose();
+      try {
+        const response = await fetch('https://hrtciuqexgybunnfjzsg.supabase.co/functions/v1/send-contact-email', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            type: 'room-application',
+            name: formData.name,
+            email: formData.email,
+            phone: formData.phone,
+            nationality: formData.nationality,
+            occupation: formData.occupation,
+            selectedRoom: formData.selectedRoom,
+            moveInDate: formData.moveInDate?.toISOString(),
+            stayDuration: formData.stayDuration,
+            nairobiPurpose: formData.nairobiPurpose,
+            selectedCharacteristics: formData.selectedCharacteristics,
+            additionalMessage: formData.additionalMessage
+          }),
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to submit application');
+        }
+
+        toast({
+          title: "Application Submitted!",
+          description: "Thank you for your application. We'll contact you within 24 hours.",
+        });
+        onClose();
+      } catch (error) {
+        console.error('Error submitting application:', error);
+        toast({
+          title: "Error",
+          description: "Failed to submit application. Please try again.",
+          variant: "destructive"
+        });
+      }
     }
   };
 
