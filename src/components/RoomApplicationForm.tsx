@@ -166,6 +166,7 @@ export const RoomApplicationForm = ({ onClose, preSelectedRoomId }: ApplicationF
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
+            'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhydGNpdXFleGd5YnVubmZqenNnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTI1ODc0MDksImV4cCI6MjA2ODE2MzQwOX0.Bj9sTIfnG69GGZLmmK3bHlA7vPHOSGd9hZ9KpZEjjUs',
           },
           body: JSON.stringify({
             type: 'room-application',
