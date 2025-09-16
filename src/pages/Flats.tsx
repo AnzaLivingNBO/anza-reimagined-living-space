@@ -265,7 +265,7 @@ const Flats = () => {
                         <img
                           src={images[currentImageIndex]?.image_url}
                           alt={images[currentImageIndex]?.alt_text || `${flat.name} photo`}
-                          className="w-full h-full object-cover"
+                          className="w-full h-full object-contain bg-muted/50"
                         />
                         
                         {/* Image Navigation */}

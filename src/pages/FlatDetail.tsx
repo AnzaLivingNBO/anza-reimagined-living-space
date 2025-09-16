@@ -196,7 +196,7 @@ const FlatDetail = () => {
                       <img 
                         src={flatImages[currentImageIndex]?.image_url} 
                         alt={flatImages[currentImageIndex]?.alt_text || `${flat.name} - Image ${currentImageIndex + 1}`}
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-contain bg-muted/50"
                       />
                       
                       {/* Navigation Arrows */}
@@ -236,7 +236,7 @@ const FlatDetail = () => {
                           <img 
                             src={image.image_url} 
                             alt={`Thumbnail ${index + 1}`}
-                            className="w-full h-full object-cover"
+                            className="w-full h-full object-contain bg-muted/30"
                           />
                         </button>
                       ))}
