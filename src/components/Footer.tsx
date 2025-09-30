@@ -33,7 +33,9 @@ export const Footer = () => {
                   <Facebook className="w-5 h-5" />
                 </a>
                 <a
-                  href="https://instagram.com"
+                  href="https://www.instagram.com/anza_living/?hl=en"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="w-10 h-10 bg-background/10 hover:bg-primary rounded-lg flex items-center justify-center transition-smooth"
                 >
                   <Instagram className="w-5 h-5" />

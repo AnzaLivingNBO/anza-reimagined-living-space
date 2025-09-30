@@ -65,7 +65,9 @@ export const Header = () => {
               <Facebook className="w-5 h-5" />
             </a>
             <a
-              href="https://instagram.com"
+              href="https://www.instagram.com/anza_living/?hl=en"
+              target="_blank"
+              rel="noopener noreferrer"
               className="text-muted-foreground hover:text-primary transition-smooth"
               aria-label="Instagram"
             >
@@ -120,7 +122,9 @@ export const Header = () => {
                   <Facebook className="w-5 h-5" />
                 </a>
                 <a
-                  href="https://instagram.com"
+                  href="https://www.instagram.com/anza_living/?hl=en"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="text-muted-foreground hover:text-primary transition-smooth"
                 >
                   <Instagram className="w-5 h-5" />
