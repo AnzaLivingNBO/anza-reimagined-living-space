@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 const WhatsAppButton = () => {
   // Replace with your WhatsApp number (include country code, no + or spaces)
   // Example: "254712345678" for Kenya
-  const whatsappNumber = "YOUR_WHATSAPP_NUMBER";
+  const whatsappNumber = "254797758485";
   const message = "Hi, I have a question about your rooms.";
   
   const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
