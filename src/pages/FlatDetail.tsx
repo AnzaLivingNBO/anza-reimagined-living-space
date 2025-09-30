@@ -158,20 +158,20 @@ const FlatDetail = () => {
 
         {/* Breadcrumb */}
         <section className="pt-6 pb-4 bg-gradient-to-r from-primary/5 via-secondary/5 to-primary/5">
-          <div className="container mx-auto px-4">
-            <div className="flex items-center space-x-2 text-sm text-muted-foreground">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex items-center space-x-2 text-xs sm:text-sm text-muted-foreground overflow-x-auto whitespace-nowrap pb-2">
               <Link to="/" className="hover:text-primary transition-smooth">Home</Link>
               <span>/</span>
               <Link to="/flats" className="hover:text-primary transition-smooth">Flats</Link>
               <span>/</span>
-              <span className="text-foreground">{flat.name}</span>
+              <span className="text-foreground truncate">{flat.name}</span>
             </div>
           </div>
         </section>
 
         {/* Back Button */}
         <section className="pb-4 bg-gradient-to-r from-primary/5 via-secondary/5 to-primary/5">
-          <div className="container mx-auto px-4">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <Link to="/flats">
               <Button variant="outline" size="sm" className="gap-2 hover:bg-primary hover:text-primary-foreground transition-smooth">
                 <ChevronLeft className="w-4 h-4" />
@@ -182,17 +182,17 @@ const FlatDetail = () => {
         </section>
 
         {/* Main Content */}
-        <section className="py-8 bg-background">
-          <div className="container mx-auto px-4">
-            <div className="grid lg:grid-cols-3 gap-8">
+        <section className="py-6 sm:py-8 bg-background">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
               
               {/* Left Column - Images & Details */}
-              <div className="lg:col-span-2 space-y-8">
+              <div className="lg:col-span-2 space-y-6 sm:space-y-8 w-full overflow-hidden">
                 
                 {/* Image Gallery */}
                 {flatImages.length > 0 && (
-                  <div className="relative">
-                    <div className="relative h-96 md:h-[500px] rounded-2xl overflow-hidden">
+                  <div className="relative w-full">
+                    <div className="relative h-64 sm:h-80 md:h-96 lg:h-[500px] rounded-xl sm:rounded-2xl overflow-hidden">
                       <img 
                         src={flatImages[currentImageIndex]?.image_url} 
                         alt={flatImages[currentImageIndex]?.alt_text || `${flat.name} - Image ${currentImageIndex + 1}`}
@@ -204,32 +204,32 @@ const FlatDetail = () => {
                         <>
                           <button
                             onClick={prevImage}
-                            className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white rounded-full p-2 transition-smooth"
+                            className="absolute left-2 sm:left-4 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white rounded-full p-1.5 sm:p-2 transition-smooth"
                           >
-                            <PrevIcon className="w-5 h-5" />
+                            <PrevIcon className="w-4 h-4 sm:w-5 sm:h-5" />
                           </button>
                           <button
                             onClick={nextImage}
-                            className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white rounded-full p-2 transition-smooth"
+                            className="absolute right-2 sm:right-4 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white rounded-full p-1.5 sm:p-2 transition-smooth"
                           >
-                            <ChevronRight className="w-5 h-5" />
+                            <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
                           </button>
                         </>
                       )}
                       
                       {/* Image Counter */}
-                      <div className="absolute bottom-4 right-4 bg-black/60 text-white px-3 py-1 rounded-full text-sm">
+                      <div className="absolute bottom-2 sm:bottom-4 right-2 sm:right-4 bg-black/60 text-white px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm">
                         {currentImageIndex + 1} / {flatImages.length}
                       </div>
                     </div>
                     
                     {/* Thumbnail Navigation */}
-                    <div className="flex gap-2 mt-4 overflow-x-auto pb-2">
+                    <div className="flex gap-2 mt-3 sm:mt-4 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-border scrollbar-track-transparent">
                       {flatImages.map((image, index) => (
                         <button
                           key={image.id}
                           onClick={() => setCurrentImageIndex(index)}
-                          className={`flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 transition-smooth ${
+                          className={`flex-shrink-0 w-16 h-16 sm:w-20 sm:h-20 rounded-lg overflow-hidden border-2 transition-smooth ${
                             index === currentImageIndex ? 'border-primary' : 'border-transparent'
                           }`}
                         >
@@ -245,32 +245,32 @@ const FlatDetail = () => {
                 )}
 
                 {/* Flat Details */}
-                <div className="space-y-6">
+                <div className="space-y-4 sm:space-y-6 w-full">
                   <div>
-                    <h1 className="text-3xl md:text-4xl font-bold mb-4">{flat.name}</h1>
+                    <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4">{flat.name}</h1>
                     <div className="flex items-center text-muted-foreground mb-4">
-                      <MapPin className="w-5 h-5 mr-2" />
-                      <span>{flat.location}</span>
+                      <MapPin className="w-4 h-4 sm:w-5 sm:h-5 mr-2 flex-shrink-0" />
+                      <span className="text-sm sm:text-base">{flat.location}</span>
                     </div>
                   </div>
 
-                  <p className="text-lg text-muted-foreground leading-relaxed">
+                  <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
                     {flat.about_description}
                   </p>
 
                   {/* Neighborhood */}
                   {flat.neighborhood && (
-                    <div className="bg-gradient-to-r from-secondary/20 to-primary/10 rounded-lg p-4 border-l-4 border-secondary">
-                      <h3 className="text-lg font-semibold mb-2 text-secondary">Neighborhood</h3>
-                      <p className="text-muted-foreground">{flat.neighborhood}</p>
+                    <div className="bg-gradient-to-r from-secondary/20 to-primary/10 rounded-lg p-3 sm:p-4 border-l-4 border-secondary">
+                      <h3 className="text-base sm:text-lg font-semibold mb-2 text-secondary">Neighborhood</h3>
+                      <p className="text-sm sm:text-base text-muted-foreground">{flat.neighborhood}</p>
                     </div>
                   )}
 
                  {/* Location Map */}
-                  <div>
-                    <h3 className="text-xl font-bold mb-4">Location</h3>
-                    <div className="space-y-4">
-                      <div className="h-48 rounded-lg overflow-hidden border border-border">
+                  <div className="w-full">
+                    <h3 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4">Location</h3>
+                    <div className="space-y-4 w-full">
+                      <div className="h-48 sm:h-56 rounded-lg overflow-hidden border border-border w-full">
                         <RoomMap 
                           location={flat.location}
                           neighbourhood={flat.neighborhood || ''}
@@ -279,7 +279,7 @@ const FlatDetail = () => {
                           mapboxToken={mapboxToken}
                         />
                       </div>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-xs sm:text-sm text-muted-foreground">
                         📍 {flat.location}
                       </p>
                     </div>
@@ -289,10 +289,10 @@ const FlatDetail = () => {
               </div>
 
               {/* Right Column - Booking & Info */}
-              <div className="space-y-6">
+              <div className="space-y-6 w-full">
                 
                 {/* Flat Info Card */}
-                <Card className="sticky top-24 border border-border/50 shadow-soft hover:shadow-medium transition-smooth bg-card backdrop-blur-sm">
+                <Card className="lg:sticky lg:top-24 border border-border/50 shadow-soft hover:shadow-medium transition-smooth bg-card backdrop-blur-sm w-full">
                   <CardContent className="p-0">
                     {/* Header Section with Gradient */}
                     <div className="bg-gradient-to-br from-primary/10 via-primary/5 to-secondary/10 p-6 border-b border-border/30">
@@ -374,7 +374,7 @@ const FlatDetail = () => {
                           <Home className="w-4 h-4 mr-2" />
                           View Available Rooms
                         </Button>
-                        <div className="flex gap-3">
+                        <div className="flex flex-col sm:flex-row gap-3">
                           <Button 
                             variant="outline" 
                             className="flex-1 hover:bg-muted hover:text-foreground transition-smooth" 
@@ -406,20 +406,20 @@ const FlatDetail = () => {
 
             {/* All Rooms Section */}
             {allRooms.length > 0 && (
-              <div id="rooms-section" className="mt-16 pt-16 border-t-4 border-gradient-to-r from-primary to-secondary">
-                <div className="flex items-center gap-3 mb-8">
-                  <h2 className="text-3xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Rooms</h2>
-                  <div className="flex-1 h-1 bg-gradient-to-r from-primary/50 to-secondary/50 rounded-full"></div>
+              <div id="rooms-section" className="mt-12 sm:mt-16 pt-12 sm:pt-16 border-t-4 border-gradient-to-r from-primary to-secondary w-full">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 mb-6 sm:mb-8">
+                  <h2 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Rooms</h2>
+                  <div className="flex-1 h-1 bg-gradient-to-r from-primary/50 to-secondary/50 rounded-full hidden sm:block"></div>
                 </div>
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 w-full">
                   {allRooms.map((room, index) => (
-                    <Card key={room.id} className="overflow-hidden hover:shadow-xl transition-smooth transform hover:scale-105 hover:-translate-y-1 border-2 border-transparent hover:border-primary/30">
+                    <Card key={room.id} className="overflow-hidden hover:shadow-xl transition-smooth transform hover:scale-105 hover:-translate-y-1 border-2 border-transparent hover:border-primary/30 w-full">
                       <div className="relative">
                         {room.room_images.length > 0 && (
                           <img 
                             src={room.room_images[0]?.image_url} 
                             alt={room.room_images[0]?.alt_text || room.title}
-                            className="w-full h-48 object-cover"
+                            className="w-full h-44 sm:h-48 object-cover"
                           />
                         )}
                         <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 hover:opacity-100 transition-smooth"></div>
@@ -428,14 +428,14 @@ const FlatDetail = () => {
                           className="absolute top-2 right-2"
                         />
                       </div>
-                      <CardContent className="p-4 bg-gradient-to-br from-background to-primary/5">
-                        <h3 className="font-semibold mb-2 text-foreground">{room.title}</h3>
-                        <div className="flex items-center justify-between">
-                          <div className="text-lg font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-                            KES {room.price.toLocaleString()}<span className="text-sm text-muted-foreground">/month</span>
+                      <CardContent className="p-4 sm:p-5 bg-gradient-to-br from-background to-primary/5">
+                        <h3 className="font-semibold text-base sm:text-lg mb-3 sm:mb-2 text-foreground">{room.title}</h3>
+                        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-2">
+                          <div className="text-base sm:text-lg font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                            KES {room.price.toLocaleString()}<span className="text-xs sm:text-sm text-muted-foreground">/month</span>
                           </div>
-                          <Link to={`/rooms/${room.id}`}>
-                            <Button size="sm" className="bg-gradient-to-r from-primary to-primary-glow hover:shadow-medium transition-smooth">View Details</Button>
+                          <Link to={`/rooms/${room.id}`} className="w-full sm:w-auto">
+                            <Button size="sm" className="bg-gradient-to-r from-primary to-primary-glow hover:shadow-medium transition-smooth w-full sm:w-auto">View Details</Button>
                           </Link>
                         </div>
                       </CardContent>
