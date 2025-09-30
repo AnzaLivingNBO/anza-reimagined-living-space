@@ -157,24 +157,24 @@ const FlatDetail = () => {
         
 
         {/* Breadcrumb */}
-        <section className="pt-6 pb-4 bg-gradient-to-r from-primary/5 via-secondary/5 to-primary/5">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex items-center space-x-2 text-xs sm:text-sm text-muted-foreground overflow-x-auto whitespace-nowrap pb-2">
+        <section className="pt-6 pb-3 bg-gradient-to-r from-primary/5 via-secondary/5 to-primary/5">
+          <div className="container mx-auto px-3 sm:px-4 lg:px-8">
+            <div className="flex items-center space-x-1.5 sm:space-x-2 text-xs text-muted-foreground overflow-x-auto whitespace-nowrap pb-2 scrollbar-thin">
               <Link to="/" className="hover:text-primary transition-smooth">Home</Link>
               <span>/</span>
               <Link to="/flats" className="hover:text-primary transition-smooth">Flats</Link>
               <span>/</span>
-              <span className="text-foreground truncate">{flat.name}</span>
+              <span className="text-foreground truncate max-w-[120px] sm:max-w-none">{flat.name}</span>
             </div>
           </div>
         </section>
 
         {/* Back Button */}
-        <section className="pb-4 bg-gradient-to-r from-primary/5 via-secondary/5 to-primary/5">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <section className="pb-3 bg-gradient-to-r from-primary/5 via-secondary/5 to-primary/5">
+          <div className="container mx-auto px-3 sm:px-4 lg:px-8">
             <Link to="/flats">
-              <Button variant="outline" size="sm" className="gap-2 hover:bg-primary hover:text-primary-foreground transition-smooth">
-                <ChevronLeft className="w-4 h-4" />
+              <Button variant="outline" size="sm" className="gap-1.5 text-xs hover:bg-primary hover:text-primary-foreground transition-smooth">
+                <ChevronLeft className="w-3.5 h-3.5" />
                 Back to Flats
               </Button>
             </Link>
@@ -182,17 +182,17 @@ const FlatDetail = () => {
         </section>
 
         {/* Main Content */}
-        <section className="py-6 sm:py-8 bg-background">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
+        <section className="py-4 sm:py-6 lg:py-8 bg-background">
+          <div className="container mx-auto px-3 sm:px-4 lg:px-8">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
               
               {/* Left Column - Images & Details */}
-              <div className="lg:col-span-2 space-y-6 sm:space-y-8 w-full overflow-hidden">
+              <div className="lg:col-span-2 space-y-4 sm:space-y-6 w-full overflow-hidden">
                 
                 {/* Image Gallery */}
                 {flatImages.length > 0 && (
                   <div className="relative w-full">
-                    <div className="relative h-64 sm:h-80 md:h-96 lg:h-[500px] rounded-xl sm:rounded-2xl overflow-hidden">
+                    <div className="relative h-56 sm:h-72 md:h-96 lg:h-[500px] rounded-lg sm:rounded-xl overflow-hidden">
                       <img 
                         src={flatImages[currentImageIndex]?.image_url} 
                         alt={flatImages[currentImageIndex]?.alt_text || `${flat.name} - Image ${currentImageIndex + 1}`}
@@ -204,32 +204,32 @@ const FlatDetail = () => {
                         <>
                           <button
                             onClick={prevImage}
-                            className="absolute left-2 sm:left-4 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white rounded-full p-1.5 sm:p-2 transition-smooth"
+                            className="absolute left-1.5 sm:left-3 top-1/2 transform -translate-y-1/2 bg-black/60 hover:bg-black/80 text-white rounded-full p-1.5 sm:p-2 transition-smooth active:scale-95"
                           >
-                            <PrevIcon className="w-4 h-4 sm:w-5 sm:h-5" />
+                            <PrevIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                           </button>
                           <button
                             onClick={nextImage}
-                            className="absolute right-2 sm:right-4 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white rounded-full p-1.5 sm:p-2 transition-smooth"
+                            className="absolute right-1.5 sm:right-3 top-1/2 transform -translate-y-1/2 bg-black/60 hover:bg-black/80 text-white rounded-full p-1.5 sm:p-2 transition-smooth active:scale-95"
                           >
-                            <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
+                            <ChevronRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                           </button>
                         </>
                       )}
                       
                       {/* Image Counter */}
-                      <div className="absolute bottom-2 sm:bottom-4 right-2 sm:right-4 bg-black/60 text-white px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm">
+                      <div className="absolute bottom-2 sm:bottom-3 right-2 sm:right-3 bg-black/70 text-white px-2 sm:px-3 py-0.5 sm:py-1 rounded-full text-xs">
                         {currentImageIndex + 1} / {flatImages.length}
                       </div>
                     </div>
                     
                     {/* Thumbnail Navigation */}
-                    <div className="flex gap-2 mt-3 sm:mt-4 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-border scrollbar-track-transparent">
+                    <div className="flex gap-1.5 sm:gap-2 mt-2 sm:mt-3 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-border scrollbar-track-transparent">
                       {flatImages.map((image, index) => (
                         <button
                           key={image.id}
                           onClick={() => setCurrentImageIndex(index)}
-                          className={`flex-shrink-0 w-16 h-16 sm:w-20 sm:h-20 rounded-lg overflow-hidden border-2 transition-smooth ${
+                          className={`flex-shrink-0 w-14 h-14 sm:w-16 sm:h-16 rounded-md overflow-hidden border-2 transition-smooth ${
                             index === currentImageIndex ? 'border-primary' : 'border-transparent'
                           }`}
                         >
@@ -245,32 +245,32 @@ const FlatDetail = () => {
                 )}
 
                 {/* Flat Details */}
-                <div className="space-y-4 sm:space-y-6 w-full">
+                <div className="space-y-3 sm:space-y-4 w-full">
                   <div>
-                    <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4">{flat.name}</h1>
-                    <div className="flex items-center text-muted-foreground mb-4">
-                      <MapPin className="w-4 h-4 sm:w-5 sm:h-5 mr-2 flex-shrink-0" />
-                      <span className="text-sm sm:text-base">{flat.location}</span>
+                    <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-2 sm:mb-3">{flat.name}</h1>
+                    <div className="flex items-center text-muted-foreground mb-3">
+                      <MapPin className="w-3.5 h-3.5 sm:w-4 sm:h-4 mr-1.5 flex-shrink-0" />
+                      <span className="text-xs sm:text-sm">{flat.location}</span>
                     </div>
                   </div>
 
-                  <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
+                  <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
                     {flat.about_description}
                   </p>
 
                   {/* Neighborhood */}
                   {flat.neighborhood && (
-                    <div className="bg-gradient-to-r from-secondary/20 to-primary/10 rounded-lg p-3 sm:p-4 border-l-4 border-secondary">
-                      <h3 className="text-base sm:text-lg font-semibold mb-2 text-secondary">Neighborhood</h3>
-                      <p className="text-sm sm:text-base text-muted-foreground">{flat.neighborhood}</p>
+                    <div className="bg-gradient-to-r from-secondary/20 to-primary/10 rounded-lg p-3 sm:p-4 border-l-3 border-secondary">
+                      <h3 className="text-sm sm:text-base font-semibold mb-1.5 text-secondary">Neighborhood</h3>
+                      <p className="text-xs sm:text-sm text-muted-foreground">{flat.neighborhood}</p>
                     </div>
                   )}
 
                  {/* Location Map */}
                   <div className="w-full">
-                    <h3 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4">Location</h3>
-                    <div className="space-y-4 w-full">
-                      <div className="h-48 sm:h-56 rounded-lg overflow-hidden border border-border w-full">
+                    <h3 className="text-base sm:text-lg font-bold mb-2 sm:mb-3">Location</h3>
+                    <div className="space-y-2 sm:space-y-3 w-full">
+                      <div className="h-40 sm:h-48 rounded-lg overflow-hidden border border-border w-full">
                         <RoomMap 
                           location={flat.location}
                           neighbourhood={flat.neighborhood || ''}
@@ -279,7 +279,7 @@ const FlatDetail = () => {
                           mapboxToken={mapboxToken}
                         />
                       </div>
-                      <p className="text-xs sm:text-sm text-muted-foreground">
+                      <p className="text-xs text-muted-foreground">
                         📍 {flat.location}
                       </p>
                     </div>
@@ -289,18 +289,18 @@ const FlatDetail = () => {
               </div>
 
               {/* Right Column - Booking & Info */}
-              <div className="space-y-6 w-full">
+              <div className="space-y-4 sm:space-y-6 w-full">
                 
                 {/* Flat Info Card */}
                 <Card className="lg:sticky lg:top-24 border border-border/50 shadow-soft hover:shadow-medium transition-smooth bg-card backdrop-blur-sm w-full">
                   <CardContent className="p-0">
                     {/* Header Section with Gradient */}
-                    <div className="bg-gradient-to-br from-primary/10 via-primary/5 to-secondary/10 p-6 border-b border-border/30">
+                    <div className="bg-gradient-to-br from-primary/10 via-primary/5 to-secondary/10 p-4 sm:p-6 border-b border-border/30">
                       <div className="text-center">
-                        <div className="text-2xl font-bold text-foreground mb-1">
+                        <div className="text-lg sm:text-xl md:text-2xl font-bold text-foreground mb-1">
                           {flat.name}
                         </div>
-                        <p className="text-sm text-muted-foreground flex items-center justify-center gap-1">
+                        <p className="text-xs sm:text-sm text-muted-foreground flex items-center justify-center gap-1">
                           <MapPin className="w-3 h-3" />
                           {flat.location}
                         </p>
@@ -308,16 +308,16 @@ const FlatDetail = () => {
                     </div>
 
                     {/* Content Section */}
-                    <div className="p-6 space-y-6">
+                    <div className="p-4 sm:p-6 space-y-4 sm:space-y-6">
 
                      {/* Stats Grid */}
-                     <div className="grid grid-cols-2 gap-3">
-                        <div className="text-center p-4 bg-muted/30 rounded-xl border border-border/40">
-                          <div className="text-2xl font-bold text-primary mb-1">{availableRooms}</div>
+                     <div className="grid grid-cols-2 gap-2 sm:gap-3">
+                        <div className="text-center p-3 sm:p-4 bg-muted/30 rounded-lg sm:rounded-xl border border-border/40">
+                          <div className="text-xl sm:text-2xl font-bold text-primary mb-0.5 sm:mb-1">{availableRooms}</div>
                           <div className="text-xs text-muted-foreground">Available</div>
                         </div>
-                        <div className="text-center p-4 bg-muted/30 rounded-xl border border-border/40">
-                          <div className="text-2xl font-bold text-secondary mb-1">{flat.total_rooms}</div>
+                        <div className="text-center p-3 sm:p-4 bg-muted/30 rounded-lg sm:rounded-xl border border-border/40">
+                          <div className="text-xl sm:text-2xl font-bold text-secondary mb-0.5 sm:mb-1">{flat.total_rooms}</div>
                           <div className="text-xs text-muted-foreground">Total Rooms</div>
                         </div>
                       </div>
@@ -333,18 +333,18 @@ const FlatDetail = () => {
                       {/* Characteristics Section */}
                       {characteristics.length > 0 && (
                         <div>
-                          <h4 className="text-sm font-semibold mb-4 text-foreground flex items-center gap-2">
-                            <div className="w-1 h-4 bg-gradient-to-b from-primary to-secondary rounded-full"></div>
+                          <h4 className="text-xs sm:text-sm font-semibold mb-3 sm:mb-4 text-foreground flex items-center gap-2">
+                            <div className="w-1 h-3 sm:h-4 bg-gradient-to-b from-primary to-secondary rounded-full"></div>
                             Features & Amenities
                           </h4>
-                          <div className="grid grid-cols-2 gap-2">
+                          <div className="grid grid-cols-2 gap-1.5 sm:gap-2">
                             {characteristics.map((char) => {
                               const Icon = getCharacteristicIcon(char.characteristics.name);
                               return (
                                 <Tooltip key={char.id}>
                                   <TooltipTrigger asChild>
-                                    <div className="flex items-center gap-2 p-3 bg-muted/30 hover:bg-primary/5 rounded-lg border border-border/30 hover:border-primary/30 transition-smooth cursor-help group">
-                                      <Icon className="w-4 h-4 text-primary group-hover:text-primary flex-shrink-0" />
+                                    <div className="flex items-center gap-1.5 sm:gap-2 p-2 sm:p-3 bg-muted/30 hover:bg-primary/5 rounded-lg border border-border/30 hover:border-primary/30 transition-smooth cursor-help group">
+                                      <Icon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-primary group-hover:text-primary flex-shrink-0" />
                                       <span className="text-xs font-medium truncate text-foreground">{char.characteristics.name}</span>
                                     </div>
                                   </TooltipTrigger>
@@ -361,38 +361,38 @@ const FlatDetail = () => {
                     </div>
 
                     {/* Action Buttons Section */}
-                    <div className="p-6 bg-muted/20 border-t border-border/30">
-                      <div className="space-y-3">
+                    <div className="p-4 sm:p-6 bg-muted/20 border-t border-border/30">
+                      <div className="space-y-2 sm:space-y-3">
                         <Button 
-                          className="w-full bg-gradient-to-r from-primary to-primary hover:from-primary/90 hover:to-primary/90 text-primary-foreground shadow-medium hover:shadow-large transition-smooth transform hover:-translate-y-0.5" 
-                          size="lg"
+                          className="w-full bg-gradient-to-r from-primary to-primary hover:from-primary/90 hover:to-primary/90 text-primary-foreground shadow-medium hover:shadow-large transition-smooth" 
+                          size="default"
                           onClick={() => {
                             const roomsSection = document.getElementById('rooms-section');
                             roomsSection?.scrollIntoView({ behavior: 'smooth', block: 'start' });
                           }}
                         >
-                          <Home className="w-4 h-4 mr-2" />
-                          View Available Rooms
+                          <Home className="w-3.5 h-3.5 sm:w-4 sm:h-4 mr-1.5 sm:mr-2" />
+                          <span className="text-sm sm:text-base">View Available Rooms</span>
                         </Button>
-                        <div className="flex flex-col sm:flex-row gap-3">
+                        <div className="flex gap-2 sm:gap-3">
                           <Button 
                             variant="outline" 
-                            className="flex-1 hover:bg-muted hover:text-foreground transition-smooth" 
-                            size="lg"
+                            className="flex-1 hover:bg-muted hover:text-foreground transition-smooth text-xs sm:text-sm" 
+                            size="default"
                             asChild
                           >
                             <Link to="/contact">
-                              <MessageSquare className="w-4 h-4 mr-2" />
-                              Ask Question
+                              <MessageSquare className="w-3.5 h-3.5 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
+                              Ask
                             </Link>
                           </Button>
                           <Button 
                             variant="outline" 
-                            className="flex-1 hover:bg-muted hover:text-foreground transition-smooth" 
-                            size="lg"
+                            className="flex-1 hover:bg-muted hover:text-foreground transition-smooth text-xs sm:text-sm" 
+                            size="default"
                             onClick={handleShare}
                           >
-                            <Share2 className="w-4 h-4 mr-2" />
+                            <Share2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
                             Share
                           </Button>
                         </div>

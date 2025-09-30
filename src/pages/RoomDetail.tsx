@@ -134,43 +134,43 @@ const RoomDetail = () => {
         )}
 
         {/* Breadcrumb */}
-        <section className="pt-20 pb-4 bg-muted/30">
-          <div className="container mx-auto px-4">
-            <div className="flex items-center space-x-2 text-sm text-muted-foreground">
+        <section className="pt-20 pb-3 bg-muted/30">
+          <div className="container mx-auto px-3 sm:px-4">
+            <div className="flex items-center space-x-1.5 sm:space-x-2 text-xs text-muted-foreground overflow-x-auto whitespace-nowrap scrollbar-thin">
               <Link to="/" className="hover:text-primary transition-smooth">Home</Link>
               <span>/</span>
               <Link to="/flats" className="hover:text-primary transition-smooth">Flats</Link>
               <span>/</span>
-              <Link to={`/flats/${room.flatId}`} className="hover:text-primary transition-smooth">Flat Details</Link>
+              <Link to={`/flats/${room.flatId}`} className="hover:text-primary transition-smooth">Flat</Link>
               <span>/</span>
-              <span className="text-foreground">{room.title}</span>
+              <span className="text-foreground truncate max-w-[100px] sm:max-w-none">{room.title}</span>
             </div>
           </div>
         </section>
 
         {/* Back Button */}
-        <section className="pb-4 bg-muted/30">
-          <div className="container mx-auto px-4">
+        <section className="pb-3 bg-muted/30">
+          <div className="container mx-auto px-3 sm:px-4">
             <Link to={`/flats/${room.flatId}`}>
-              <Button variant="outline" size="sm" className="gap-2">
-                <ChevronLeft className="w-4 h-4" />
-                Back to Flat Details
+              <Button variant="outline" size="sm" className="gap-1.5 text-xs">
+                <ChevronLeft className="w-3.5 h-3.5" />
+                Back to Flat
               </Button>
             </Link>
           </div>
         </section>
 
         {/* Main Content */}
-        <section className="py-8 bg-background">
-          <div className="container mx-auto px-4">
-            <div className="grid lg:grid-cols-3 gap-8">
+        <section className="py-4 sm:py-6 lg:py-8 bg-background">
+          <div className="container mx-auto px-3 sm:px-4">
+            <div className="grid lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
               
               {/* Left Column - Images & Details */}
-              <div className="lg:col-span-2 space-y-8">
+              <div className="lg:col-span-2 space-y-4 sm:space-y-6">
                 
                 {/* Image Gallery */}
                 <div className="relative">
-                  <div className="relative h-96 md:h-[500px] rounded-2xl overflow-hidden">
+                  <div className="relative h-56 sm:h-72 md:h-96 lg:h-[500px] rounded-lg sm:rounded-xl overflow-hidden">
                      <img 
                        src={roomImages[currentImageIndex]} 
                        alt={`${room.title} - Image ${currentImageIndex + 1}`}
@@ -183,32 +183,32 @@ const RoomDetail = () => {
                       <>
                         <button
                           onClick={prevImage}
-                          className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white rounded-full p-2 transition-smooth"
+                          className="absolute left-1.5 sm:left-3 top-1/2 transform -translate-y-1/2 bg-black/60 hover:bg-black/80 text-white rounded-full p-1.5 sm:p-2 transition-smooth active:scale-95"
                         >
-                          <PrevIcon className="w-5 h-5" />
+                          <PrevIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                         </button>
                         <button
                           onClick={nextImage}
-                          className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white rounded-full p-2 transition-smooth"
+                          className="absolute right-1.5 sm:right-3 top-1/2 transform -translate-y-1/2 bg-black/60 hover:bg-black/80 text-white rounded-full p-1.5 sm:p-2 transition-smooth active:scale-95"
                         >
-                          <ChevronRight className="w-5 h-5" />
+                          <ChevronRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                         </button>
                       </>
                     )}
                     
                     {/* Image Counter */}
-                    <div className="absolute bottom-4 right-4 bg-black/60 text-white px-3 py-1 rounded-full text-sm">
+                    <div className="absolute bottom-2 sm:bottom-3 right-2 sm:right-3 bg-black/70 text-white px-2 sm:px-3 py-0.5 sm:py-1 rounded-full text-xs">
                       {currentImageIndex + 1} / {roomImages.length}
                     </div>
                   </div>
                   
                    {/* Image Grid Navigation - Full Size Previews */}
-                   <div className="grid grid-cols-4 md:grid-cols-6 gap-2 mt-4">
+                   <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 gap-1.5 sm:gap-2 mt-2 sm:mt-3">
                      {roomImages.map((image, index) => (
                        <button
                          key={index}
                          onClick={() => setCurrentImageIndex(index)}
-                         className={`aspect-square rounded-lg overflow-hidden border-2 transition-smooth hover:shadow-md ${
+                         className={`aspect-square rounded-md overflow-hidden border-2 transition-smooth hover:shadow-md ${
                            index === currentImageIndex ? 'border-primary shadow-lg' : 'border-border hover:border-primary/50'
                          }`}
                        >
@@ -224,30 +224,30 @@ const RoomDetail = () => {
                 </div>
 
                 {/* Room Details */}
-                <div className="space-y-6">
+                <div className="space-y-3 sm:space-y-4">
                   <div>
-                    <h1 className="text-3xl md:text-4xl font-bold mb-4">{room.title}</h1>
-                    <div className="flex items-center gap-4 mb-4">
-                      <div className="flex items-center text-muted-foreground">
-                        <MapPin className="w-5 h-5 mr-2" />
+                    <h1 className="text-xl sm:text-2xl md:text-3xl font-bold mb-2 sm:mb-3">{room.title}</h1>
+                    <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-3">
+                      <div className="flex items-center text-muted-foreground text-xs sm:text-sm">
+                        <MapPin className="w-3.5 h-3.5 sm:w-4 sm:h-4 mr-1.5" />
                         <span>{room.location}</span>
                       </div>
                       <StatusBadge 
                         status={room.availabilityStatus}
-                        className=""
+                        className="text-xs"
                       />
                     </div>
                   </div>
 
-                  <p className="text-lg text-muted-foreground leading-relaxed">
+                  <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
                     {room.description}
                   </p>
 
                   {/* Room Setup - Furniture Section */}
                   {room.furniture.length > 0 && (
                     <div>
-                      <h3 className="text-xl font-bold mb-4">Room Setup</h3>
-                      <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                      <h3 className="text-base sm:text-lg font-bold mb-2 sm:mb-3">Room Setup</h3>
+                      <div className="grid grid-cols-2 md:grid-cols-3 gap-2 sm:gap-3">
                          {room.furniture.map((item, i) => {
                           const colors = [
                             'bg-primary/20 border-primary/30',
@@ -256,11 +256,11 @@ const RoomDetail = () => {
                           const colorClass = colors[i % 2];
                           
                           return (
-                            <div key={i} className={`${colorClass} rounded-xl p-4 border-2 transition-smooth hover:scale-105`}>
-                              <div className="flex items-center justify-between mb-2">
-                                <h4 className="font-medium text-sm">{item.name}</h4>
+                            <div key={i} className={`${colorClass} rounded-lg sm:rounded-xl p-2.5 sm:p-3 border-2 transition-smooth hover:scale-105`}>
+                              <div className="flex items-center justify-between mb-1 sm:mb-1.5">
+                                <h4 className="font-medium text-xs sm:text-sm">{item.name}</h4>
                                 {item.quantity > 1 && (
-                                  <Badge variant="secondary" className="text-xs">
+                                  <Badge variant="secondary" className="text-xs h-4 px-1.5">
                                     {item.quantity}x
                                   </Badge>
                                 )}
@@ -320,24 +320,24 @@ const RoomDetail = () => {
               </div>
 
               {/* Right Column - Booking & Info */}
-              <div className="space-y-6">
+              <div className="space-y-4 sm:space-y-6">
                 
                 {/* Enhanced Info Card */}
-                <Card className="sticky top-24 overflow-hidden border-0 shadow-xl bg-gradient-to-br from-background via-background to-primary/5">
+                <Card className="lg:sticky lg:top-24 overflow-hidden border-0 shadow-xl bg-gradient-to-br from-background via-background to-primary/5">
                   {/* Header Section */}
-                  <div className="bg-gradient-to-r from-primary to-secondary p-6 text-white">
+                  <div className="bg-gradient-to-r from-primary to-secondary p-4 sm:p-6 text-white">
                     <div className="text-center">
-                      <div className="text-3xl font-bold mb-1">
+                      <div className="text-xl sm:text-2xl md:text-3xl font-bold mb-1">
                         KES {room.price.toLocaleString()}
-                        <span className="text-lg opacity-90">{room.period}</span>
+                        <span className="text-sm sm:text-base opacity-90">{room.period}</span>
                       </div>
-                      <p className="text-sm opacity-80">Security deposit: KES {room.deposit.toLocaleString()}</p>
+                      <p className="text-xs sm:text-sm opacity-80">Security deposit: KES {room.deposit.toLocaleString()}</p>
                     </div>
                   </div>
 
                   <CardContent className="p-0">
                     {/* Room Details */}
-                    <div className="px-6 py-4 space-y-3 border-b border-border/50">
+                    <div className="px-4 sm:px-6 py-3 sm:py-4 space-y-2 sm:space-y-3 border-b border-border/50">
                       <div className="flex items-center justify-between">
                         <span className="text-sm text-muted-foreground">Room Size</span>
                         <span className="font-medium">{room.roomSize} sqm</span>
@@ -361,16 +361,16 @@ const RoomDetail = () => {
 
                     {/* What's Included Section */}
                     {room.characteristics.length > 0 && (
-                      <div className="px-6 py-4 border-b border-border/50 overflow-visible">
-                        <h4 className="text-sm font-semibold mb-3 text-muted-foreground uppercase tracking-wide">What's Included</h4>
-                        <div className="grid grid-cols-2 gap-2">
+                      <div className="px-4 sm:px-6 py-3 sm:py-4 border-b border-border/50 overflow-visible">
+                        <h4 className="text-xs sm:text-sm font-semibold mb-2 sm:mb-3 text-muted-foreground uppercase tracking-wide">What's Included</h4>
+                        <div className="grid grid-cols-2 gap-1.5 sm:gap-2">
                           {room.characteristics.map((characteristic, i) => {
                             const Icon = characteristic.icon;
                             return (
                               <Tooltip key={i}>
                                 <TooltipTrigger asChild>
-                                  <div className="flex items-center gap-2 p-2 bg-muted/30 rounded-lg hover:bg-primary/10 transition-smooth cursor-help relative z-10">
-                                    <Icon className="w-4 h-4 text-primary flex-shrink-0" />
+                                  <div className="flex items-center gap-1.5 sm:gap-2 p-1.5 sm:p-2 bg-muted/30 rounded-lg hover:bg-primary/10 transition-smooth cursor-help relative z-10">
+                                    <Icon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-primary flex-shrink-0" />
                                     <span className="text-xs font-medium truncate">{characteristic.label}</span>
                                   </div>
                                 </TooltipTrigger>
@@ -385,24 +385,24 @@ const RoomDetail = () => {
                     )}
 
                     {/* Action Buttons */}
-                    <div className="p-6 space-y-3">
+                    <div className="p-4 sm:p-6 space-y-2 sm:space-y-3">
                       <Button 
-                        className="w-full btn-primary" 
-                        size="lg"
+                        className="w-full btn-primary text-sm sm:text-base" 
+                        size="default"
                         onClick={() => setShowApplicationForm(true)}
                       >
-                        <Home className="w-4 h-4 mr-2" />
+                        <Home className="w-3.5 h-3.5 sm:w-4 sm:h-4 mr-1.5 sm:mr-2" />
                         Start Room Application
                       </Button>
-                      <div className="flex gap-3">
+                      <div className="flex gap-2 sm:gap-3">
                         <Button 
                           variant="outline" 
-                          className="flex-1" 
-                          size="lg"
+                          className="flex-1 text-xs sm:text-sm" 
+                          size="default"
                           asChild
                         >
                           <Link to="/contact">
-                            <MessageSquare className="w-4 h-4 mr-2" />
+                            <MessageSquare className="w-3.5 h-3.5 sm:w-4 sm:h-4 mr-1 sm:mr-1.5" />
                             Ask Question
                           </Link>
                         </Button>
