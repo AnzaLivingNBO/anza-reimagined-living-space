@@ -170,11 +170,11 @@ const RoomDetail = () => {
                 
                 {/* Image Gallery */}
                 <div className="relative">
-                  <div className="relative h-56 sm:h-72 md:h-96 lg:h-[500px] rounded-lg sm:rounded-xl overflow-hidden">
+                   <div className="relative h-56 sm:h-72 md:h-96 lg:h-[500px] rounded-lg sm:rounded-xl overflow-hidden bg-muted/50">
                      <img 
                        src={roomImages[currentImageIndex]} 
                        alt={`${room.title} - Image ${currentImageIndex + 1}`}
-                       className="w-full h-full object-cover"
+                       className="w-full h-full object-contain"
                        loading="eager"
                      />
                     
@@ -215,7 +215,7 @@ const RoomDetail = () => {
                          <img 
                            src={image} 
                            alt={`Room view ${index + 1}`}
-                           className="w-full h-full object-cover hover:scale-110 transition-smooth"
+                           className="w-full h-full object-contain hover:scale-110 transition-smooth"
                            loading="lazy"
                          />
                        </button>
