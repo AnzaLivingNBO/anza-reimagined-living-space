@@ -158,12 +158,12 @@ const Flats = () => {
     <>
       <Header />
       <div className="min-h-screen bg-gradient-to-br from-background via-secondary/10 to-accent/5 pt-24 pb-20">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl lg:text-6xl font-bold mb-4 bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-8 sm:mb-10 lg:mb-12 px-2">
+          <h1 className="text-3xl sm:text-4xl lg:text-6xl font-bold mb-3 sm:mb-4 bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent">
             Available Flats
           </h1>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto">
             Discover our collection of premium flats across Nairobi's most desirable neighborhoods
           </p>
         </div>
@@ -256,12 +256,12 @@ const Flats = () => {
             const availableRooms = flat.rooms?.filter(room => room.availability_status === 'available').length || 0;
 
             return (
-              <Card key={flat.id} className="overflow-hidden backdrop-blur-sm bg-card/80 border-border/50 hover:shadow-xl transition-all duration-300">
-                <div className="grid lg:grid-cols-3 gap-0">
+              <Card key={flat.id} className="overflow-hidden backdrop-blur-sm bg-card/80 border-border/50 hover:shadow-xl transition-all duration-300 w-full">
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-0 w-full">
                   {/* Image Section */}
-                  <div className="relative lg:col-span-1">
+                  <div className="relative lg:col-span-1 w-full">
                     {images.length > 0 ? (
-                      <div className="relative h-64 lg:h-80 group">
+                      <div className="relative h-56 sm:h-64 lg:h-80 group w-full">
                         <img
                           src={images[currentImageIndex]?.image_url}
                           alt={images[currentImageIndex]?.alt_text || `${flat.name} photo`}
@@ -302,20 +302,20 @@ const Flats = () => {
                         )}
                       </div>
                     ) : (
-                      <div className="h-64 lg:h-80 bg-muted flex items-center justify-center">
+                      <div className="h-56 sm:h-64 lg:h-80 bg-muted flex items-center justify-center w-full">
                         <span className="text-muted-foreground">No images available</span>
                       </div>
                     )}
                   </div>
 
                   {/* Content Section */}
-                  <div className="lg:col-span-1 p-5 lg:p-6">
-                    <div className="flex items-start justify-between mb-3">
-                      <div>
-                        <h2 className="text-xl lg:text-2xl font-bold mb-2">{flat.name}</h2>
+                  <div className="lg:col-span-1 p-4 sm:p-5 lg:p-6 w-full">
+                    <div className="flex flex-col sm:flex-row items-start justify-between gap-3 mb-3">
+                      <div className="flex-1 min-w-0">
+                        <h2 className="text-lg sm:text-xl lg:text-2xl font-bold mb-2 truncate">{flat.name}</h2>
                         <div className="flex items-center text-muted-foreground mb-2">
-                          <MapPin className="w-4 h-4 mr-2" />
-                          <span>{flat.location}</span>
+                          <MapPin className="w-4 h-4 mr-2 flex-shrink-0" />
+                          <span className="text-sm truncate">{flat.location}</span>
                         </div>
                       </div>
                       
@@ -325,7 +325,7 @@ const Flats = () => {
                           <TooltipTrigger asChild>
                              <Badge 
                                variant="outline" 
-                               className="flex items-center gap-2 px-3 py-1 hover:bg-primary/5 transition-colors cursor-help"
+                               className="flex items-center gap-2 px-3 py-1 hover:bg-primary/5 transition-colors cursor-help flex-shrink-0"
                              >
                                <Home className="w-4 h-4" />
                                <span className="font-medium">{availableRooms}/{flat.total_rooms}</span>
@@ -338,13 +338,13 @@ const Flats = () => {
                       </TooltipProvider>
                     </div>
 
-                    <p className="text-muted-foreground mb-4 leading-relaxed line-clamp-2">
+                    <p className="text-sm sm:text-base text-muted-foreground mb-4 leading-relaxed line-clamp-2">
                       {flat.about_description}
                     </p>
 
                     {/* Characteristics */}
                     {characteristics.length > 0 && (
-                      <div className="mb-4">
+                      <div className="mb-4 w-full overflow-hidden">
                         <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-border scrollbar-track-transparent">
                           {characteristics.map((char) => {
                             const Icon = getCharacteristicIcon(char.characteristics.name);
@@ -359,15 +359,15 @@ const Flats = () => {
                       </div>
                     )}
 
-                    <Link to={`/flats/${flat.id}`}>
-                      <Button className="w-full lg:w-auto">
+                    <Link to={`/flats/${flat.id}`} className="block">
+                      <Button className="w-full sm:w-full lg:w-auto">
                         View Flat
                       </Button>
                     </Link>
                   </div>
 
                   {/* Map Section */}
-                  <div className="lg:col-span-1 h-64 lg:h-80">
+                  <div className="lg:col-span-1 h-56 sm:h-64 lg:h-80 w-full">
                     <RoomMap 
                       location={flat.location}
                       neighbourhood={flat.neighborhood || flat.location}
