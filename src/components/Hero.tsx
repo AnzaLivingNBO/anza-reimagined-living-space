@@ -12,19 +12,19 @@ export const Hero = () => {
       <div className="absolute inset-0 hero-gradient"></div>
       
       {/* Content */}
-      <div className="relative z-10 container mx-auto px-4 text-center text-white">
-        <div className="max-w-4xl mx-auto space-y-8 animate-fade-up">
-          <h1 className="text-5xl md:text-7xl font-bold leading-tight">
+      <div className="relative z-10 container mx-auto px-6 sm:px-8 text-center text-white">
+        <div className="max-w-4xl mx-auto space-y-6 sm:space-y-8 animate-fade-up">
+          <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold leading-tight px-2">
             Find Your Home,{' '}
             <span className="bg-gradient-to-r from-white to-primary-glow bg-clip-text text-transparent">
               Build Your Community
             </span>
           </h1>
           
-          <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed">We offer fully furnished rooms in vibrant shared flats, designed to give you everything you need - comfort, convenience, and a co-living community you'll love.</p>
+          <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed px-4">We offer fully furnished rooms in vibrant shared flats, designed to give you everything you need - comfort, convenience, and a co-living community you'll love.</p>
           
-          <div className="flex justify-center items-center pt-8">
-            <Button size="lg" className="btn-primary text-lg px-10 py-4 hover:scale-105 transition-bounce" onClick={() => document.getElementById('rooms')?.scrollIntoView({
+          <div className="flex justify-center items-center pt-4 sm:pt-8">
+            <Button size="lg" className="btn-primary text-base sm:text-lg px-8 sm:px-10 py-3 sm:py-4 hover:scale-105 transition-bounce" onClick={() => document.getElementById('rooms')?.scrollIntoView({
             behavior: 'smooth'
           })}>
               Start Exploring

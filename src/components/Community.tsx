@@ -25,37 +25,37 @@ const features = [
 
 export const Community = () => {
   return (
-    <section className="py-20 bg-gradient-to-br from-primary/5 via-secondary/5 to-primary/5">
-      <div className="container mx-auto px-4">
+    <section className="py-12 sm:py-16 md:py-20 bg-gradient-to-br from-primary/5 via-secondary/5 to-primary/5">
+      <div className="container mx-auto px-4 sm:px-6">
         <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-16 animate-fade-up">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+          <div className="text-center mb-10 sm:mb-14 md:mb-16 animate-fade-up">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6 px-2">
               More Than Just a Room
             </h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto px-4">
               Join a vibrant community where lasting friendships are made and every day brings new opportunities to connect.
             </p>
           </div>
           
-          <div className="grid md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 md:gap-8">
             {features.map((feature, index) => {
               const Icon = feature.icon;
               return (
                 <div 
                   key={index}
-                  className="group flex items-start space-x-4 p-6 rounded-2xl bg-background/60 backdrop-blur-sm hover:bg-background/80 transition-smooth animate-slide-in-left"
+                  className="group flex items-start space-x-3 sm:space-x-4 p-4 sm:p-6 rounded-xl sm:rounded-2xl bg-background/60 backdrop-blur-sm hover:bg-background/80 transition-smooth animate-slide-in-left"
                   style={{
                     animationDelay: `${index * 0.1}s`
                   }}
                 >
-                  <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-primary to-secondary rounded-xl flex items-center justify-center group-hover:scale-110 transition-bounce">
-                    <Icon className="w-6 h-6 text-white" />
+                  <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-primary to-secondary rounded-lg sm:rounded-xl flex items-center justify-center group-hover:scale-110 transition-bounce">
+                    <Icon className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold mb-2">
+                    <h3 className="text-lg sm:text-xl font-bold mb-1.5 sm:mb-2">
                       {feature.title}
                     </h3>
-                    <p className="text-muted-foreground leading-relaxed">
+                    <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
                       {feature.description}
                     </p>
                   </div>

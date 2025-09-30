@@ -9,9 +9,9 @@ export const Footer = () => {
 
   return (
     <>
-      <footer id="contact" className="bg-foreground text-background py-16">
-        <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+      <footer id="contact" className="bg-foreground text-background py-12 sm:py-16">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 mb-8 sm:mb-12">
             {/* Brand */}
             <div className="lg:col-span-2">
               <Link to="/" className="flex items-center space-x-2 mb-4">
@@ -81,12 +81,12 @@ export const Footer = () => {
           </div>
           
           {/* CTA Section */}
-          <div className="border-t border-background/20 pt-8 mb-8">
-            <div className="text-center">
-              <h3 className="text-2xl font-bold mb-4">Ready to Find Your Home?</h3>
-              <p className="text-background/80 mb-6">Join our community today and discover co-living at its finest.</p>
+          <div className="border-t border-background/20 pt-6 sm:pt-8 mb-6 sm:mb-8">
+            <div className="text-center px-4">
+              <h3 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4">Ready to Find Your Home?</h3>
+              <p className="text-sm sm:text-base text-background/80 mb-4 sm:mb-6">Join our community today and discover co-living at its finest.</p>
               <Button 
-                className="btn-primary"
+                className="btn-primary w-full sm:w-auto"
                 onClick={() => setShowApplicationForm(true)}
               >
                 Apply For Room
@@ -95,8 +95,8 @@ export const Footer = () => {
           </div>
           
           {/* Copyright */}
-          <div className="border-t border-background/20 pt-8 text-center text-background/60">
-            <p>&copy; 2024 Anza Living. All rights reserved. | Privacy Policy | Terms of Service</p>
+          <div className="border-t border-background/20 pt-6 sm:pt-8 text-center text-background/60">
+            <p className="text-xs sm:text-sm">&copy; 2024 Anza Living. All rights reserved. | Privacy Policy | Terms of Service</p>
           </div>
         </div>
       </footer>
