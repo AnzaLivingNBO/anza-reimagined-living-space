@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Menu, X, Home, Users, MapPin, HelpCircle, Phone, Facebook, Instagram, Building2 } from 'lucide-react';
+import { Menu, X, Home, Users, MapPin, HelpCircle, Phone, Facebook, Instagram, Building2, Bed } from 'lucide-react';
 import { RoomApplicationForm } from '@/components/RoomApplicationForm';
 
 export const Header = () => {
@@ -11,6 +11,7 @@ export const Header = () => {
 
   const navItems = [
     { name: 'Home', href: '/', icon: Home },
+    { name: 'Rooms', href: '/rooms', icon: Bed },
     { name: 'About', href: '/about', icon: Users },
     { name: 'Flats', href: '/flats', icon: MapPin },
     { name: 'For Landlords', href: '/landlords', icon: Building2 },
