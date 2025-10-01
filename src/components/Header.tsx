@@ -28,13 +28,13 @@ export const Header = () => {
   return (
     <>
       <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
-        <nav className="container mx-auto px-4 py-4 flex items-center justify-between">
+        <nav className="container mx-auto px-4 py-2.5 flex items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center">
             <img 
               src="/lovable-uploads/4a1a548f-b5b3-41e8-9963-49d8f9258482.png" 
               alt="Anza Living Logo" 
-              className="w-12 h-12 hover:scale-105 transition-smooth"
+              className="w-10 h-10 hover:scale-105 transition-smooth"
             />
           </Link>
 
