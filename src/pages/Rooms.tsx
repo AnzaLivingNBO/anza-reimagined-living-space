@@ -6,8 +6,8 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Home, MapPin, Filter, X, User, Bed } from "lucide-react";
-import { getCharacteristicIcon } from "@/utils/iconMapping";
+import { MapPin, Filter, X } from "lucide-react";
+import { getFurnitureIcon } from "@/utils/furnitureIconMapping";
 import { getStatusConfig } from "@/utils/statusBadge";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
@@ -34,11 +34,13 @@ interface Room {
     alt_text: string | null;
     display_order: number;
   }>;
-  room_included: Array<{
+  room_furniture: Array<{
     id: string;
-    characteristics: {
+    quantity: number;
+    furniture: {
       id: string;
       name: string;
+      description: string | null;
     };
   }>;
 }
@@ -66,29 +68,30 @@ const Rooms = () => {
 
       if (roomsError) throw roomsError;
 
-      // Get characteristics and room_included separately
-      const { data: characteristics, error: charError } = await supabase
-        .from("characteristics")
-        .select("id, name");
+      // Get furniture data
+      const { data: furniture, error: furnitureError } = await supabase
+        .from("furniture")
+        .select("id, name, description");
 
-      if (charError) throw charError;
+      if (furnitureError) throw furnitureError;
 
-      const { data: roomIncluded, error: riError } = await supabase
-        .from("room_included")
-        .select("id, room_id, characteristic_id");
+      const { data: roomFurniture, error: rfError } = await supabase
+        .from("room_furniture")
+        .select("id, room_id, furniture_id, quantity");
 
-      if (riError) throw riError;
+      if (rfError) throw rfError;
 
       // Combine the data
-      const roomsWithCharacteristics = roomsData?.map(room => ({
+      const roomsWithFurniture = roomsData?.map(room => ({
         ...room,
-        room_included: roomIncluded?.filter(ri => ri.room_id === room.id).map(ri => ({
-          id: ri.id,
-          characteristics: characteristics?.find(c => c.id === ri.characteristic_id) || { id: '', name: '' }
+        room_furniture: roomFurniture?.filter(rf => rf.room_id === room.id).map(rf => ({
+          id: rf.id,
+          quantity: rf.quantity,
+          furniture: furniture?.find(f => f.id === rf.furniture_id) || { id: '', name: '', description: null }
         })) || []
       }));
 
-      return roomsWithCharacteristics as Room[];
+      return roomsWithFurniture as Room[];
     },
   });
 
@@ -329,16 +332,16 @@ const Rooms = () => {
             {filteredRooms?.map((room, index) => {
               const currentImageIndex = selectedImageIndex[room.id] || 0;
               const images = room.room_images?.sort((a, b) => a.display_order - b.display_order) || [];
-              const characteristics = room.room_included || [];
+              const furniture = room.room_furniture || [];
               const statusConfig = getStatusConfig(room.availability_status);
 
               return (
                 <Card key={room.id} className="overflow-hidden backdrop-blur-sm bg-card/80 border-border/50 hover:shadow-xl transition-all duration-300 w-full animate-fade-up" style={{
                   animationDelay: `${index * 0.1}s`
                 }}>
-                  <div className="grid grid-cols-1 lg:grid-cols-5 gap-0 w-full">
-                    {/* Image Section - Takes up 2 columns */}
-                    <div className="relative lg:col-span-2 w-full">
+                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-0 w-full">
+                    {/* Image Section */}
+                    <div className="relative lg:col-span-1 w-full">
                       {images.length > 0 ? (
                         <div className="relative h-56 sm:h-64 lg:h-80 group w-full">
                           <img
@@ -392,72 +395,46 @@ const Rooms = () => {
                       )}
                     </div>
 
-                    {/* Content Section - Takes up 3 columns */}
-                    <div className="lg:col-span-3 p-4 sm:p-5 lg:p-6 w-full flex flex-col justify-between">
-                      <div>
-                        <div className="flex flex-col sm:flex-row items-start justify-between gap-3 mb-3">
-                          <div className="flex-1 min-w-0">
-                            <h2 className="text-lg sm:text-xl lg:text-2xl font-bold mb-2 truncate">{room.title}</h2>
-                            <div className="flex items-center text-muted-foreground mb-2">
-                              <MapPin className="w-4 h-4 mr-2 flex-shrink-0" />
-                              <span className="text-sm truncate">{room.flats.location}</span>
-                              {room.flats.neighborhood && (
-                                <span className="text-xs ml-1">• {room.flats.neighborhood}</span>
-                              )}
-                            </div>
+                    {/* Content Section */}
+                    <div className="lg:col-span-2 p-4 sm:p-5 lg:p-6 w-full">
+                      <div className="flex flex-col sm:flex-row items-start justify-between gap-3 mb-3">
+                        <div className="flex-1 min-w-0">
+                          <h2 className="text-lg sm:text-xl lg:text-2xl font-bold mb-2 truncate">{room.title}</h2>
+                          <div className="flex items-center text-muted-foreground mb-2">
+                            <MapPin className="w-4 h-4 mr-2 flex-shrink-0" />
+                            <span className="text-sm truncate">{room.flats.location}</span>
                           </div>
                         </div>
-
-                        <div className="mb-4">
-                          <p className="text-2xl sm:text-3xl font-bold text-primary">
-                            KES {Number(room.price).toLocaleString()}
-                            <span className="text-sm sm:text-base font-normal text-muted-foreground">/month</span>
-                          </p>
-                        </div>
-
-                        <div className="flex items-center gap-4 mb-4 text-sm text-muted-foreground">
-                          {room.room_size && (
-                            <div className="flex items-center gap-1">
-                              <Home className="w-4 h-4" />
-                              <span>{room.room_size} sq ft</span>
-                            </div>
-                          )}
-                          {room.max_occupancy && (
-                            <div className="flex items-center gap-1">
-                              <User className="w-4 h-4" />
-                              <span>Max {room.max_occupancy}</span>
-                            </div>
-                          )}
-                        </div>
-
-                        <p className="text-sm sm:text-base text-muted-foreground mb-4 leading-relaxed line-clamp-2">
-                          {room.description || "No description available"}
-                        </p>
-
-                        {/* Characteristics */}
-                        {characteristics.length > 0 && (
-                          <div className="mb-4 w-full overflow-hidden">
-                            <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-border scrollbar-track-transparent">
-                              {characteristics.map((char) => {
-                                const Icon = getCharacteristicIcon(char.characteristics.name);
-                                return (
-                                  <Badge key={char.id} variant="secondary" className="flex items-center gap-1 whitespace-nowrap flex-shrink-0">
-                                    <Icon className="w-3 h-3" />
-                                    <span className="text-xs">{char.characteristics.name}</span>
-                                  </Badge>
-                                );
-                              })}
-                            </div>
-                          </div>
-                        )}
                       </div>
+
+                      <p className="text-sm sm:text-base text-muted-foreground mb-4 leading-relaxed line-clamp-2">
+                        {room.description || "No description available"}
+                      </p>
+
+                      {/* Furniture */}
+                      {furniture.length > 0 && (
+                        <div className="mb-4 w-full overflow-hidden">
+                          <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-border scrollbar-track-transparent">
+                            {furniture.map((item) => {
+                              const Icon = getFurnitureIcon(item.furniture.name);
+                              return (
+                                <Badge key={item.id} variant="secondary" className="flex items-center gap-1 whitespace-nowrap flex-shrink-0">
+                                  <Icon className="w-3 h-3" />
+                                  <span className="text-xs">{item.furniture.name}</span>
+                                  {item.quantity > 1 && <span className="text-xs">({item.quantity})</span>}
+                                </Badge>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      )}
 
                       <Link to={`/rooms/${room.id}`} className="block">
                         <Button 
                           className="w-full sm:w-full lg:w-auto"
                           disabled={room.availability_status === 'unavailable'}
                         >
-                          View Details
+                          View Room
                         </Button>
                       </Link>
                     </div>
