@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Home, MapPin, Filter, X, User, Bed } from "lucide-react";
+import { RoomMap } from "@/components/RoomMap";
 import { getCharacteristicIcon } from "@/utils/iconMapping";
 import { getStatusConfig } from "@/utils/statusBadge";
 import { Header } from "@/components/Header";
@@ -27,6 +28,8 @@ interface Room {
     name: string;
     location: string;
     neighborhood: string | null;
+    latitude: number | null;
+    longitude: number | null;
   };
   room_images: Array<{
     id: string;
@@ -59,7 +62,7 @@ const Rooms = () => {
         .from("rooms")
         .select(`
           *,
-          flats(id, name, location, neighborhood),
+          flats(id, name, location, neighborhood, latitude, longitude),
           room_images(*)
         `)
         .order("created_at", { ascending: false });
@@ -336,9 +339,9 @@ const Rooms = () => {
                 <Card key={room.id} className="overflow-hidden backdrop-blur-sm bg-card/80 border-border/50 hover:shadow-xl transition-all duration-300 w-full animate-fade-up" style={{
                   animationDelay: `${index * 0.1}s`
                 }}>
-                  <div className="grid grid-cols-1 lg:grid-cols-5 gap-0 w-full">
-                    {/* Image Section - Takes up 2 columns */}
-                    <div className="relative lg:col-span-2 w-full">
+                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-0 w-full">
+                    {/* Image Section - Takes up 1 column */}
+                    <div className="relative lg:col-span-1 w-full">
                       {images.length > 0 ? (
                         <div className="relative h-56 sm:h-64 lg:h-80 group w-full">
                           <img
@@ -392,8 +395,8 @@ const Rooms = () => {
                       )}
                     </div>
 
-                    {/* Content Section - Takes up 3 columns */}
-                    <div className="lg:col-span-3 p-4 sm:p-5 lg:p-6 w-full flex flex-col justify-between">
+                    {/* Content Section - Takes up 1 column */}
+                    <div className="lg:col-span-1 p-4 sm:p-5 lg:p-6 w-full flex flex-col justify-between">
                       <div>
                         <div className="flex flex-col sm:flex-row items-start justify-between gap-3 mb-3">
                           <div className="flex-1 min-w-0">
@@ -460,6 +463,16 @@ const Rooms = () => {
                           View Details
                         </Button>
                       </Link>
+                    </div>
+
+                    {/* Map Section - Takes up 1 column */}
+                    <div className="lg:col-span-1 h-56 sm:h-64 lg:h-80 w-full">
+                      <RoomMap 
+                        location={room.flats.location}
+                        neighbourhood={room.flats.neighborhood || room.flats.location}
+                        latitude={room.flats.latitude ? Number(room.flats.latitude) : undefined}
+                        longitude={room.flats.longitude ? Number(room.flats.longitude) : undefined}
+                      />
                     </div>
                   </div>
                 </Card>
