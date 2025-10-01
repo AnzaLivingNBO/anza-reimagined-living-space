@@ -11,8 +11,8 @@ export const Header = () => {
 
   const navItems = [
     { name: 'Home', href: '/', icon: Home },
-    { name: 'Rooms', href: '/rooms', icon: Bed },
     { name: 'About', href: '/about', icon: Users },
+    { name: 'Rooms', href: '/rooms', icon: Bed },
     { name: 'For Landlords', href: '/landlords', icon: Building2 },
     { name: 'FAQs', href: '/faqs', icon: HelpCircle },
     { name: 'Contact', href: '/contact', icon: Phone },
