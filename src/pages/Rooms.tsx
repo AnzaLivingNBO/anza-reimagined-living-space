@@ -325,7 +325,7 @@ const Rooms = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="space-y-6">
             {filteredRooms?.map((room, index) => {
               const currentImageIndex = selectedImageIndex[room.id] || 0;
               const images = room.room_images?.sort((a, b) => a.display_order - b.display_order) || [];
@@ -333,129 +333,134 @@ const Rooms = () => {
               const statusConfig = getStatusConfig(room.availability_status);
 
               return (
-                <Card key={room.id} className="overflow-hidden backdrop-blur-sm bg-card/80 border-border/50 hover:shadow-xl transition-all duration-300 flex flex-col animate-fade-up" style={{
+                <Card key={room.id} className="overflow-hidden backdrop-blur-sm bg-card/80 border-border/50 hover:shadow-xl transition-all duration-300 w-full animate-fade-up" style={{
                   animationDelay: `${index * 0.1}s`
                 }}>
-                  {/* Image Section */}
-                  <div className="relative">
-                    {images.length > 0 ? (
-                      <div className="relative h-48 group">
-                        <img
-                          src={images[currentImageIndex]?.image_url}
-                          alt={images[currentImageIndex]?.alt_text || `${room.title} photo`}
-                          className="w-full h-full object-cover"
-                        />
-                        
-                        {/* Image Navigation */}
-                        {images.length > 1 && (
-                          <>
-                            <button
-                              onClick={() => handleImageChange(room.id, 'prev', images.length)}
-                              className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black/50 text-white rounded-full w-8 h-8 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
-                              aria-label="Previous image"
-                            >
-                              ←
-                            </button>
-                            <button
-                              onClick={() => handleImageChange(room.id, 'next', images.length)}
-                              className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black/50 text-white rounded-full w-8 h-8 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
-                              aria-label="Next image"
-                            >
-                              →
-                            </button>
-                            
-                            {/* Image Indicators */}
-                            <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex space-x-1">
-                              {images.map((_, index) => (
-                                <button
-                                  key={index}
-                                  onClick={() => setSelectedImageIndex(prev => ({ ...prev, [room.id]: index }))}
-                                  className={`w-2 h-2 rounded-full transition-all ${
-                                    index === currentImageIndex ? 'bg-white' : 'bg-white/50'
-                                  }`}
-                                />
-                              ))}
+                  <div className="grid grid-cols-1 lg:grid-cols-5 gap-0 w-full">
+                    {/* Image Section - Takes up 2 columns */}
+                    <div className="relative lg:col-span-2 w-full">
+                      {images.length > 0 ? (
+                        <div className="relative h-56 sm:h-64 lg:h-80 group w-full">
+                          <img
+                            src={images[currentImageIndex]?.image_url}
+                            alt={images[currentImageIndex]?.alt_text || `${room.title} photo`}
+                            className="w-full h-full object-contain bg-muted/50"
+                          />
+                          
+                          {/* Image Navigation */}
+                          {images.length > 1 && (
+                            <>
+                              <button
+                                onClick={() => handleImageChange(room.id, 'prev', images.length)}
+                                className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black/50 text-white rounded-full w-8 h-8 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                                aria-label="Previous image"
+                              >
+                                ←
+                              </button>
+                              <button
+                                onClick={() => handleImageChange(room.id, 'next', images.length)}
+                                className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black/50 text-white rounded-full w-8 h-8 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                                aria-label="Next image"
+                              >
+                                →
+                              </button>
+                              
+                              {/* Image Indicators */}
+                              <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex space-x-1">
+                                {images.map((_, idx) => (
+                                  <button
+                                    key={idx}
+                                    onClick={() => setSelectedImageIndex(prev => ({ ...prev, [room.id]: idx }))}
+                                    className={`w-2 h-2 rounded-full transition-all ${
+                                      idx === currentImageIndex ? 'bg-white' : 'bg-white/50'
+                                    }`}
+                                  />
+                                ))}
+                              </div>
+                            </>
+                          )}
+                          
+                          {/* Availability Badge */}
+                          <Badge className={`${statusConfig.className} absolute top-2 right-2`}>
+                            {statusConfig.label}
+                          </Badge>
+                        </div>
+                      ) : (
+                        <div className="h-56 sm:h-64 lg:h-80 bg-muted flex items-center justify-center w-full">
+                          <span className="text-muted-foreground">No images available</span>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Content Section - Takes up 3 columns */}
+                    <div className="lg:col-span-3 p-4 sm:p-5 lg:p-6 w-full flex flex-col justify-between">
+                      <div>
+                        <div className="flex flex-col sm:flex-row items-start justify-between gap-3 mb-3">
+                          <div className="flex-1 min-w-0">
+                            <h2 className="text-lg sm:text-xl lg:text-2xl font-bold mb-2 truncate">{room.title}</h2>
+                            <div className="flex items-center text-muted-foreground mb-2">
+                              <MapPin className="w-4 h-4 mr-2 flex-shrink-0" />
+                              <span className="text-sm truncate">{room.flats.location}</span>
+                              {room.flats.neighborhood && (
+                                <span className="text-xs ml-1">• {room.flats.neighborhood}</span>
+                              )}
                             </div>
-                          </>
-                        )}
-                        
-                        {/* Availability Badge */}
-                        <Badge className={`${statusConfig.className} absolute top-2 right-2`}>
-                          {statusConfig.label}
-                        </Badge>
-                      </div>
-                    ) : (
-                      <div className="h-48 bg-muted flex items-center justify-center">
-                        <span className="text-muted-foreground">No images available</span>
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Content Section */}
-                  <div className="p-5 flex flex-col flex-grow">
-                    <div className="mb-3">
-                      <h2 className="text-xl font-bold mb-2">{room.title}</h2>
-                      <div className="flex items-center text-muted-foreground mb-2">
-                        <MapPin className="w-4 h-4 mr-2 flex-shrink-0" />
-                        <span className="text-sm truncate">{room.flats.location}</span>
-                        {room.flats.neighborhood && (
-                          <span className="text-xs ml-1">• {room.flats.neighborhood}</span>
-                        )}
-                      </div>
-                    </div>
-
-                    <div className="mb-3">
-                      <div className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-                        KES {Number(room.price).toLocaleString()}
-                        <span className="text-sm text-muted-foreground font-normal">/month</span>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center gap-4 mb-4 text-sm text-muted-foreground">
-                      {room.room_size && (
-                        <div className="flex items-center gap-1">
-                          <Home className="w-4 h-4" />
-                          <span>{room.room_size} sq ft</span>
+                          </div>
                         </div>
-                      )}
-                      {room.max_occupancy && (
-                        <div className="flex items-center gap-1">
-                          <User className="w-4 h-4" />
-                          <span>Max {room.max_occupancy}</span>
-                        </div>
-                      )}
-                    </div>
 
-                    {/* Characteristics */}
-                    {characteristics.length > 0 && (
-                      <div className="mb-4">
-                        <div className="flex flex-wrap gap-2">
-                          {characteristics.slice(0, 4).map((char) => {
-                            const Icon = getCharacteristicIcon(char.characteristics.name);
-                            return (
-                              <Badge key={char.id} variant="secondary" className="flex items-center gap-1">
-                                <Icon className="w-3 h-3" />
-                                <span className="text-xs">{char.characteristics.name}</span>
-                              </Badge>
-                            );
-                          })}
-                          {characteristics.length > 4 && (
-                            <Badge variant="outline" className="text-xs">
-                              +{characteristics.length - 4} more
-                            </Badge>
+                        <div className="mb-4">
+                          <p className="text-2xl sm:text-3xl font-bold text-primary">
+                            KES {Number(room.price).toLocaleString()}
+                            <span className="text-sm sm:text-base font-normal text-muted-foreground">/month</span>
+                          </p>
+                        </div>
+
+                        <div className="flex items-center gap-4 mb-4 text-sm text-muted-foreground">
+                          {room.room_size && (
+                            <div className="flex items-center gap-1">
+                              <Home className="w-4 h-4" />
+                              <span>{room.room_size} sq ft</span>
+                            </div>
+                          )}
+                          {room.max_occupancy && (
+                            <div className="flex items-center gap-1">
+                              <User className="w-4 h-4" />
+                              <span>Max {room.max_occupancy}</span>
+                            </div>
                           )}
                         </div>
-                      </div>
-                    )}
 
-                    <Link to={`/rooms/${room.id}`} className="mt-auto block">
-                      <Button 
-                        className="w-full" 
-                        disabled={room.availability_status === 'unavailable'}
-                      >
-                        View Details
-                      </Button>
-                    </Link>
+                        <p className="text-sm sm:text-base text-muted-foreground mb-4 leading-relaxed line-clamp-2">
+                          {room.description || "No description available"}
+                        </p>
+
+                        {/* Characteristics */}
+                        {characteristics.length > 0 && (
+                          <div className="mb-4 w-full overflow-hidden">
+                            <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-border scrollbar-track-transparent">
+                              {characteristics.map((char) => {
+                                const Icon = getCharacteristicIcon(char.characteristics.name);
+                                return (
+                                  <Badge key={char.id} variant="secondary" className="flex items-center gap-1 whitespace-nowrap flex-shrink-0">
+                                    <Icon className="w-3 h-3" />
+                                    <span className="text-xs">{char.characteristics.name}</span>
+                                  </Badge>
+                                );
+                              })}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+
+                      <Link to={`/rooms/${room.id}`} className="block">
+                        <Button 
+                          className="w-full sm:w-full lg:w-auto"
+                          disabled={room.availability_status === 'unavailable'}
+                        >
+                          View Details
+                        </Button>
+                      </Link>
+                    </div>
                   </div>
                 </Card>
               );
