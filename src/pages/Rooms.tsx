@@ -8,6 +8,7 @@ import { Card } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { MapPin, Filter, X } from "lucide-react";
 import { getFurnitureIcon } from "@/utils/furnitureIconMapping";
+import { RoomMap } from "@/components/RoomMap";
 import { getStatusConfig } from "@/utils/statusBadge";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
@@ -27,6 +28,8 @@ interface Room {
     name: string;
     location: string;
     neighborhood: string | null;
+    latitude: number | null;
+    longitude: number | null;
   };
   room_images: Array<{
     id: string;
@@ -61,7 +64,7 @@ const Rooms = () => {
         .from("rooms")
         .select(`
           *,
-          flats(id, name, location, neighborhood),
+          flats(id, name, location, neighborhood, latitude, longitude),
           room_images(*)
         `)
         .order("created_at", { ascending: false });
@@ -396,7 +399,7 @@ const Rooms = () => {
                     </div>
 
                     {/* Content Section */}
-                    <div className="lg:col-span-2 p-4 sm:p-5 lg:p-6 w-full">
+                    <div className="lg:col-span-1 p-4 sm:p-5 lg:p-6 w-full">
                       <div className="flex flex-col sm:flex-row items-start justify-between gap-3 mb-3">
                         <div className="flex-1 min-w-0">
                           <h2 className="text-lg sm:text-xl lg:text-2xl font-bold mb-2 truncate">{room.title}</h2>
@@ -433,6 +436,16 @@ const Rooms = () => {
                           View Room
                         </Button>
                       </Link>
+                    </div>
+
+                    {/* Map Section */}
+                    <div className="lg:col-span-1 h-56 sm:h-64 lg:h-80 w-full">
+                      <RoomMap 
+                        location={room.flats.location}
+                        neighbourhood={room.flats.neighborhood || room.flats.location}
+                        latitude={room.flats.latitude ? Number(room.flats.latitude) : undefined}
+                        longitude={room.flats.longitude ? Number(room.flats.longitude) : undefined}
+                      />
                     </div>
                   </div>
                 </Card>
