@@ -267,7 +267,7 @@ const RoomDetail = () => {
                                   {/* Content */}
                                   <div className="flex-1 min-w-0">
                                     <div className="flex items-start justify-between gap-2 mb-1">
-                                      <h4 className="font-semibold text-sm sm:text-base line-clamp-1">{item.name}</h4>
+                                      <h4 className="font-semibold text-sm sm:text-base">{item.name}</h4>
                                       {item.quantity > 1 && (
                                         <Badge variant="secondary" className="text-xs px-2 py-0.5 flex-shrink-0">
                                           {item.quantity}×
@@ -275,7 +275,7 @@ const RoomDetail = () => {
                                       )}
                                     </div>
                                     {item.description && (
-                                      <p className="text-xs sm:text-sm text-muted-foreground line-clamp-2 leading-relaxed">
+                                      <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
                                         {item.description}
                                       </p>
                                     )}
