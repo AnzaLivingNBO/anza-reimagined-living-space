@@ -8,7 +8,8 @@ import { Card } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
-import { MapPin, Filter, X } from "lucide-react";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { MapPin, Filter, X, ChevronDown } from "lucide-react";
 import { getFurnitureIcon } from "@/utils/furnitureIconMapping";
 import { RoomMap } from "@/components/RoomMap";
 import { getStatusConfig } from "@/utils/statusBadge";
@@ -56,6 +57,8 @@ const Rooms = () => {
   const [locationFilter, setLocationFilter] = useState<string>("all");
   const [selectedFurniture, setSelectedFurniture] = useState<string[]>([]);
   const [selectedBathroom, setSelectedBathroom] = useState<string[]>([]);
+  const [furnitureOpen, setFurnitureOpen] = useState(false);
+  const [bathroomOpen, setBathroomOpen] = useState(false);
 
   const { data: rooms, isLoading } = useQuery({
     queryKey: ["rooms"],
@@ -252,65 +255,85 @@ const Rooms = () => {
                 {/* Furniture Filter */}
                 <div>
                   <Label className="text-sm font-medium mb-2 block">Furniture</Label>
-                  <div className="border border-border rounded-lg p-3 max-h-48 overflow-y-auto bg-background">
-                    {regularFurniture.length > 0 ? (
-                      regularFurniture.map((furniture) => (
-                        <div key={furniture.id} className="flex items-center space-x-2 mb-2">
-                          <Checkbox
-                            id={`furniture-${furniture.id}`}
-                            checked={selectedFurniture.includes(furniture.id)}
-                            onCheckedChange={(checked) => {
-                              if (checked) {
-                                setSelectedFurniture([...selectedFurniture, furniture.id]);
-                              } else {
-                                setSelectedFurniture(selectedFurniture.filter(id => id !== furniture.id));
-                              }
-                            }}
-                          />
-                          <Label
-                            htmlFor={`furniture-${furniture.id}`}
-                            className="text-sm font-normal cursor-pointer"
-                          >
-                            {furniture.name}
-                          </Label>
-                        </div>
-                      ))
-                    ) : (
-                      <p className="text-sm text-muted-foreground">No furniture options</p>
-                    )}
-                  </div>
+                  <Collapsible open={furnitureOpen} onOpenChange={setFurnitureOpen}>
+                    <CollapsibleTrigger asChild>
+                      <Button variant="outline" className="w-full justify-between">
+                        <span>{selectedFurniture.length > 0 ? `${selectedFurniture.length} selected` : 'Select furniture'}</span>
+                        <ChevronDown className={`h-4 w-4 transition-transform ${furnitureOpen ? 'rotate-180' : ''}`} />
+                      </Button>
+                    </CollapsibleTrigger>
+                    <CollapsibleContent className="mt-2">
+                      <div className="border border-border rounded-lg p-3 max-h-48 overflow-y-auto bg-background">
+                        {regularFurniture.length > 0 ? (
+                          regularFurniture.map((furniture) => (
+                            <div key={furniture.id} className="flex items-center space-x-2 mb-2">
+                              <Checkbox
+                                id={`furniture-${furniture.id}`}
+                                checked={selectedFurniture.includes(furniture.id)}
+                                onCheckedChange={(checked) => {
+                                  if (checked) {
+                                    setSelectedFurniture([...selectedFurniture, furniture.id]);
+                                  } else {
+                                    setSelectedFurniture(selectedFurniture.filter(id => id !== furniture.id));
+                                  }
+                                }}
+                              />
+                              <Label
+                                htmlFor={`furniture-${furniture.id}`}
+                                className="text-sm font-normal cursor-pointer"
+                              >
+                                {furniture.name}
+                              </Label>
+                            </div>
+                          ))
+                        ) : (
+                          <p className="text-sm text-muted-foreground">No furniture options</p>
+                        )}
+                      </div>
+                    </CollapsibleContent>
+                  </Collapsible>
                 </div>
 
                 {/* Bathroom Filter */}
                 <div>
                   <Label className="text-sm font-medium mb-2 block">Bathroom</Label>
-                  <div className="border border-border rounded-lg p-3 max-h-48 overflow-y-auto bg-background">
-                    {bathroomItems.length > 0 ? (
-                      bathroomItems.map((item) => (
-                        <div key={item.id} className="flex items-center space-x-2 mb-2">
-                          <Checkbox
-                            id={`bathroom-${item.id}`}
-                            checked={selectedBathroom.includes(item.id)}
-                            onCheckedChange={(checked) => {
-                              if (checked) {
-                                setSelectedBathroom([...selectedBathroom, item.id]);
-                              } else {
-                                setSelectedBathroom(selectedBathroom.filter(id => id !== item.id));
-                              }
-                            }}
-                          />
-                          <Label
-                            htmlFor={`bathroom-${item.id}`}
-                            className="text-sm font-normal cursor-pointer"
-                          >
-                            {item.name}
-                          </Label>
-                        </div>
-                      ))
-                    ) : (
-                      <p className="text-sm text-muted-foreground">No bathroom options</p>
-                    )}
-                  </div>
+                  <Collapsible open={bathroomOpen} onOpenChange={setBathroomOpen}>
+                    <CollapsibleTrigger asChild>
+                      <Button variant="outline" className="w-full justify-between">
+                        <span>{selectedBathroom.length > 0 ? `${selectedBathroom.length} selected` : 'Select bathroom features'}</span>
+                        <ChevronDown className={`h-4 w-4 transition-transform ${bathroomOpen ? 'rotate-180' : ''}`} />
+                      </Button>
+                    </CollapsibleTrigger>
+                    <CollapsibleContent className="mt-2">
+                      <div className="border border-border rounded-lg p-3 max-h-48 overflow-y-auto bg-background">
+                        {bathroomItems.length > 0 ? (
+                          bathroomItems.map((item) => (
+                            <div key={item.id} className="flex items-center space-x-2 mb-2">
+                              <Checkbox
+                                id={`bathroom-${item.id}`}
+                                checked={selectedBathroom.includes(item.id)}
+                                onCheckedChange={(checked) => {
+                                  if (checked) {
+                                    setSelectedBathroom([...selectedBathroom, item.id]);
+                                  } else {
+                                    setSelectedBathroom(selectedBathroom.filter(id => id !== item.id));
+                                  }
+                                }}
+                              />
+                              <Label
+                                htmlFor={`bathroom-${item.id}`}
+                                className="text-sm font-normal cursor-pointer"
+                              >
+                                {item.name}
+                              </Label>
+                            </div>
+                          ))
+                        ) : (
+                          <p className="text-sm text-muted-foreground">No bathroom options</p>
+                        )}
+                      </div>
+                    </CollapsibleContent>
+                  </Collapsible>
                 </div>
               </div>
 
