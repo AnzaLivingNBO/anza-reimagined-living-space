@@ -23,7 +23,6 @@ import { useToast } from '@/hooks/use-toast';
 import { useRoom } from '@/hooks/useRoom';
 import { RoomApplicationForm } from '@/components/RoomApplicationForm';
 import { StatusBadge } from '@/utils/statusBadge';
-import { getFurnitureIcon } from '@/utils/furnitureIconMapping';
 
 const RoomDetail = () => {
   const { id } = useParams();
@@ -247,42 +246,29 @@ const RoomDetail = () => {
                   {/* Room Setup - Furniture Section */}
                   {room.furniture.length > 0 && (
                     <div>
-                      <h3 className="text-base sm:text-lg font-bold mb-3 sm:mb-4">Room Setup</h3>
-                      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
+                      <h3 className="text-base sm:text-lg font-bold mb-2 sm:mb-3">Room Setup</h3>
+                      <div className="grid grid-cols-2 md:grid-cols-3 gap-2 sm:gap-3">
                          {room.furniture.map((item, i) => {
-                          const FurnitureIcon = getFurnitureIcon(item.name);
+                          const colors = [
+                            'bg-primary/20 border-primary/30',
+                            'bg-blue-400/20 border-blue-400/30'
+                          ];
+                          const colorClass = colors[i % 2];
                           
                           return (
-                            <Card 
-                              key={i} 
-                              className="overflow-hidden border border-border/50 hover:border-primary/50 transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
-                            >
-                              <CardContent className="p-3 sm:p-4">
-                                <div className="flex items-start gap-3">
-                                  {/* Icon */}
-                                  <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-primary/10 flex items-center justify-center">
-                                    <FurnitureIcon className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
-                                  </div>
-                                  
-                                  {/* Content */}
-                                  <div className="flex-1 min-w-0">
-                                    <div className="flex items-start justify-between gap-2 mb-1">
-                                      <h4 className="font-semibold text-sm sm:text-base line-clamp-1">{item.name}</h4>
-                                      {item.quantity > 1 && (
-                                        <Badge variant="secondary" className="text-xs px-2 py-0.5 flex-shrink-0">
-                                          {item.quantity}×
-                                        </Badge>
-                                      )}
-                                    </div>
-                                    {item.description && (
-                                      <p className="text-xs sm:text-sm text-muted-foreground line-clamp-2 leading-relaxed">
-                                        {item.description}
-                                      </p>
-                                    )}
-                                  </div>
-                                </div>
-                              </CardContent>
-                            </Card>
+                            <div key={i} className={`${colorClass} rounded-lg sm:rounded-xl p-2.5 sm:p-3 border-2 transition-smooth hover:scale-105`}>
+                              <div className="flex items-center justify-between mb-1 sm:mb-1.5">
+                                <h4 className="font-medium text-xs sm:text-sm">{item.name}</h4>
+                                {item.quantity > 1 && (
+                                  <Badge variant="secondary" className="text-xs h-4 px-1.5">
+                                    {item.quantity}x
+                                  </Badge>
+                                )}
+                              </div>
+                              {item.description && (
+                                <p className="text-xs text-muted-foreground">{item.description}</p>
+                              )}
+                            </div>
                           );
                         })}
                       </div>
