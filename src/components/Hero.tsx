@@ -21,7 +21,7 @@ export const Hero = () => {
             </span>
           </h1>
           
-          <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed px-4">We offer fully furnished rooms in vibrant shared flats, designed to give you everything you need - comfort, convenience, and a co-living community you'll love.</p>
+          <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed px-4">We offer fully furnished rooms in vibrant shared flats across Nairobi, designed to give you everything you need - comfort, convenience, and a co-living community you'll love.</p>
           
           <div className="flex justify-center items-center pt-4 sm:pt-8">
             <Button size="lg" className="btn-primary text-base sm:text-lg px-8 sm:px-10 py-3 sm:py-4 hover:scale-105 transition-bounce" onClick={() => document.getElementById('rooms')?.scrollIntoView({
