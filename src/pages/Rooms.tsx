@@ -57,6 +57,8 @@ const Rooms = () => {
   const [locationFilter, setLocationFilter] = useState<string>("all");
   const [selectedFurniture, setSelectedFurniture] = useState<string[]>([]);
   const [selectedBathroom, setSelectedBathroom] = useState<string[]>([]);
+  const [capacityFilter, setCapacityFilter] = useState<string>("all");
+  const [priceFilter, setPriceFilter] = useState<string>("all");
   const [furnitureOpen, setFurnitureOpen] = useState(false);
   const [bathroomOpen, setBathroomOpen] = useState(false);
 
@@ -162,6 +164,23 @@ const Rooms = () => {
       return false;
     }
     
+    // Capacity filter
+    if (capacityFilter !== "all") {
+      const capacity = room.max_occupancy || 1;
+      if (capacityFilter === "1" && capacity !== 1) return false;
+      if (capacityFilter === "2" && capacity !== 2) return false;
+      if (capacityFilter === "3+" && capacity < 3) return false;
+    }
+    
+    // Price filter
+    if (priceFilter !== "all") {
+      const price = Number(room.price);
+      if (priceFilter === "under-20k" && price >= 20000) return false;
+      if (priceFilter === "20k-30k" && (price < 20000 || price >= 30000)) return false;
+      if (priceFilter === "30k-40k" && (price < 30000 || price >= 40000)) return false;
+      if (priceFilter === "40k+" && price < 40000) return false;
+    }
+    
     // Furniture filter - room must have ALL selected furniture items
     if (selectedFurniture.length > 0) {
       const roomFurnitureIds = room.room_furniture.map(rf => rf.furniture.id);
@@ -215,7 +234,7 @@ const Rooms = () => {
                 Filter Rooms
               </div>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {/* Location Filter */}
                 <div>
                   <Label className="text-sm font-medium mb-2 block">Location</Label>
@@ -248,6 +267,39 @@ const Rooms = () => {
                       <SelectItem value="unavailable">Unavailable</SelectItem>
                       <SelectItem value="reserved">Reserved</SelectItem>
                       <SelectItem value="under_maintenance">Under Maintenance</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {/* Capacity Filter */}
+                <div>
+                  <Label className="text-sm font-medium mb-2 block">Capacity</Label>
+                  <Select value={capacityFilter} onValueChange={setCapacityFilter}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Any" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">Any</SelectItem>
+                      <SelectItem value="1">1 Person</SelectItem>
+                      <SelectItem value="2">2 People</SelectItem>
+                      <SelectItem value="3+">3+ People</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {/* Price Filter */}
+                <div>
+                  <Label className="text-sm font-medium mb-2 block">Price Range</Label>
+                  <Select value={priceFilter} onValueChange={setPriceFilter}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Any" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">Any</SelectItem>
+                      <SelectItem value="under-20k">Under KES 20,000</SelectItem>
+                      <SelectItem value="20k-30k">KES 20,000 - 30,000</SelectItem>
+                      <SelectItem value="30k-40k">KES 30,000 - 40,000</SelectItem>
+                      <SelectItem value="40k+">KES 40,000+</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -338,13 +390,15 @@ const Rooms = () => {
               </div>
 
               {/* Clear Filters Button */}
-              {(availabilityFilter !== "all" || locationFilter !== "all" || selectedFurniture.length > 0 || selectedBathroom.length > 0) && (
+              {(availabilityFilter !== "all" || locationFilter !== "all" || capacityFilter !== "all" || priceFilter !== "all" || selectedFurniture.length > 0 || selectedBathroom.length > 0) && (
                 <div className="mt-6 flex justify-end">
                   <Button
                     variant="outline"
                     onClick={() => {
                       setAvailabilityFilter("all");
                       setLocationFilter("all");
+                      setCapacityFilter("all");
+                      setPriceFilter("all");
                       setSelectedFurniture([]);
                       setSelectedBathroom([]);
                     }}
