@@ -6,6 +6,8 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
 import { MapPin, Filter, X } from "lucide-react";
 import { getFurnitureIcon } from "@/utils/furnitureIconMapping";
 import { RoomMap } from "@/components/RoomMap";
@@ -52,9 +54,8 @@ const Rooms = () => {
   const [selectedImageIndex, setSelectedImageIndex] = useState<{ [key: string]: number }>({});
   const [availabilityFilter, setAvailabilityFilter] = useState<string>("all");
   const [locationFilter, setLocationFilter] = useState<string>("all");
-  const [priceFilter, setPriceFilter] = useState<string>("all");
-  const [roomSizeFilter, setRoomSizeFilter] = useState<string>("all");
-  const [occupancyFilter, setOccupancyFilter] = useState<string>("all");
+  const [selectedFurniture, setSelectedFurniture] = useState<string[]>([]);
+  const [selectedBathroom, setSelectedBathroom] = useState<string[]>([]);
 
   const { data: rooms, isLoading } = useQuery({
     queryKey: ["rooms"],
@@ -111,6 +112,26 @@ const Rooms = () => {
     },
   });
 
+  const { data: furnitureOptions = [] } = useQuery({
+    queryKey: ["furniture"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("furniture")
+        .select("id, name")
+        .order("name");
+
+      if (error) throw error;
+      return data;
+    },
+  });
+
+  const bathroomItems = furnitureOptions.filter(item => 
+    item.name.toLowerCase().includes('bathroom')
+  );
+  const regularFurniture = furnitureOptions.filter(item => 
+    !item.name.toLowerCase().includes('bathroom')
+  );
+
   const handleImageChange = (roomId: string, direction: 'next' | 'prev', totalImages: number) => {
     setSelectedImageIndex(prev => {
       const currentIndex = prev[roomId] || 0;
@@ -138,55 +159,22 @@ const Rooms = () => {
       return false;
     }
     
-    // Price filter
-    if (priceFilter !== "all") {
-      const price = Number(room.price);
-      switch (priceFilter) {
-        case "under-15000":
-          if (price >= 15000) return false;
-          break;
-        case "15000-25000":
-          if (price < 15000 || price > 25000) return false;
-          break;
-        case "25000-35000":
-          if (price < 25000 || price > 35000) return false;
-          break;
-        case "over-35000":
-          if (price <= 35000) return false;
-          break;
-      }
+    // Furniture filter - room must have ALL selected furniture items
+    if (selectedFurniture.length > 0) {
+      const roomFurnitureIds = room.room_furniture.map(rf => rf.furniture.id);
+      const hasAllFurniture = selectedFurniture.every(furnitureId => 
+        roomFurnitureIds.includes(furnitureId)
+      );
+      if (!hasAllFurniture) return false;
     }
 
-    // Room Size filter
-    if (roomSizeFilter !== "all" && room.room_size) {
-      const size = Number(room.room_size);
-      switch (roomSizeFilter) {
-        case "small":
-          if (size >= 300) return false;
-          break;
-        case "medium":
-          if (size < 300 || size >= 500) return false;
-          break;
-        case "large":
-          if (size < 500) return false;
-          break;
-      }
-    }
-
-    // Occupancy filter
-    if (occupancyFilter !== "all" && room.max_occupancy) {
-      const occupancy = Number(room.max_occupancy);
-      switch (occupancyFilter) {
-        case "single":
-          if (occupancy !== 1) return false;
-          break;
-        case "double":
-          if (occupancy !== 2) return false;
-          break;
-        case "multiple":
-          if (occupancy <= 2) return false;
-          break;
-      }
+    // Bathroom filter - room must have ALL selected bathroom items
+    if (selectedBathroom.length > 0) {
+      const roomFurnitureIds = room.room_furniture.map(rf => rf.furniture.id);
+      const hasAllBathroom = selectedBathroom.every(bathroomId => 
+        roomFurnitureIds.includes(bathroomId)
+      );
+      if (!hasAllBathroom) return false;
     }
     
     return true;
@@ -218,22 +206,22 @@ const Rooms = () => {
 
           {/* Filters Section */}
           <div className="mb-8">
-            <div className="flex flex-col sm:flex-row gap-4 items-center justify-between bg-card/50 p-4 rounded-lg border border-border/50">
-              <div className="flex items-center gap-2 text-sm font-medium">
-                <Filter className="w-4 h-4" />
-                Filter by:
+            <div className="bg-card/50 backdrop-blur-sm p-6 rounded-lg border border-border/50">
+              <div className="flex items-center gap-2 mb-6 text-lg font-semibold">
+                <Filter className="w-5 h-5" />
+                Filter Rooms
               </div>
               
-              <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {/* Location Filter */}
-                <div className="flex flex-col gap-1">
-                  <label className="text-xs text-muted-foreground">Location</label>
+                <div>
+                  <Label className="text-sm font-medium mb-2 block">Location</Label>
                   <Select value={locationFilter} onValueChange={setLocationFilter}>
-                    <SelectTrigger className="w-full sm:w-[140px]">
-                      <SelectValue placeholder="All locations" />
+                    <SelectTrigger>
+                      <SelectValue placeholder="All Locations" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="all">All locations</SelectItem>
+                      <SelectItem value="all">All Locations</SelectItem>
                       {locations?.map((location) => (
                         <SelectItem key={location} value={location}>
                           {location}
@@ -243,91 +231,107 @@ const Rooms = () => {
                   </Select>
                 </div>
 
-                {/* Price Filter */}
-                <div className="flex flex-col gap-1">
-                  <label className="text-xs text-muted-foreground">Price Range</label>
-                  <Select value={priceFilter} onValueChange={setPriceFilter}>
-                    <SelectTrigger className="w-full sm:w-[140px]">
-                      <SelectValue placeholder="All prices" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="all">All prices</SelectItem>
-                      <SelectItem value="under-15000">Under 15K</SelectItem>
-                      <SelectItem value="15000-25000">15K - 25K</SelectItem>
-                      <SelectItem value="25000-35000">25K - 35K</SelectItem>
-                      <SelectItem value="over-35000">Over 35K</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                {/* Room Size Filter */}
-                <div className="flex flex-col gap-1">
-                  <label className="text-xs text-muted-foreground">Room Size</label>
-                  <Select value={roomSizeFilter} onValueChange={setRoomSizeFilter}>
-                    <SelectTrigger className="w-full sm:w-[140px]">
-                      <SelectValue placeholder="All sizes" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="all">All sizes</SelectItem>
-                      <SelectItem value="small">Small (&lt;300 sq ft)</SelectItem>
-                      <SelectItem value="medium">Medium (300-499 sq ft)</SelectItem>
-                      <SelectItem value="large">Large (500+ sq ft)</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                {/* Occupancy Filter */}
-                <div className="flex flex-col gap-1">
-                  <label className="text-xs text-muted-foreground">Occupancy</label>
-                  <Select value={occupancyFilter} onValueChange={setOccupancyFilter}>
-                    <SelectTrigger className="w-full sm:w-[140px]">
-                      <SelectValue placeholder="All occupancy" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="all">All occupancy</SelectItem>
-                      <SelectItem value="single">Single person</SelectItem>
-                      <SelectItem value="double">Double occupancy</SelectItem>
-                      <SelectItem value="multiple">Multiple (3+)</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
                 {/* Availability Filter */}
-                <div className="flex flex-col gap-1">
-                  <label className="text-xs text-muted-foreground">Availability</label>
+                <div>
+                  <Label className="text-sm font-medium mb-2 block">Availability</Label>
                   <Select value={availabilityFilter} onValueChange={setAvailabilityFilter}>
-                    <SelectTrigger className="w-full sm:w-[140px]">
-                      <SelectValue placeholder="All rooms" />
+                    <SelectTrigger>
+                      <SelectValue placeholder="All" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="all">All rooms</SelectItem>
+                      <SelectItem value="all">All</SelectItem>
                       <SelectItem value="available">Available</SelectItem>
                       <SelectItem value="becoming_available">Becoming Available</SelectItem>
-                      <SelectItem value="reserved">Reserved</SelectItem>
                       <SelectItem value="unavailable">Unavailable</SelectItem>
+                      <SelectItem value="reserved">Reserved</SelectItem>
+                      <SelectItem value="under_maintenance">Under Maintenance</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
 
-                {/* Clear Filters */}
-                {(availabilityFilter !== "all" || locationFilter !== "all" || priceFilter !== "all" || roomSizeFilter !== "all" || occupancyFilter !== "all") && (
+                {/* Furniture Filter */}
+                <div>
+                  <Label className="text-sm font-medium mb-2 block">Furniture</Label>
+                  <div className="border border-border rounded-lg p-3 max-h-48 overflow-y-auto bg-background">
+                    {regularFurniture.length > 0 ? (
+                      regularFurniture.map((furniture) => (
+                        <div key={furniture.id} className="flex items-center space-x-2 mb-2">
+                          <Checkbox
+                            id={`furniture-${furniture.id}`}
+                            checked={selectedFurniture.includes(furniture.id)}
+                            onCheckedChange={(checked) => {
+                              if (checked) {
+                                setSelectedFurniture([...selectedFurniture, furniture.id]);
+                              } else {
+                                setSelectedFurniture(selectedFurniture.filter(id => id !== furniture.id));
+                              }
+                            }}
+                          />
+                          <Label
+                            htmlFor={`furniture-${furniture.id}`}
+                            className="text-sm font-normal cursor-pointer"
+                          >
+                            {furniture.name}
+                          </Label>
+                        </div>
+                      ))
+                    ) : (
+                      <p className="text-sm text-muted-foreground">No furniture options</p>
+                    )}
+                  </div>
+                </div>
+
+                {/* Bathroom Filter */}
+                <div>
+                  <Label className="text-sm font-medium mb-2 block">Bathroom</Label>
+                  <div className="border border-border rounded-lg p-3 max-h-48 overflow-y-auto bg-background">
+                    {bathroomItems.length > 0 ? (
+                      bathroomItems.map((item) => (
+                        <div key={item.id} className="flex items-center space-x-2 mb-2">
+                          <Checkbox
+                            id={`bathroom-${item.id}`}
+                            checked={selectedBathroom.includes(item.id)}
+                            onCheckedChange={(checked) => {
+                              if (checked) {
+                                setSelectedBathroom([...selectedBathroom, item.id]);
+                              } else {
+                                setSelectedBathroom(selectedBathroom.filter(id => id !== item.id));
+                              }
+                            }}
+                          />
+                          <Label
+                            htmlFor={`bathroom-${item.id}`}
+                            className="text-sm font-normal cursor-pointer"
+                          >
+                            {item.name}
+                          </Label>
+                        </div>
+                      ))
+                    ) : (
+                      <p className="text-sm text-muted-foreground">No bathroom options</p>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              {/* Clear Filters Button */}
+              {(availabilityFilter !== "all" || locationFilter !== "all" || selectedFurniture.length > 0 || selectedBathroom.length > 0) && (
+                <div className="mt-6 flex justify-end">
                   <Button
                     variant="outline"
-                    size="sm"
                     onClick={() => {
                       setAvailabilityFilter("all");
                       setLocationFilter("all");
-                      setPriceFilter("all");
-                      setRoomSizeFilter("all");
-                      setOccupancyFilter("all");
+                      setSelectedFurniture([]);
+                      setSelectedBathroom([]);
                     }}
-                    className="flex items-center gap-2 mt-4 sm:mt-6"
+                    className="flex items-center gap-2"
                   >
-                    <X className="w-3 h-3" />
-                    Clear
+                    <X className="w-4 h-4" />
+                    Clear All Filters
                   </Button>
-                )}
-              </div>
+                </div>
+              )}
             </div>
           </div>
 
