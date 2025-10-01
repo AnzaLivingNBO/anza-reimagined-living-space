@@ -47,7 +47,7 @@ export const HowItWorks = () => {
         </div>
         
         {/* All Steps Container */}
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 sm:gap-5 lg:gap-4">
             {steps.map((step, index) => {
               const Icon = step.icon;
