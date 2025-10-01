@@ -55,6 +55,7 @@ const Rooms = () => {
   const [selectedImageIndex, setSelectedImageIndex] = useState<{ [key: string]: number }>({});
   const [availabilityFilter, setAvailabilityFilter] = useState<string>("all");
   const [locationFilter, setLocationFilter] = useState<string>("all");
+  const [flatFilter, setFlatFilter] = useState<string>("all");
   const [selectedFurniture, setSelectedFurniture] = useState<string[]>([]);
   const [selectedBathroom, setSelectedBathroom] = useState<string[]>([]);
   const [capacityFilter, setCapacityFilter] = useState<string>("all");
@@ -117,6 +118,19 @@ const Rooms = () => {
     },
   });
 
+  const { data: flats } = useQuery({
+    queryKey: ["flats"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("flats")
+        .select("id, name, location")
+        .order("name");
+
+      if (error) throw error;
+      return data;
+    },
+  });
+
   const { data: furnitureOptions = [] } = useQuery({
     queryKey: ["furniture"],
     queryFn: async () => {
@@ -161,6 +175,11 @@ const Rooms = () => {
     
     // Location filter
     if (locationFilter !== "all" && room.flats.location !== locationFilter) {
+      return false;
+    }
+
+    // Flat filter
+    if (flatFilter !== "all" && room.flats.id !== flatFilter) {
       return false;
     }
     
@@ -247,6 +266,24 @@ const Rooms = () => {
                       {locations?.map((location) => (
                         <SelectItem key={location} value={location}>
                           {location}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {/* Flat Filter */}
+                <div>
+                  <Label className="text-sm font-medium mb-2 block">Flat</Label>
+                  <Select value={flatFilter} onValueChange={setFlatFilter}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="All Flats" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">All Flats</SelectItem>
+                      {flats?.map((flat) => (
+                        <SelectItem key={flat.id} value={flat.id}>
+                          {flat.name}
                         </SelectItem>
                       ))}
                     </SelectContent>
@@ -390,13 +427,14 @@ const Rooms = () => {
               </div>
 
               {/* Clear Filters Button */}
-              {(availabilityFilter !== "all" || locationFilter !== "all" || capacityFilter !== "all" || priceFilter !== "all" || selectedFurniture.length > 0 || selectedBathroom.length > 0) && (
+              {(availabilityFilter !== "all" || locationFilter !== "all" || flatFilter !== "all" || capacityFilter !== "all" || priceFilter !== "all" || selectedFurniture.length > 0 || selectedBathroom.length > 0) && (
                 <div className="mt-6 flex justify-end">
                   <Button
                     variant="outline"
                     onClick={() => {
                       setAvailabilityFilter("all");
                       setLocationFilter("all");
+                      setFlatFilter("all");
                       setCapacityFilter("all");
                       setPriceFilter("all");
                       setSelectedFurniture([]);
