@@ -15,7 +15,7 @@ export const Hero = () => {
       <div className="relative z-10 container mx-auto px-4 sm:px-6 text-center text-white">
         <div className="max-w-4xl mx-auto space-y-6 sm:space-y-8 animate-fade-up">
           <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold leading-tight px-2">
-            Find Your Home,{' '}
+            Find Your Home,<br />
             <span className="bg-gradient-to-r from-white to-primary-glow bg-clip-text text-transparent">
               Build Your Community
             </span>
