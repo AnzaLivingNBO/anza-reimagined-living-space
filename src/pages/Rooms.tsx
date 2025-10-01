@@ -407,10 +407,6 @@ const Rooms = () => {
                         </div>
                       </div>
 
-                      <p className="text-sm sm:text-base text-muted-foreground mb-4 leading-relaxed line-clamp-2">
-                        {room.description || "No description available"}
-                      </p>
-
                       {/* Furniture */}
                       {furniture.length > 0 && (
                         <div className="mb-4 w-full overflow-hidden">
