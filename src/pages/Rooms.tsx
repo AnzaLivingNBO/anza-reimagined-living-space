@@ -339,9 +339,14 @@ const Rooms = () => {
               const statusConfig = getStatusConfig(room.availability_status);
 
               return (
-                <Card key={room.id} className="overflow-hidden backdrop-blur-sm bg-card/80 border-border/50 hover:shadow-xl transition-all duration-300 w-full animate-fade-up" style={{
+                <Card key={room.id} className="overflow-hidden backdrop-blur-sm bg-card/80 border-border/50 hover:shadow-xl transition-all duration-300 w-full animate-fade-up relative" style={{
                   animationDelay: `${index * 0.1}s`
                 }}>
+                  {/* Availability Badge - Top Left Corner */}
+                  <Badge className={`${statusConfig.className} absolute top-4 left-4 z-10`}>
+                    {statusConfig.label}
+                  </Badge>
+
                   <div className="grid grid-cols-1 lg:grid-cols-3 gap-0 w-full">
                     {/* Image Section */}
                     <div className="relative lg:col-span-1 w-full">
@@ -350,7 +355,7 @@ const Rooms = () => {
                           <img
                             src={images[currentImageIndex]?.image_url}
                             alt={images[currentImageIndex]?.alt_text || `${room.title} photo`}
-                            className="w-full h-full object-contain bg-muted/50"
+                            className="w-full h-full object-cover"
                           />
                           
                           {/* Image Navigation */}
@@ -385,11 +390,6 @@ const Rooms = () => {
                               </div>
                             </>
                           )}
-                          
-                          {/* Availability Badge */}
-                          <Badge className={`${statusConfig.className} absolute top-2 right-2`}>
-                            {statusConfig.label}
-                          </Badge>
                         </div>
                       ) : (
                         <div className="h-56 sm:h-64 lg:h-80 bg-muted flex items-center justify-center w-full">
